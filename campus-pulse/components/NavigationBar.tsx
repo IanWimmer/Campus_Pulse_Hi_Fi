@@ -1,9 +1,12 @@
 "use client"
 
+import clsx from 'clsx';
+
 
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import HomeFilledIcon from '@mui/icons-material/HomeFilled';
 import PersonIcon from '@mui/icons-material/Person';
+import { useState } from 'react';
 
 
 
@@ -41,9 +44,14 @@ const NavigationBarButton = ({
   onClick?: (id?: number) => void;
 }) => {
 
-  return <div>
-    <button onClick={() => onClick(tabInfo.id)}>
-      {tabInfo.icon}
+  return <div className='w-[33%] flex justify-center items-center'>
+    <button onClick={() => onClick(tabInfo.id)} className={clsx(
+      'w-[90%] h-11 rounded-full',
+      selected ? 'bg-neutral-300' : 'bg-inherit'
+    )}>
+      <div>
+        {tabInfo.icon}
+      </div>
     </button>
   </div>
 }
@@ -51,9 +59,13 @@ const NavigationBarButton = ({
 
 
 const NavigationBar = () => {
+  const [selected, setSelected] = useState<number>(0);
+
+
+
   return <div className="absolute bottom-0 left-0 w-full z-40 h-[60px] bg-neutral-100 flex justify-between">
     {navigationTabs.map(tab => {
-      return <NavigationBarButton tabInfo={tab} />
+      return <NavigationBarButton key={tab.id} tabInfo={tab} selected={selected == tab.id} onClick={() => setSelected(tab.id)}/>
     })}
   </div>
 }

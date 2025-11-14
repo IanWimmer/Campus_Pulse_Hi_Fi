@@ -5,7 +5,7 @@ import React from "react";
 
 
 
-const PrimaryButton = ({
+const NeutralButton = ({
   onClick,
   text,
   containerClassName = "",
@@ -15,7 +15,7 @@ const PrimaryButton = ({
   containerClassName?: string;
 }) => {
   return <div className={containerClassName}>
-    <button onClick={() => onClick()} className="w-full h-full bg-accepting-background rounded-full">
+    <button onClick={() => onClick()} className="w-full h-full bg-neutral-200 rounded-full">
       {text}
     </button>
   </div>
@@ -23,4 +23,4 @@ const PrimaryButton = ({
 
 
 
-export default PrimaryButton;
+export default NeutralButton;
