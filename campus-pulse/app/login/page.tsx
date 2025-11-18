@@ -6,9 +6,11 @@ import { useLoginContext } from "@/contexts/LoginContext";
 import PrimaryButton from "@/components/buttons/PrimaryButton";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useOnboardingContext } from "@/contexts/OnboardingContext";
 
 const LoginPage = () => {
   const loginContext = useLoginContext()
+  const onboradingContext = useOnboardingContext()
   const router = useRouter()
 
   const switchToLogin = () => {
@@ -18,7 +20,8 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (loginContext.state) {
-      router.replace('/')
+      if (onboradingContext.state.done) {router.replace('/')}
+      else {router.replace('/onboarding')}
     }
   }, [loginContext.state])
 

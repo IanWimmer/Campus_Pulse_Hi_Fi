@@ -2,15 +2,18 @@
 
 import { LoginProvider } from "@/contexts/LoginContext";
 import AuthGuard from "./auth/AuthGuard";
+import { OnboardingProvider } from "@/contexts/OnboardingContext";
 
 
 
 const Providers = ({children}: {children: React.ReactNode}) => {
   return (
     <LoginProvider>
-      <AuthGuard>
-        {children}
-      </AuthGuard>
+      <OnboardingProvider>
+        <AuthGuard>
+          {children}
+        </AuthGuard>
+      </OnboardingProvider>
     </LoginProvider>
   )
 }
