@@ -13,7 +13,10 @@ export default function AuthGuard({ children }: {children: React.ReactNode}) {
   const onboardingDone = useOnboardingContext().state.done
 
   useEffect(() => {
-    if (!loggedIn && pathname !== '/login') {
+    if (pathname == '/components') {
+      console.log("components")
+    }
+    else if (!loggedIn && pathname !== '/login') {
       router.replace('/login')
     }
     else if (!onboardingDone && (pathname !== '/onboarding' && pathname !== '/login')) {
@@ -22,6 +25,6 @@ export default function AuthGuard({ children }: {children: React.ReactNode}) {
   }, [loggedIn, pathname])
 
   // Optionally, block rendering on protected pages until loggedIn is checked
-  if (!loggedIn && pathname !== '/login') return null
+  if (pathname !== '/components' && !loggedIn && pathname !== '/login') return null
   return children
 }

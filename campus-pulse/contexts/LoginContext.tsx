@@ -8,7 +8,7 @@ const LoginContext = createContext({state: false, actions: (newState: boolean): 
 
 // Step 2: Create Provider component
 export function LoginProvider({ children}: {children: React.ReactNode }) {
-  const [loggedIn, setLoggedIn] = useState<boolean>(true)
+  const [loggedIn, setLoggedIn] = useState<boolean>(false)
 
 
   return (

@@ -1,6 +1,6 @@
 
 import "./globals.css";
-import Providers from "@/components/Providers";
+import Providers from "@/contexts/Providers";
 
 
 const RootLayout = ({

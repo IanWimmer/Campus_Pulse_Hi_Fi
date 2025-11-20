@@ -10,7 +10,7 @@ const AddEventButton = ({
 }: {
   onClick?: () => void;
 }) => {
-  return <div className="bg-green-200 rounded-full w-fit">
+  return <div className="w-12 h-12 border-2 rounded-md shadow-neobrutalist flex justify-center items-center">
     <button onClick={() => onClick()} className="">
       <AddIcon fontSize="large" className="fill-black!"/>
     </button>

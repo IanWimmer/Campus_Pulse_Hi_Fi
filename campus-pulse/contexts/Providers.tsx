@@ -1,7 +1,7 @@
 'use client'
 
 import { LoginProvider } from "@/contexts/LoginContext";
-import AuthGuard from "./auth/AuthGuard";
+import AuthGuard from "../components/auth/AuthGuard";
 import { OnboardingProvider } from "@/contexts/OnboardingContext";
 
 

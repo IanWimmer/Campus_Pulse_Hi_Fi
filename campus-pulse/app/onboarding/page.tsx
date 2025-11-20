@@ -3,7 +3,7 @@
 
 
 import Card from "@/components/card/Card";
-import ProgressionBar from "@/components/ProgressionBar";
+import OnboardingProgressionBar from "@/components/OnboardingProgressionBar";
 import { useOnboardingContext } from "@/contexts/OnboardingContext";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -32,9 +32,9 @@ const CardArrangement = ({
     <div className="relative">
       <div className="bg-neutral-200 px-4 py-8">
         <Card 
-          imageSrc="images/party.jpg"
-          title={"Party @ John’s, wird epic!!! 🔥🔥"} 
-          description={"Komm vorbei zur Houseparty des Jahrhunderts! Jeder, der etwas Alk mitbringt, ist herzlich ..."}
+          imageSrc={imageSrc1}
+          title={title1} 
+          description={description1}
         />
       </div>
       <span className="absolute top-[calc(50%-24px)] left-[calc(50%-24px)] h-12 w-12 bg-white flex justify-center items-center rounded-full font-semibold text-lg">
@@ -42,9 +42,9 @@ const CardArrangement = ({
       </span>
       <div className="bg-neutral-300 px-4 py-8">
         <Card 
-          imageSrc="images/boardgame.jpg"
-          title={"Gemütlicher Brettspielabend"}
-          description={"Wir spielen Catan, Dominion, The 7th continent und weitere Strategiespiele. Wir suchen Mitspieler ..."}
+          imageSrc={imageSrc2}
+          title={title2}
+          description={description2}
         />
       </div>
     </div>
@@ -96,7 +96,7 @@ const OnboardingPage = () => {
 
   return <main className="container">
     <div className="absolute top-16 w-full h-fit flex justify-center p-2">
-      <ProgressionBar current_stage={onboardingContext.state.stage} n_stages={onboardingContext.state.max_stages} />
+      <OnboardingProgressionBar current_stage={onboardingContext.state.stage} n_stages={onboardingContext.state.max_stages} />
     </div>
 
     <div className="absolute top-28 w-full h-[calc(100%-128px)]">

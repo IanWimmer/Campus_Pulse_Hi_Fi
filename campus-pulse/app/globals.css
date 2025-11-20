@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "ClashDisplay";
+  src: url("./../public/fonts/ClashDisplay/ClashDisplay-Variable.ttf");
+}
+
 :root {
   --background:             #ffffff;
   --foreground:             #171717;
@@ -13,8 +18,16 @@
 }
 
 @theme {
-  --color-accepting-background:   #D2E0D6;
-  --color-primary:                #195D2F;
+  /* colors */
+  --color-primary:                #1FAA1F;
+  --color-secondary:              #105510;
+  --color-negative:               #AA310B;
+
+  --color-primary-background:     #D5FFD5;
+
+  /* shadows */
+  --shadow-neobrutalist:          6px 6px 0 0 rgba(0, 0, 0, 1.00);
+  --shadow-neobrutalist-sm:       2px 2px 0 0 rgba(0, 0, 0, 1.00)
 }
 
 /*
@@ -29,5 +42,10 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "ClashDisplay", Helvetica sans-serif;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
 }

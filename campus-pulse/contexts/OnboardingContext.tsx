@@ -3,7 +3,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
-const max_stages = 5
+const max_stages = 6
 
 // Step 1: Create Context
 const OnboardingContext = createContext({state: {stage: 0, max_stages: max_stages, done: false}, actions: (newStage: number): void => {false}})

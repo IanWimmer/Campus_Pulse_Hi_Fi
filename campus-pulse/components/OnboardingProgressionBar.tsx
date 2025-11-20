@@ -4,7 +4,7 @@ import useWindowWidth from "@/custom_hooks/useWindowWidth";
 
 
 
-const ProgressionBar = ({
+const OnboardingProgressionBar = ({
   current_stage,
   n_stages,
 }: {
@@ -53,4 +53,4 @@ const ProgressionBar = ({
 
 
 
-export default ProgressionBar
+export default OnboardingProgressionBar

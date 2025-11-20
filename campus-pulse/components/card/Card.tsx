@@ -1,3 +1,4 @@
+import clsx from "clsx";
 
 
 
@@ -8,28 +9,39 @@ const Card = ({
   description = null,
   datetime = null,
   location = null,
-  height = "h-64"
+  tall = false,
+  height = null,
 }: {
   imageSrc?: string;
   title?: string | null;
   description?: string | null;
   datetime?: string | null;
   location?: string | null;
-  height?: string | number;
+  tall?: boolean
+  height?: string | number | null;
 }) => {
-  return (<div className={"rounded-2xl shadow-[0px_0px_5px_5px_rgba(0,0,0,0.25)] relative"}>
-    <div className={"rounded-2xl overflow-hidden relative " + height}>
+  if (height === null && tall) height = "h-112";
+  else if (height === null && !tall) height = "h-64"; 
+  return (<div className={clsx("shadow-neobrutalist border-2 border-black flex flex-col", height)}>
+    <div className={"overflow-hidden border-b-2 border-b-black flex-1"}>
       <img src={imageSrc} className="h-full w-full object-cover"/>
     </div>
-    <div className="absolute bg-[#EBEBEB] rounded-xl bottom-0 left-0 m-2 p-3">
-      <h3 className="font-semibold text-xl mb-2">
+    <div className="p-3 bg-white shrink-0 h-fit w-full grid grid-cols-1 gap-2">
+      {title && <h3 className="font-bold text-base">
         {title}
-      </h3>
-      <p className="text-sm">
+      </h3>}
+      {description && <p className="text-xs">
         {description}
-      </p>
+      </p>}
+      {(datetime || location) && <div className="text-zinc-500">
+        {datetime && <div>
+          {datetime}
+        </div>}
+        {location && <div>
+          {location}
+        </div>}
+      </div>}
     </div>
-
   </div>)
 }
 

@@ -6,7 +6,7 @@ import React from "react";
 
 
 
-const PrimaryButton = ({
+const NegativeButton = ({
   onClick = () => {false},
   text,
   containerClassName = "",
@@ -16,7 +16,7 @@ const PrimaryButton = ({
   containerClassName?: string;
 }) => {
   return <div className={clsx(containerClassName, "pr-1.5")}>
-    <button onClick={() => onClick()} className="w-full h-12 bg-primary text-white rounded-md shadow-neobrutalist border-2 border-black text-xl font-semibold">
+    <button onClick={() => onClick()} className="w-full h-12 bg-negative text-white rounded-md shadow-neobrutalist border-2 border-black text-xl font-semibold">
       {text}
     </button>
   </div>
@@ -24,4 +24,4 @@ const PrimaryButton = ({
 
 
 
-export default PrimaryButton;
+export default NegativeButton;
