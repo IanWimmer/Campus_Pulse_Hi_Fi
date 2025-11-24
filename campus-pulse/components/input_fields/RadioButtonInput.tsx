@@ -17,7 +17,6 @@ const RadioButtonInputForm = ({
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSelected(event.target.value)
     onChange(event)
-    console.log(event)
   }
 
   return (<div className="flex flex-col gap-1">

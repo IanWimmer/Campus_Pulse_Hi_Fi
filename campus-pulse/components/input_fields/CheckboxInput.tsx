@@ -1,5 +1,4 @@
 import { ChangeEvent, useRef, useState } from "react"
-import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import clsx from "clsx";
 
 
@@ -26,7 +25,6 @@ const CheckboxInputForm = ({
     }
     setSelected(nextSelected);
     onChange(event, nextSelected);
-    console.log(nextSelected)
   }
 
   return (<div className="flex flex-col gap-1">
@@ -69,7 +67,6 @@ export const CheckboxInput = ({
     <label 
       htmlFor={inputId}
       className={"h-8 flex items-center gap-3 cursor-pointer"}
-      onClick={() => console.log(value)}
     >
       <input 
         ref={inputRef}
@@ -78,10 +75,10 @@ export const CheckboxInput = ({
         name={name}
         value={value}
         checked={checked}
-        onChange={(event) => {onChange(event); console.log(event)}}
+        onChange={(event) => {onChange(event)}}
         className="sr-only"
       />
-      <svg className={clsx("h-full aspect-square", checked && "shadow-neobrutalist-sm")} viewBox="0 0 24 24">
+      <svg className={clsx("h-full aspect-square", checked && "shadow-neobrutalist-xs")} viewBox="0 0 24 24">
         <rect x={0} y={0} width={24} height={24} className="fill-primary-background stroke-3 stroke-black" />
         {checked && (
           <polyline

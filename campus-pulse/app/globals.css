@@ -27,7 +27,8 @@
 
   /* shadows */
   --shadow-neobrutalist:          6px 6px 0 0 rgba(0, 0, 0, 1.00);
-  --shadow-neobrutalist-sm:       2px 2px 0 0 rgba(0, 0, 0, 1.00)
+  --shadow-neobrutalist-sm:       4px 4px 0 0 rgba(0, 0, 0, 1.00);
+  --shadow-neobrutalist-xs:       2px 2px 0 0 rgba(0, 0, 0, 1.00);
 }
 
 /*
