@@ -22,6 +22,8 @@ const Card = ({
 }) => {
   if (height === null && tall) height = "h-112";
   else if (height === null && !tall) height = "h-64"; 
+
+  
   return (<div className={clsx("shadow-neobrutalist border-2 border-black flex flex-col", height)}>
     <div className={"overflow-hidden border-b-2 border-b-black flex-1"}>
       <img src={imageSrc} className="h-full w-full object-cover"/>

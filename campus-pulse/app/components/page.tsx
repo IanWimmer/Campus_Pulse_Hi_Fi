@@ -7,7 +7,7 @@ import SecondaryButton from "@/components/buttons/SecondaryButton";
 import Card from "@/components/card/Card";
 import Chip from "@/components/chip/Chip";
 import DropDownMenu from "@/components/dropdown/DropDownMenu";
-import CrossCheckAnimated from "@/components/icons/CrossCheckAnimated";
+import CrossCheckAnimated from "@/public/icons/CrossCheckAnimated";
 import CheckboxInputForm from "@/components/input_fields/CheckboxInput";
 import DateInput from "@/components/input_fields/DateInput";
 import RadioButtonInputForm from "@/components/input_fields/RadioButtonInput";
@@ -24,6 +24,7 @@ import Person from "@/public/icons/Person";
 
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from "react";
+import Search from "@/public/icons/Search";
 
 
 
@@ -65,7 +66,7 @@ const ComponentsPage = () => {
   ] as NavigationTabType[];
 
 
-  return <main className="page-container w-full bg-white p-4 pb-64">
+  return <main className="page-container w-full bg-white p-4 pb-[100vh]">
     <div>
       <p className="text-xl font-semibold">Onboarding Progression Bar</p>
       <OnboardingProgressionBar current_stage={0} n_stages={6}  time_per_page={[5, -1, -1, -1, -1, 5]}/>
@@ -102,7 +103,7 @@ const ComponentsPage = () => {
     <div >
       <p className="text-xl font-semibold">Input fields:</p>
       Input field with end icon
-      <TextInput withEndIcon endIcon={<SearchIcon />} id={1}/>
+      <TextInput withEndIcon endIcon={<Search />} id={1}/>
       <br />
       Input field
       <TextInput withPlaceholder={false} withoutShadow id={2} />
@@ -146,7 +147,7 @@ const ComponentsPage = () => {
       </div>
       <br />
       Progress bar
-      <ProgressBar content="Progress bar text" progress={66} />
+      <ProgressBar content="Progress bar text" progress={50} />
       <br />
       Navigation bar
       <div className="absolute left-0">

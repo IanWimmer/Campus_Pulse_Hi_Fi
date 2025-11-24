@@ -34,48 +34,48 @@ const ProgressBar = ({
 
   return (
     <div ref={containerRef} className={clsx("w-full h-fit relative")}>
-      <svg 
-        className={clsx(
-          "w-[" + width + "px]",
-          "h-8 drop-shadow-[4px_4px_0px_rgba(0,0,0,1.00)]"
-        )}
-        viewBox={`0 0 ${width} 32`}
-      >
-        <rect 
-          x={1} 
-          y={2}
-          width={width ? width - 2 : 0}
-          height={24}
-          rx={12}
-          ry={12}
-          className='fill-white'
-        />
-        <rect 
-          x={1} 
-          y={3}
-          width={width ? (width - 2) * (progress / 100) : 0}
-          height={22}
-          rx={11}
-          ry={11}
-          className='fill-primary'
-        />
-        <rect 
-          x={1} 
-          y={2}
-          width={width ? width - 2 : 0}
-          height={24}
-          rx={12}
-          ry={12}
-          className='stroke-2 stroke-black fill-transparent'
-        />
-
-        <text
-          x={12}
-          y={18}
-          fontSize={13}
-          className={clsx(progress > 50 ? "fill-white" : "fill-black")}
-        >{content}</text>
-      </svg>
+      {containerRef ? <>
+        <svg 
+          className={clsx(
+            "w-[" + width + "px]",
+            "h-8",
+            withoutShadow ? "" : "drop-shadow-[4px_4px_0px_rgba(0,0,0,1.00)]"
+          )}
+          viewBox={`0 0 ${width} 32`}
+        >
+          <rect 
+            x={1} 
+            y={2}
+            width={width ? width - 2 : 0}
+            height={24}
+            rx={12}
+            ry={12}
+            className='fill-white'
+          />
+          <rect 
+            x={1} 
+            y={3}
+            width={width ? (width - 2) * (progress / 100) : 0}
+            height={22}
+            rx={11}
+            ry={11}
+            className='fill-primary'
+          />
+          <rect 
+            x={1} 
+            y={2}
+            width={width ? width - 2 : 0}
+            height={24}
+            rx={12}
+            ry={12}
+            className='stroke-2 stroke-black fill-transparent'
+          />
+        </svg> 
+        <div className={clsx(
+          "absolute bottom-2 text-sm w-full flex items-center px-3",
+          progress > 50 ? "text-white justify-baseline" : "text-black justify-end",
+        )}>{content}</div>
+      </> : ""}
     </div>
   )
 }

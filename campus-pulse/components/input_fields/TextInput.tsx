@@ -31,7 +31,7 @@ const TextInput = ({
     <input type={type} ref={inputRef} id={id} onChange={(event) => onChange(event)} placeholder={withPlaceholder ? placeholder : ""} className="flex-1 focus:outline-none focus:ring-0"/>
     {withEndIcon && <div className="h-7 w-7 rounded-full border-2 border-black shrink-0 box-content flex justify-center items-center">
       {React.isValidElement(endIcon)
-      ? React.cloneElement(endIcon as React.ReactElement<any>, { className: "h-full w-full object-contain" })
+      ? React.cloneElement(endIcon as React.ReactElement<any>, { className: "h-[18px] w-[18px] object-contain" })
       : <span className="h-full w-full flex items-center justify-center">{endIcon}</span>}
     </div>}
   </div>)

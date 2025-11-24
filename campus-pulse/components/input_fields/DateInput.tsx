@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React, { useState } from "react";
 import { ChangeEvent, useRef } from "react";
-import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+import CalendarMonthOutlined from "@/public/icons/CalendarMonthOutlined";
 
 
 
@@ -62,7 +62,7 @@ const DateInput = ({
       />
 
       {/* Custom visible input */}
-      <div className="h-full aspect-square flex items-center justify-center"><CalendarMonthOutlinedIcon /></div>
+      <div className="h-full aspect-square flex items-center justify-center"><CalendarMonthOutlined /></div>
       <div
         className={clsx("border-2 border-black flex-1 h-full flex items-center pl-5 cursor-pointer select-none", !withoutShadow && "shadow-neobrutalist")}
       >
