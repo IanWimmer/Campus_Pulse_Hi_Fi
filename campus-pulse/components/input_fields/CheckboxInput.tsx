@@ -89,7 +89,7 @@ export const CheckboxInput = ({
           />
         )}
       </svg>
-      {label && <div>{label}</div>}
+      {label && <div className="font-secondary">{label}</div>}
     </label>
   )
 }

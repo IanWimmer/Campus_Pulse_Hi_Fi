@@ -72,7 +72,7 @@ const ProgressBar = ({
           />
         </svg> 
         <div className={clsx(
-          "absolute bottom-2 text-sm w-full flex items-center px-3",
+          "font-secondary absolute bottom-2 text-sm w-full flex items-center px-3",
           progress > 50 ? "text-white justify-baseline" : "text-black justify-end",
         )}>{content}</div>
       </> : ""}

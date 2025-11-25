@@ -28,7 +28,7 @@ const TextInput = ({
   const inputRef = useRef<HTMLInputElement>(null)
 
   return (<div onClick={() => inputRef.current?.focus()} className={clsx("h-12 w-full flex items-center border-2 border-black p-2 pl-5", !withoutShadow && "shadow-neobrutalist")}>
-    <input type={type} ref={inputRef} id={id} onChange={(event) => onChange(event)} placeholder={withPlaceholder ? placeholder : ""} className="flex-1 focus:outline-none focus:ring-0"/>
+    <input type={type} ref={inputRef} id={id} onChange={(event) => onChange(event)} placeholder={withPlaceholder ? placeholder : ""} className="font-secondary flex-1 focus:outline-none focus:ring-0"/>
     {withEndIcon && <div className="h-7 w-7 rounded-full border-2 border-black shrink-0 box-content flex justify-center items-center">
       {React.isValidElement(endIcon)
       ? React.cloneElement(endIcon as React.ReactElement<any>, { className: "h-[18px] w-[18px] object-contain" })

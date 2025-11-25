@@ -75,7 +75,7 @@ export const RadioButtonInput = ({
         <circle cx={16} cy={16} r={12} className="fill-transparent stroke-2 stroke-black" />
         {checked && <circle cx={16} cy={16} r={7} className="fill-black" />}
       </svg>
-      {label && <div>{label}</div>}
+      {label && <div className="font-secondary">{label}</div>}
     </label>
   )
 }

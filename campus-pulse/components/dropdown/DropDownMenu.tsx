@@ -22,7 +22,7 @@ const DropDownItem = ({
 
 
   return (<div className={clsx(
-    "hover:bg-neutral-200 h-8 rounded-md flex items-center pl-2",
+    "font-secondary hover:bg-neutral-200 h-8 rounded-md flex items-center pl-2",
     selected && "bg-primary-background font-medium"
   )} onClick={() => onClick(value ? value : "")} >
     {content}
@@ -87,7 +87,7 @@ const DropDownMenu = ({
 
   return (<div ref={dropdownRef}>
     <div 
-      className={clsx("flex w-full h-12 items-center justify-between border-2 border-black p-2 pl-5", !withoutShadow && "shadow-neobrutalist")} 
+      className={clsx("font-secondary flex w-full h-12 items-center justify-between border-2 border-black p-2 pl-5", !withoutShadow && "shadow-neobrutalist")} 
       onClick={handleOpenChange}
       ref={dropdownButtonRef}
     >

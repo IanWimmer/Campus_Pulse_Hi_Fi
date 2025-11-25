@@ -64,7 +64,7 @@ const DateInput = ({
       {/* Custom visible input */}
       <div className="h-full aspect-square flex items-center justify-center"><CalendarMonthOutlined /></div>
       <div
-        className={clsx("border-2 border-black flex-1 h-full flex items-center pl-5 cursor-pointer select-none", !withoutShadow && "shadow-neobrutalist")}
+        className={clsx("font-secondary border-2 border-black flex-1 h-full flex items-center pl-5 cursor-pointer select-none", !withoutShadow && "shadow-neobrutalist")}
       >
         {date || "Select a date..."}
       </div>
