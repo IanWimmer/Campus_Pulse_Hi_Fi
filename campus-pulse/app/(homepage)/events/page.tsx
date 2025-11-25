@@ -3,12 +3,10 @@ import AddEventButton from "@/components/buttons/AddEventButton"
 import NavigationBar from "@/components/NavigationBar";
 
 
-const MyEventsPage = () => {
+export default function MyEventsPage() {
   return <main className="page-container">
     my events
 
     <AddEventButton />
   </main>;
 };
-
-export default MyEventsPage;
