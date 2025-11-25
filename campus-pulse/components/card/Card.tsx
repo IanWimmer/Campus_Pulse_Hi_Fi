@@ -1,8 +1,5 @@
 import clsx from "clsx";
 
-
-
-
 const Card = ({
   imageSrc = "images/image_placeholder.png",
   title = null,
@@ -30,13 +27,13 @@ const Card = ({
       <img src={imageSrc} className="h-full w-full object-cover"/>
     </div>
     <div className="p-3 bg-white shrink-0 h-fit w-full grid grid-cols-1 gap-2">
-      {title && <h3 className="font-bold text-base">
+      {title && <h3 className="font-secondary font-bold text-base">
         {title}
       </h3>}
-      {description && <p className="text-xs max-h-12 overflow-y-hidden">
+      {description && <p className="font-secondary text-xs max-h-12 overflow-y-hidden">
         {description}
       </p>}
-      {(datetime || location) && <div className="text-zinc-500">
+      {(datetime || location) && <div className="text-zinc-500 font-secondary">
         {datetime && <div>
           {datetime}
         </div>}

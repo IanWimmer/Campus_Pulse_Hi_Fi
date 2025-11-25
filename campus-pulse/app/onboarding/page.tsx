@@ -78,6 +78,25 @@ const CardArrangement = ({
   );
 };
 
+const GoBackButton = ({ onboardingContext }: { onboardingContext: any; }) => {
+  return <button
+    className="h-10 flex items-center justify-center px-6 gap-2 font-secondary text-zinc-500"
+    onClick={() => onboardingContext.actions.stage(1)}
+  >
+    <ChevronLeft className="[&_path]:fill-zinc-400" /> Go back to
+    previous
+  </button>;
+}
+
+const SkipButton = ({ onboardingContext }: { onboardingContext: any; }) => {
+  return <button
+    className=" h-10 flex items-center justify-center px-6 gap-2 font-secondary text-zinc-500"
+    onClick={() => onboardingContext.actions.stage(5)}
+  >
+    Skip for now <ChevronRight className="[&_path]:fill-zinc-400" />
+  </button>;
+}
+
 const OnboardingPage = () => {
   const onboardingContext = useOnboardingContext();
   const router = useRouter();
@@ -146,7 +165,7 @@ const OnboardingPage = () => {
       <>
         <CardArrangement
           title2="Gemütlicher Brettspielabend"
-          title1="Party @ John’s, wird epic!!! 🔥🔥"
+          title1="Party @ John's, wird epic!!! 🔥🔥"
           description1="Komm vorbei zur Houseparty des Jahrhunderts! Jeder, der etwas Alk mitbringt, ist herzlich ..."
           description2="Wir spielen Catan, Dominion, The 7th continent und weitere Strategiespiele. Wir suchen Mitspieler ..."
           imageSrc1="images/party.jpg"
@@ -183,13 +202,7 @@ const OnboardingPage = () => {
           selection={onboardingContext.state.selection[2]}
         />
         <div className="fixed bottom-0 left-0 w-full h-15 flex items-center justify-center bg-white">
-          <button
-            className=" h-10 flex items-center justify-center px-6 gap-2 text-zinc-500"
-            onClick={() => onboardingContext.actions.stage(1)}
-          >
-            <ChevronLeft className="[&_path]:fill-zinc-400" /> Go back to
-            previous
-          </button>
+          <GoBackButton onboardingContext={onboardingContext} />
         </div>
       </>
     );
@@ -216,13 +229,7 @@ const OnboardingPage = () => {
           selection={onboardingContext.state.selection[3]}
         />
         <div className="fixed bottom-0 left-0 w-full h-15 flex items-center justify-center bg-white">
-          <button
-            className=" h-10 flex items-center justify-center px-6 gap-2 text-zinc-500"
-            onClick={() => onboardingContext.actions.stage(2)}
-          >
-            <ChevronLeft className="[&_path]:fill-zinc-400" /> Go back to
-            previous
-          </button>
+          <GoBackButton onboardingContext={onboardingContext} />
         </div>
       </>
     );
@@ -232,19 +239,8 @@ const OnboardingPage = () => {
     output = (
       <>
         <div className="fixed bottom-0 left-0 w-full h-15 flex items-center justify-center bg-white">
-          <button
-            className=" h-10 flex items-center justify-center px-6 gap-2 text-zinc-500"
-            onClick={() => onboardingContext.actions.stage(3)}
-          >
-            <ChevronLeft className="[&_path]:fill-zinc-400" /> Go back to
-            previous
-          </button>
-          <button
-            className=" h-10 flex items-center justify-center px-6 gap-2 text-zinc-500"
-            onClick={() => onboardingContext.actions.stage(5)}
-          >
-            Skip for now <ChevronRight className="[&_path]:fill-zinc-400" />
-          </button>
+          <GoBackButton onboardingContext={onboardingContext} />
+          <SkipButton onboardingContext={onboardingContext}/>
         </div>
       </>
     );
