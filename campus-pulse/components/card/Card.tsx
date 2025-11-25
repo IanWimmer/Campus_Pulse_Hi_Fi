@@ -21,10 +21,11 @@ const Card = ({
   height?: string | number | null;
 }) => {
   if (height === null && tall) height = "h-112";
-  else if (height === null && !tall) height = "h-64"; 
+  else if (height === null && !tall) height = "h-64";
 
   
   return (<div className={clsx("shadow-neobrutalist border-2 border-black flex flex-col", height)}>
+    <div className="h-3 bg-white border-b-2 border-b-black shrink-0"/>
     <div className={"overflow-hidden border-b-2 border-b-black flex-1"}>
       <img src={imageSrc} className="h-full w-full object-cover"/>
     </div>
@@ -32,7 +33,7 @@ const Card = ({
       {title && <h3 className="font-bold text-base">
         {title}
       </h3>}
-      {description && <p className="text-xs">
+      {description && <p className="text-xs max-h-12 overflow-y-hidden">
         {description}
       </p>}
       {(datetime || location) && <div className="text-zinc-500">

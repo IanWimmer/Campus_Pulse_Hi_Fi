@@ -4,11 +4,11 @@
 import React, { createContext, useContext, useState } from 'react'
 
 // Step 1: Create Context
-const LoginContext = createContext({state: false, actions: (newState: boolean): void => {false}})
+const LoginContext = createContext({state: true, actions: (newState: boolean): void => {false}})
 
 // Step 2: Create Provider component
 export function LoginProvider({ children}: {children: React.ReactNode }) {
-  const [loggedIn, setLoggedIn] = useState<boolean>(false)
+  const [loggedIn, setLoggedIn] = useState<boolean>(true)
 
 
   return (
