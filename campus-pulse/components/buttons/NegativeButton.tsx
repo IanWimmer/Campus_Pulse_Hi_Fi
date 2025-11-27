@@ -1,13 +1,12 @@
-"use client"
+"use client";
 
 import clsx from "clsx";
-import React from "react";
-
-
-
+import React, { useState } from "react";
 
 const NegativeButton = ({
-  onClick = () => {false},
+  onClick = () => {
+    false;
+  },
   text,
   containerClassName = "",
 }: {
@@ -15,13 +14,33 @@ const NegativeButton = ({
   text: string | React.ReactElement;
   containerClassName?: string;
 }) => {
-  return <div className={clsx(containerClassName, "pr-1.5")}>
-    <button onClick={() => onClick()} className="w-full h-12 bg-negative text-white rounded-md shadow-neobrutalist border-2 border-black text-xl font-semibold">
-      {text}
-    </button>
-  </div>
-}
+  const delay = 300;
+  const [clicked, setClicked] = useState(false);
 
-
+  const handleClick = () => {
+    setClicked(true);
+    setTimeout(() => {
+      setClicked(false);
+    }, delay / 2);
+    setTimeout(() => {
+      onClick();
+    }, delay);
+  };
+  return (
+    <div className={clsx(containerClassName, "pr-1.5")}>
+      <button
+        onClick={() => handleClick()}
+        className={clsx(
+          "w-full h-12 bg-negative text-white rounded-md border-2 border-black text-xl font-semibold transition",
+          clicked
+            ? "shadow-[0_0_0_0_rgba(0,0,0,1.00)] translate-x-1.5 translate-y-1.5"
+            : "shadow-neobrutalist"
+        )}
+      >
+        {text}
+      </button>
+    </div>
+  );
+};
 
 export default NegativeButton;
