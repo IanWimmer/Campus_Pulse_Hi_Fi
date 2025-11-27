@@ -7,10 +7,12 @@ const ProgressBar = ({
   progress = 50,
   content = "",
   withoutShadow = false,
+  className = "",
 }: {
   progress?: number; // percentage from 0 to 100
   content?: string | React.ReactNode;
   withoutShadow?: boolean;
+  className?: string;
 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const [width, setWidth] = useState<number>(0)
@@ -26,27 +28,28 @@ const ProgressBar = ({
 
   useEffect(() => {
     if (containerRef && containerRef.current) {
-      setWidth(containerRef.current.offsetWidth)
+      console.log(containerRef.current.offsetWidth)
+      setWidth(Math.max(containerRef.current.offsetWidth - 2, 0))
     } else {
       setWidth(0)
     }
   }, [containerRef?.current?.offsetWidth])
 
   return (
-    <div ref={containerRef} className={clsx("w-full h-fit relative")}>
+    <div ref={containerRef} className={clsx(className, "w-full h-fit relative")}>
       {containerRef ? <>
         <svg 
           className={clsx(
-            "w-[" + width + "px]",
+            "w-[" + (width) + "px]",
             "h-8",
             withoutShadow ? "" : "drop-shadow-[4px_4px_0px_rgba(0,0,0,1.00)]"
           )}
-          viewBox={`0 0 ${width} 32`}
+          viewBox={"0 0 " + width + " 32"}
         >
           <rect 
             x={1} 
             y={2}
-            width={width ? width - 2 : 0}
+            width={width ? width - 4 : 0}
             height={24}
             rx={12}
             ry={12}
@@ -55,7 +58,7 @@ const ProgressBar = ({
           <rect 
             x={1} 
             y={3}
-            width={width ? (width - 2) * (progress / 100) : 0}
+            width={width ? (width - 4) * (progress / 100) : 0}
             height={22}
             rx={11}
             ry={11}
@@ -64,7 +67,7 @@ const ProgressBar = ({
           <rect 
             x={1} 
             y={2}
-            width={width ? width - 2 : 0}
+            width={width ? width - 4 : 0}
             height={24}
             rx={12}
             ry={12}
@@ -72,7 +75,7 @@ const ProgressBar = ({
           />
         </svg> 
         <div className={clsx(
-          "font-secondary absolute bottom-2 text-sm w-full flex items-center px-3",
+          "font-secondary absolute bottom-[9px] text-[13px] w-full flex items-center pl-3.5 pr-4",
           progress > 50 ? "text-white justify-baseline" : "text-black justify-end",
         )}>{content}</div>
       </> : ""}

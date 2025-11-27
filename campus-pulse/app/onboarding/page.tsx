@@ -43,6 +43,8 @@ const CardArrangement = ({
                 ? 'url("/background_patterns/background_pattern_dotted_green.svg")'
                 : 'url("/background_patterns/background_pattern_dotted.svg")',
             backgroundRepeat: "repeat",
+            backgroundSize: '300px auto',
+            backgroundPositionX: 'center'
           }}
         >
           <Card
@@ -64,6 +66,8 @@ const CardArrangement = ({
                 ? 'url("/background_patterns/background_pattern_striped_green.svg")'
                 : 'url("/background_patterns/background_pattern_striped.svg")',
             backgroundRepeat: "repeat",
+            backgroundSize: '300px auto',
+            backgroundPositionX: 'center'
           }}
         >
           <Card

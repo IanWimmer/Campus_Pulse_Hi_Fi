@@ -7,6 +7,6 @@ export default function MyEventsPage() {
   return <main className="page-container">
     my events
 
-    <AddEventButton />
+    
   </main>;
 };
