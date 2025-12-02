@@ -66,9 +66,11 @@ const NavigationBarButton = ({
 
 const NavigationBar = ({
   onChange = (selected) => {},
+  onOpenCreateEvent = () => {},
   options = [],
 }: {
-  onChange?: (selected: number) => void;
+  onChange?: (selected: number) => any;
+  onOpenCreateEvent?: () => any;
   options: NavigationTabType[];
 }) => {
   const [selected, setSelected] = useState<number>(0);
@@ -76,7 +78,7 @@ const NavigationBar = ({
   return (
     <div className="">
       <div className="absolute right-1.5 bottom-20">
-        <AddEventButton />
+        <AddEventButton onClick={() => onOpenCreateEvent()}/>
       </div>
       <div className="w-[calc(100vw-24px)] h-[50px] z-30 ml-2 bg-primary-background border-2 border-black shadow-neobrutalist rounded-full flex justify-between">
         {options.map((tab) => {

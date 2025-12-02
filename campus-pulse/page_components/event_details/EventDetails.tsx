@@ -9,6 +9,7 @@ import Share from "@/public/icons/Share";
 import clsx from "clsx";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 type loadingType = {
   image: boolean;
@@ -75,29 +76,12 @@ const EventDetails = ({
 
   const handleClose = () => {
     setShow(false); // Start exit animation
-    setTimeout(() => {
-      onClose(); // Call onClose after 300ms delay
-    }, 300);
+    onClose(); // for full animation call onClose after 300ms delay
   };
 
-  useEffect(() => {
-    if (visible) {
-      // Lock scroll
-      document.body.style.overflow = "hidden";
-    } else {
-      // Unlock scroll
-      document.body.style.overflow = "";
-    }
-
-    // Cleanup in case component unmounts
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [visible]);
-
-  return (
+  return createPortal(
     <motion.div
-      className="fixed top-0 left-0 w-full h-[calc(var(--vh,1vh)*100)] z-40 pointer-events-auto"
+      className="fixed top-0 left-0 w-screen h-[calc(var(--vh,1vh)*100)] z-40 pointer-events-auto"
       initial={{ x: "100%" }}
       animate={{ x: show ? 0 : "100%" }}
       transition={{ type: "tween", ease: "easeInOut" }}
@@ -228,7 +212,8 @@ const EventDetails = ({
           />
         )}
       </div>
-    </motion.div>
+    </motion.div>,
+    document.body
   );
 };
 

@@ -21,6 +21,7 @@ const RightArrow = ({
         stroke={fill}
         strokeWidth={3}
         strokeLinecap="round"
+        className={"fill-" + fill}
       />
       <line
         x1={11}
@@ -30,6 +31,7 @@ const RightArrow = ({
         stroke={fill}
         strokeWidth={3}
         strokeLinecap="round"
+        className={"fill-" + fill}
       />
       <line
         x1={11}
@@ -39,6 +41,7 @@ const RightArrow = ({
         stroke={fill}
         strokeWidth={3}
         strokeLinecap="round"
+        className={"fill-" + fill}
       />
     </svg>
   );

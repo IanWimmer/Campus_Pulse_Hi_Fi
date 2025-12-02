@@ -9,10 +9,12 @@ const SecondaryButton = ({
   },
   text,
   containerClassName = "",
+  buttonClassName = "",
 }: {
   onClick?: () => void;
   text: string | React.ReactElement;
   containerClassName?: string;
+  buttonClassName?: string;
 }) => {
   const delay = 300;
   const [clicked, setClicked] = useState(false);
@@ -32,6 +34,7 @@ const SecondaryButton = ({
       <button
         onClick={() => handleClick()}
         className={clsx(
+          buttonClassName,
           "w-full h-12 bg-white text-secondary rounded-md border-2 border-black text-xl font-semibold transition",
           clicked
             ? "shadow-[0_0_0_0_rgba(0,0,0,1.00)] translate-x-1.5 translate-y-1.5"

@@ -74,7 +74,6 @@ const DropDownMenu = ({
 
   useEffect(() => {
     const handler = (event: MouseEvent) => {
-      console.log(event);
       if (
         dropdownRef.current &&
         event.target instanceof Node &&
@@ -109,7 +108,7 @@ const DropDownMenu = ({
         onClick={handleOpenChange}
         ref={dropdownButtonRef}
       >
-        <div className="text-nowrap flex-1 max-w-[calc(100%-40px)] overflow-x-hidden">
+        <div className={clsx("text-nowrap flex-1 max-w-[calc(100%-40px)] overflow-x-hidden", selected.length == 0 || (selected.length == 1 && selected.includes("")) ? "text-placeholder" : "text-black")}>
           {(selected.length == 1 && selected.includes("")) ||
           selected.length == 0
             ? withPlaceholder
@@ -136,7 +135,7 @@ const DropDownMenu = ({
 
       <motion.div
         className={clsx(
-          "absolute max-h-[40vh] px-2 z-40 mt-2 bg-white shadow-neobrutalist-xs border-2 border-black flex flex-col overflow-y-auto"
+          "absolute max-h-[40vh] px-2 z-50 mt-2 bg-white shadow-neobrutalist-xs border-2 border-black flex flex-col overflow-y-auto"
         )}
         style={{ width: dropdownButtonRef?.current?.offsetWidth }}
         initial={{ opacity: 0, height: 0 }}

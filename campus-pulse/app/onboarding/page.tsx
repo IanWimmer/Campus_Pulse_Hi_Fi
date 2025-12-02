@@ -3,6 +3,7 @@
 import Card from "@/components/card/Card";
 import OnboardingProgressionBar from "@/components/OnboardingProgressionBar";
 import { useOnboardingContext } from "@/contexts/OnboardingContext";
+import AddFriends from "@/page_components/add_friends/AddFriends";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
@@ -85,7 +86,7 @@ const CardArrangement = ({
 const GoBackButton = ({ onboardingContext }: { onboardingContext: any; }) => {
   return <button
     className="h-10 flex items-center justify-center px-6 gap-2 font-secondary text-zinc-500"
-    onClick={() => onboardingContext.actions.stage(1)}
+    onClick={() => onboardingContext.actions.stage(onboardingContext.state.stage - 1)}
   >
     <ChevronLeft className="[&_path]:fill-zinc-400" /> Go back to
     previous
@@ -242,6 +243,12 @@ const OnboardingPage = () => {
   if (onboardingContext.state.stage == 4) {
     output = (
       <>
+        <div className="text-center text-2xl font-semibold h-15">
+          Add friends now!
+        </div>
+        <div className="w-full h-[calc(100%-120px)]">
+          <AddFriends />
+        </div>
         <div className="fixed bottom-0 left-0 w-full h-15 flex items-center justify-center bg-white">
           <GoBackButton onboardingContext={onboardingContext} />
           <SkipButton onboardingContext={onboardingContext}/>

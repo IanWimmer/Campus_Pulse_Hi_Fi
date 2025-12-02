@@ -2,14 +2,15 @@ import clsx from "clsx";
 import React, { useState } from "react";
 import { ChangeEvent, useRef } from "react";
 import CalendarMonthOutlined from "@/public/icons/CalendarMonthOutlined";
+import CalendarDateAndTimeOutlined from "@/public/icons/CalendarDateAndTimeOutlined";
 
 
 
-const DateInput = ({
+const DateTimeInput = ({
   onChange = (event) => {},
   withIcon = false,
   withPlaceholder = true,
-  placeholder = "Please select a date ...",
+  placeholder = "Please select a date and time ... ",
   id = 0,
   withoutShadow = false,
 }: {
@@ -22,7 +23,8 @@ const DateInput = ({
 }) => {
 
   const inputRef = useRef<HTMLInputElement>(null)
-  const [date, setDate] = useState<string>("")
+  const [datetime, setDatetime] = useState<Date | null>(null)
+  const [datetimeISO, setDatetimeISO] = useState<string | null>(null)
   
   const openNativePicker = () => {
     if (inputRef.current?.showPicker) {
@@ -35,7 +37,9 @@ const DateInput = ({
 
   // Update date when native picker value changes
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDate(e.target.value);
+    const val = new Date(e.target.value)
+    setDatetime(val);
+    setDatetimeISO(val.toISOString())
     onChange(e)
   };
 
@@ -52,8 +56,8 @@ const DateInput = ({
       {/* Hidden native date input */}
       <input
         ref={inputRef}
-        type="date"
-        value={date}
+        type="datetime-local"
+        value={datetimeISO ? datetimeISO.slice(0, 16) : ""}
         onChange={handleDateChange}
         className="sr-only"
         tabIndex={-1}
@@ -62,11 +66,11 @@ const DateInput = ({
       />
 
       {/* Custom visible input */}
-      <div className="h-full aspect-square flex items-center justify-center"><CalendarMonthOutlined /></div>
+      <div className="h-full aspect-square flex items-center justify-center"><CalendarDateAndTimeOutlined /></div>
       <div
-        className={clsx("font-secondary border-2 border-black flex-1 h-full flex items-center pl-5 cursor-pointer select-none", !withoutShadow && "shadow-neobrutalist", date ? "text-black" : "text-placeholder")}
+        className={clsx("font-secondary border-2 border-black flex-1 h-full flex items-center pl-5 cursor-pointer select-none", !withoutShadow && "shadow-neobrutalist", !datetime ? "text-placeholder" : "text-black")}
       >
-        {date || (withPlaceholder ? placeholder : "")}
+        {datetime ? datetime.toLocaleDateString("de-CH", {day: "2-digit", month: "2-digit", year: "numeric"}) + ", " + datetime.toLocaleTimeString("de-CH", {hour: "2-digit", minute: "2-digit"}) : (withPlaceholder ? placeholder : "")}
       </div>
     </div>
   );
@@ -74,4 +78,4 @@ const DateInput = ({
 
 
 
-export default DateInput
+export default DateTimeInput
