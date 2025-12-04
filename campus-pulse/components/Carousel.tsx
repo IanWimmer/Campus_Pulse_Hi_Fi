@@ -13,6 +13,7 @@ interface CarouselProps {
 
 export const Carousel = ({ items, height = "h-[500px]" }: CarouselProps) => {
     const [index, setIndex] = useState(0);
+    const [viewportWidth, setViewportWidth] = useState(0);
 
     // Debug State
     const containerRef = useRef<HTMLDivElement>(null);
@@ -27,31 +28,46 @@ export const Carousel = ({ items, height = "h-[500px]" }: CarouselProps) => {
 
     // Measure widths for debugging (Console Only)
     useEffect(() => {
-        const updateMeasurements = () => {
-            if (containerRef.current && cardRef.current) {
-                const containerW = containerRef.current.offsetWidth;
-                const cardW = cardRef.current.offsetWidth;
+        const handleResize = () => {
+            // 1. Get the robust viewport width (handles mobile keyboards/meta tags glitches)
+            const width = window.visualViewport?.width || window.innerWidth;
+            setViewportWidth(width);
 
-                // We use window.innerWidth here to verify if it matches the viewport logic
-                const viewportW = window.innerWidth;
-                const calculatedPercent = (cardW / viewportW) * 100;
+            // 2. Set the CSS variable as requested
+            const vw = width * 0.01;
+            document.documentElement.style.setProperty("--vw", `${vw}px`);
+        };
 
-                console.group("Carousel Debug Metrics");
-                console.log(`Viewport Width: ${viewportW}px`);
-                console.log(`Container Width: ${containerW}px`);
-                console.log(`Card Width: ${cardW}px`);
-                console.log(`Actual Card vs Viewport: ${calculatedPercent.toFixed(2)}% (Target: ${CARD_WIDTH_UNIT}%)`);
-                console.groupEnd();
+        handleResize(); // Initial measurement
+
+        window.addEventListener("resize", handleResize);
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener("resize", handleResize);
+        }
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+            if (window.visualViewport) {
+                window.visualViewport.removeEventListener("resize", handleResize);
             }
         };
-
-        const timer = setTimeout(updateMeasurements, 200);
-        window.addEventListener('resize', updateMeasurements);
-        return () => {
-            window.removeEventListener('resize', updateMeasurements);
-            clearTimeout(timer);
-        };
     }, []);
+
+    // Debug Logging
+    useEffect(() => {
+        if (!containerRef.current || !cardRef.current || viewportWidth === 0) return;
+
+        const containerW = containerRef.current.offsetWidth;
+        const cardW = cardRef.current.offsetWidth;
+        const calculatedPercent = (cardW / viewportWidth) * 100;
+
+        console.group("Carousel Debug Metrics");
+        console.log(`Viewport Width (JS): ${viewportWidth}px`);
+        console.log(`Container Width: ${containerW}px`);
+        console.log(`Card Width: ${cardW}px`);
+        console.log(`Actual Card vs Viewport: ${calculatedPercent.toFixed(2)}% (Target: ${CARD_WIDTH_UNIT}%)`);
+        console.groupEnd();
+    }, [viewportWidth, index]);
 
     const handlePrev = () => {
         if (index > 0) setIndex((prev) => prev - 1);
@@ -82,21 +98,32 @@ export const Carousel = ({ items, height = "h-[500px]" }: CarouselProps) => {
     // 4. Shift per item = (Card Width) + Gap
     //                   = (85 * var(--vw)) + 16px
 
-    const xOffset = `calc((50% - (var(--vw, 1vw) * ${CARD_WIDTH_UNIT / 2})) - ${index} * ((var(--vw, 1vw) * ${CARD_WIDTH_UNIT}) + ${GAP_PIXELS}px))`;
+    const cardWidthPx = (viewportWidth * CARD_WIDTH_UNIT) / 100;
+    const xOffsetPx = (viewportWidth / 2) - (cardWidthPx / 2) - (index * (cardWidthPx + GAP_PIXELS));
+
+    const canScrollPrev = index > 0;
+    const canScrollNext = index < items.length - 1;
 
     return (
         <div
             ref={containerRef}
-            className={clsx("relative w-full", height)}
+            className={clsx("relative w-screen overflow-hidden", height)}
+            style={{ marginLeft: "calc(50% - (var(--vw, 1vw) * 50))" }}
         >
             {/* TRACK */}
             <motion.div
                 className="flex gap-4 items-center h-full py-8 w-full"
                 drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.2}
+                dragConstraints={{
+                    left: canScrollNext ? -Infinity : 0,
+                    right: canScrollPrev ? Infinity : 0,
+                }}
+                // Stop momentum immediately on release so 'animate' takes over instantly
+                dragMomentum={false}
+                // Small elasticity for the edge rubber-band effect
+                dragElastic={0.1}
                 onDragEnd={onDragEnd}
-                animate={{ x: xOffset }}
+                animate={{ x: xOffsetPx }}
                 transition={{ type: "tween", ease: "easeInOut", duration: 0.5 }}
                 style={{ touchAction: "pan-y" }}
             >
@@ -109,7 +136,7 @@ export const Carousel = ({ items, height = "h-[500px]" }: CarouselProps) => {
                         )}
                         // STRICT WIDTH ENFORCEMENT
                         style={{
-                            width: `calc(var(--vw, 1vw) * ${CARD_WIDTH_UNIT})`
+                            width: cardWidthPx > 0 ? cardWidthPx : `${CARD_WIDTH_UNIT}%`
                         }}
                         animate={{
                             scale: i === index ? 1 : 0.95,
