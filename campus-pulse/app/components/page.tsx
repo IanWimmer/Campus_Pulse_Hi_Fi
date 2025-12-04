@@ -71,7 +71,7 @@ const ComponentsPage = () => {
       <OnboardingProgressionBar current_stage={0} n_stages={6} time_per_page={[5, -1, -1, -1, -1, 5]} />
     </div>
     <br />
-    <div className="w-full overflow-hidden">
+    <div className="w-full">
       <Carousel items={cards_data} height="h-[550px]" />
     </div>
     <br />

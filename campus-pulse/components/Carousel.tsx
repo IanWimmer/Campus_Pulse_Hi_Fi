@@ -54,7 +54,7 @@ export const Carousel = ({ items, height = "h-[500px]" }: CarouselProps) => {
     }, []);
 
     // Debug Logging
-    useEffect(() => {
+    /*useEffect(() => {
         if (!containerRef.current || !cardRef.current || viewportWidth === 0) return;
 
         const containerW = containerRef.current.offsetWidth;
@@ -67,7 +67,7 @@ export const Carousel = ({ items, height = "h-[500px]" }: CarouselProps) => {
         console.log(`Card Width: ${cardW}px`);
         console.log(`Actual Card vs Viewport: ${calculatedPercent.toFixed(2)}% (Target: ${CARD_WIDTH_UNIT}%)`);
         console.groupEnd();
-    }, [viewportWidth, index]);
+    }, [viewportWidth, index]);*/
 
     const handlePrev = () => {
         if (index > 0) setIndex((prev) => prev - 1);
@@ -151,7 +151,7 @@ export const Carousel = ({ items, height = "h-[500px]" }: CarouselProps) => {
             {/* FLOATING NAVIGATION BUTTONS (Neobrutalist) */}
 
             {/* PREV BUTTON */}
-            <div className="absolute left-0 z-50 top-1/2 -translate-y-1/2">
+            <div className="absolute left-2 z-50 top-1/2 -translate-y-1/2">
                 <button
                     onClick={handlePrev}
                     disabled={index === 0}
@@ -168,7 +168,7 @@ export const Carousel = ({ items, height = "h-[500px]" }: CarouselProps) => {
             </div>
 
             {/* NEXT BUTTON */}
-            <div className="absolute right-0 z-50 top-1/2 -translate-y-1/2">
+            <div className="absolute right-2 z-50 top-1/2 -translate-y-1/2">
                 <button
                     onClick={handleNext}
                     disabled={index === items.length - 1}
