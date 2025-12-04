@@ -17,11 +17,12 @@ const Card = ({
   tall?: boolean
   height?: string | number | null;
 }) => {
-  if (height === null && tall) height = "h-112";
-  else if (height === null && !tall) height = "h-64";
+  let heightClass = height;
+  if (height === null && tall) heightClass = "h-112";
+  else if (height === null && !tall) heightClass = "h-64";
 
   
-  return (<div className={clsx("shadow-neobrutalist border-2 border-black flex flex-col", height)}>
+  return (<div className={clsx("shadow-neobrutalist border-2 border-black flex flex-col", heightClass)}>
     <div className="h-3 bg-white border-b-2 border-b-black shrink-0"/>
     <div className={"overflow-hidden border-b-2 border-b-black flex-1"}>
       <img src={imageSrc} className="h-full w-full object-cover"/>
