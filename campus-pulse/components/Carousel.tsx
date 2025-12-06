@@ -1,3 +1,5 @@
+"use client";
+
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useState, useEffect, useRef } from "react";
@@ -104,6 +106,24 @@ export const Carousel = ({ items, height = "h-[500px]" }: CarouselProps) => {
     const canScrollPrev = index > 0;
     const canScrollNext = index < items.length - 1;
 
+    const renderItem = (item: any) => {
+        // We try to intelligently map common field names if the exact props aren't present
+        const cardProps = {
+            imageSrc: item.image_path, // Map 'image_path' from JSON to 'imageSrc'
+            title: item.title,
+            description: item.description,
+            datetime: item.datetime,
+            location: item.location,
+            tall: true,
+            height: "h-full" // Force full height as required by Carousel layout
+        };
+        return <Card {...cardProps} />;
+    };
+
+    if (!items || items.length === 0) {
+        return <div className={clsx("relative w-screen flex items-center justify-center", height)}>No events found</div>;
+    }
+
     return (
         <div
             ref={containerRef}
@@ -138,12 +158,13 @@ export const Carousel = ({ items, height = "h-[500px]" }: CarouselProps) => {
                         style={{
                             width: cardWidthPx > 0 ? cardWidthPx : `${CARD_WIDTH_UNIT}%`
                         }}
+                        onClick={() => console.log("Clicked item ID:", item.id)} 
                         animate={{
                             scale: i === index ? 1 : 0.95,
                             opacity: i === index ? 1 : 0.6
                         }}
                     >
-                        <Card {...item} height="h-full" />
+                        {renderItem(item)}
                     </motion.div>
                 ))}
             </motion.div>

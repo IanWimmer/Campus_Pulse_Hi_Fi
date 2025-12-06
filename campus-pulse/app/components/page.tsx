@@ -24,9 +24,6 @@ import Person from "@mui/icons-material/Person";
 import { useState } from "react";
 import Search from "@mui/icons-material/Search";
 
-import { Carousel } from "@/components/Carousel";
-import { cards_data } from "./card_contents";
-
 import EventDetails from "@/page_components/event_details/EventDetails";
 import { NavigationTabType } from "@/types/types";
 import { motion } from "motion/react";

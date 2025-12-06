@@ -8,7 +8,7 @@ const dataPath = path.join(process.cwd(), 'public', 'data', 'events.json');
 
 async function readData() {
   try {
-    console.log(dataPath)
+    //console.log(dataPath)
     const data = await fs.readFile(dataPath, 'utf8');
     return JSON.parse(data);
   } catch (error) {

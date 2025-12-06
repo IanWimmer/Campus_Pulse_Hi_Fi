@@ -76,7 +76,7 @@ const NavigationBar = ({
   const [selected, setSelected] = useState<number>(0);
 
   return (
-    <div className="">
+    <>
       <div className="absolute right-1.5 bottom-20">
         <AddEventButton onClick={() => onOpenCreateEvent()}/>
       </div>
@@ -92,7 +92,7 @@ const NavigationBar = ({
           );
         })}
       </div>
-    </div>
+    </>
   );
 };
 
