@@ -1,31 +1,36 @@
 "use client";
 
-import type { Metadata } from "next";
 import NavigationBar from "@/components/NavigationBar";
-import MapSearch from "@/public/icons/MapSearch";
-import HomeFilled from "@/public/icons/HomeFilled";
-import EventAvailable from "@/public/icons/EventAvailable";
-import Person from "@/public/icons/Person";
 import { NavigationTabType } from "@/types/types";
 import CreateEvent from "@/page_components/create_event/CreateEvent";
 import { useState } from "react";
 
+import Map from "@mui/icons-material/Map";
+import Search from "@mui/icons-material/Search";
+import HomeFilled from "@mui/icons-material/HomeFilled";
+import EventAvailable from "@mui/icons-material/EventAvailable";
+import Person from "@mui/icons-material/Person";
+
 const navigationTabs = [
   {
     id: 0,
-    icon: <MapSearch className="h-6!" />,
+    icon: <Map sx={{ fontSize: 28 }}/>,
   },
   {
     id: 1,
-    icon: <HomeFilled className="h-6!" />,
+    icon: <Search sx={{ fontSize: 28 }}/>
   },
   {
     id: 2,
-    icon: <EventAvailable className="h-6!" />,
+    icon: <HomeFilled sx={{ fontSize: 28 }}/>,
   },
   {
     id: 3,
-    icon: <Person />,
+    icon: <EventAvailable sx={{ fontSize: 28 }}/>,
+  },
+  {
+    id: 4,
+    icon: <Person sx={{ fontSize: 28 }}/>,
   },
 ] as NavigationTabType[];
 

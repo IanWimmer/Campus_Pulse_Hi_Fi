@@ -1,8 +1,8 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import clsx from "clsx";
-import { motion, useMotionValue, animate } from "framer-motion";
+import { motion } from "framer-motion";
 
 import Card from './card/Card';
 

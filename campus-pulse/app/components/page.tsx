@@ -16,13 +16,13 @@ import NavigationBar from "@/components/NavigationBar";
 import OnboardingProgressionBar from "@/components/OnboardingProgressionBar";
 import ProgressBar from "@/components/progress_bar/ProgressBar";
 import Switch from "@/components/switch/Switch";
-import EventAvailable from "@/public/icons/EventAvailable";
-import HomeFilled from "@/public/icons/HomeFilled";
-import MapSearch from "@/public/icons/MapSearch";
-import Person from "@/public/icons/Person";
+import EventAvailable from "@mui/icons-material/EventAvailable";
+import HomeFilled from "@mui/icons-material/HomeFilled";
+import Map from "@mui/icons-material/Map";
+import Person from "@mui/icons-material/Person";
 
 import { useState } from "react";
-import Search from "@/public/icons/Search";
+import Search from "@mui/icons-material/Search";
 
 import { Carousel } from "@/components/Carousel";
 import { cards_data } from "./card_contents";
@@ -73,7 +73,7 @@ const ComponentsPage = () => {
   const navigationTabs = [
     {
       id: 0,
-      icon: <MapSearch className="h-6!" />,
+      icon: <Map className="h-6!" />,
     },
     {
       id: 1,

@@ -34,7 +34,7 @@ const NavigationBarButton = ({
             height="50"
             viewBox="0 0 77 50"
             fill="none"
-            className="absolute"
+            className="absolute scale-90"
           >
             <rect
               width="74.5776"
