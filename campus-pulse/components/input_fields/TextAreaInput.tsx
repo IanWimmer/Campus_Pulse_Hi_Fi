@@ -26,7 +26,7 @@ const TextAreaInput = ({
       id={id} 
       onChange={(event) => onChange(event)} 
       placeholder={withPlaceholder ? placeholder : ""} 
-      className="font-secondary flex-1 resize-none border-none outline-none bg-transparent h-full w-full focus:outline-none focus:ring-0"
+      className="font-secondary placeholder:text-placeholder flex-1 resize-none border-none outline-none bg-transparent h-full w-full focus:outline-none focus:ring-0"
     />
   </div>)
 }

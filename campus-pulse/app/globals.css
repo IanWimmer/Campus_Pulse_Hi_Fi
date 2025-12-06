@@ -13,8 +13,8 @@
 }
 
 :root {
-  --background:             #ffffff;
-  --foreground:             #171717;
+  --background: #ffffff;
+  --foreground: #171717;
 }
 
 @theme inline {
@@ -29,16 +29,18 @@
 
 @theme {
   /* colors */
-  --color-primary:                #1FAA1F;
-  --color-secondary:              #105510;
-  --color-negative:               #AA310B;
+  --color-primary: #1faa1f;
+  --color-secondary: #105510;
+  --color-grayed: #5D5D5D;
+  --color-placeholder: #8B8B8B;
+  --color-negative: #aa310b;
 
-  --color-primary-background:     #D5FFD5;
+  --color-primary-background: #d5ffd5;
 
   /* shadows */
-  --shadow-neobrutalist:          6px 6px 0 0 rgba(0, 0, 0, 1.00);
-  --shadow-neobrutalist-sm:       4px 4px 0 0 rgba(0, 0, 0, 1.00);
-  --shadow-neobrutalist-xs:       2px 2px 0 0 rgba(0, 0, 0, 1.00);
+  --shadow-neobrutalist: 6px 6px 0 0 rgba(0, 0, 0, 1);
+  --shadow-neobrutalist-sm: 4px 4px 0 0 rgba(0, 0, 0, 1);
+  --shadow-neobrutalist-xs: 2px 2px 0 0 rgba(0, 0, 0, 1);
 }
 
 /*
@@ -59,4 +61,27 @@ body {
 input[type="date"]::-webkit-calendar-picker-indicator {
   display: none;
   -webkit-appearance: none;
+}
+
+.text-white-border {
+  text-shadow: 
+    -2px -2px 0 #fff,
+    2px -2px 0 #fff,
+    -2px 2px 0 #fff,
+    2px 2px 0 #fff,
+    -2px 0px 0 #fff,
+    2px 0px 0 #fff,
+    0px -2px 0 #fff,
+    0px 2px 0 #fff;
+}
+
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

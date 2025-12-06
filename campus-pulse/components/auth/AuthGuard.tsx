@@ -15,6 +15,9 @@ export default function AuthGuard({ children }: {children: React.ReactNode}) {
   useEffect(() => {
     if (pathname == '/components') {
       console.log("components")
+    } 
+    else if (pathname == '/test') {
+      console.log("test")
     }
     else if (!loggedIn && pathname !== '/login') {
       router.replace('/login')

@@ -1,20 +1,10 @@
 "use client";
 
+import { NavigationTabType } from "@/types/types";
 import clsx from "clsx";
 
-
 import { useState } from "react";
-import MapSearch from "@/public/icons/MapSearch";
-import HomeFilled from "@/public/icons/HomeFilled";
-import EventAvailable from "@/public/icons/EventAvailable";
-import Person from "@/public/icons/Person";
-
-export type NavigationTabType = {
-  id: number;
-  icon: React.ReactElement;
-};
-
-
+import AddEventButton from "./buttons/AddEventButton";
 
 const NavigationBarButton = ({
   tabInfo,
@@ -33,7 +23,9 @@ const NavigationBarButton = ({
           "w-[90%] h-11 rounded-full flex justify-center items-center"
         )}
       >
-        <div className={clsx(selected && "[&_path]:fill-primary-background! z-50")}>
+        <div
+          className={clsx(selected && "[&_path]:fill-primary-background! z-31")}
+        >
           {tabInfo.icon}
         </div>
         {selected && (
@@ -74,25 +66,32 @@ const NavigationBarButton = ({
 
 const NavigationBar = ({
   onChange = (selected) => {},
-  options = []
+  onOpenCreateEvent = () => {},
+  options = [],
 }: {
-  onChange?: (selected: number) => void,
-  options: NavigationTabType[]
+  onChange?: (selected: number) => any;
+  onOpenCreateEvent?: () => any;
+  options: NavigationTabType[];
 }) => {
   const [selected, setSelected] = useState<number>(0);
 
   return (
-    <div className="w-[calc(100vw-24px)] h-[50px] z-40 ml-2 bg-primary-background border-2 border-black shadow-neobrutalist rounded-full flex justify-between">
-      {options.map((tab) => {
-        return (
-          <NavigationBarButton
-            key={tab.id}
-            tabInfo={tab}
-            selected={selected == tab.id}
-            onClick={() => setSelected(tab.id)}
-          />
-        );
-      })}
+    <div className="">
+      <div className="absolute right-1.5 bottom-20">
+        <AddEventButton onClick={() => onOpenCreateEvent()}/>
+      </div>
+      <div className="w-[calc(100vw-24px)] h-[50px] z-30 ml-2 bg-primary-background border-2 border-black shadow-neobrutalist rounded-full flex justify-between">
+        {options.map((tab) => {
+          return (
+            <NavigationBarButton
+              key={tab.id}
+              tabInfo={tab}
+              selected={selected == tab.id}
+              onClick={() => setSelected(tab.id)}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };
