@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 
 import { Carousel } from "@/components/Carousel";
-import { cards_data } from "./card_contents";
 
 export default function Home() {
   const [cardsData, setCardsData] = useState<any[]>([]);

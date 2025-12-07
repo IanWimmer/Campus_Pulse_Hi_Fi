@@ -7,40 +7,47 @@ import clsx from "clsx";
 import { motion } from "framer-motion";
 
 import Card from './card/Card';
+import { useClickAnimationImmediate } from '@/utils/useClickAnimationImmediate';
 
 interface CarouselProps {
-    items: any[]; // Array of data objects for the cards
-    height?: string; // Adjustable height for the whole carousel
+    items: any[];
+    height?: string;
 }
+
+function getNavButtonClasses(disabled: boolean, clicked: boolean) {
+    if (disabled)
+      return "bg-zinc-300 border-zinc-400 text-zinc-500 cursor-not-allowed shadow-none translate-x-0 translate-y-0";
+  
+    if (clicked)
+      return "bg-white border-black text-black shadow-[0_0_0_0_rgba(0,0,0,1.00)] translate-x-1.5 translate-y-1.5";
+  
+    return (
+      "bg-white border-black text-black shadow-neobrutalist " +
+      "hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-neobrutalist-hover" +
+      "active:translate-x-0 active:translate-y-0 active:shadow-neobrutalist"
+    );
+  }
 
 export const Carousel = ({ items, height = "h-[500px]" }: CarouselProps) => {
     const [index, setIndex] = useState(0);
     const [viewportWidth, setViewportWidth] = useState(0);
 
-    // Debug State
     const containerRef = useRef<HTMLDivElement>(null);
     const cardRef = useRef<HTMLDivElement>(null);
 
-    // Configuration
     const DRAG_BUFFER = 50;
     const GAP_PIXELS = 16;
-
-    // We use 85, representing 85 "units" of our custom viewport width
     const CARD_WIDTH_UNIT = 85;
 
-    // Measure widths for debugging (Console Only)
     useEffect(() => {
         const handleResize = () => {
-            // 1. Get the robust viewport width (handles mobile keyboards/meta tags glitches)
             const width = window.visualViewport?.width || window.innerWidth;
             setViewportWidth(width);
-
-            // 2. Set the CSS variable as requested
             const vw = width * 0.01;
             document.documentElement.style.setProperty("--vw", `${vw}px`);
         };
 
-        handleResize(); // Initial measurement
+        handleResize();
 
         window.addEventListener("resize", handleResize);
         if (window.visualViewport) {
@@ -79,6 +86,13 @@ export const Carousel = ({ items, height = "h-[500px]" }: CarouselProps) => {
         if (index < items.length - 1) setIndex((prev) => prev + 1);
     };
 
+    const onCardClick = (item: any) => {
+        console.log("Clicked " + item.id);
+    }
+
+    const {clicked: clickedPrev, handleClick: handleClickPrev} = useClickAnimationImmediate(handlePrev);
+    const {clicked: clickedNext, handleClick: handleClickNext} = useClickAnimationImmediate(handleNext);
+
     const onDragEnd = (event: any, info: any) => {
         const offset = info.offset.x;
         const velocity = info.velocity.x;
@@ -90,16 +104,6 @@ export const Carousel = ({ items, height = "h-[500px]" }: CarouselProps) => {
         }
     };
 
-    // --- UPDATED LAYOUT FORMULA ---
-    // Instead of %, we use calc(var(--vw) * UNIT)
-    //
-    // Logic: 
-    // 1. Center of screen is 50 * var(--vw)
-    // 2. Half of card is (85 * var(--vw)) / 2 = 42.5 * var(--vw)
-    // 3. Start pos (offset) = 50 - 42.5 = 7.5 * var(--vw)
-    // 4. Shift per item = (Card Width) + Gap
-    //                   = (85 * var(--vw)) + 16px
-
     const cardWidthPx = (viewportWidth * CARD_WIDTH_UNIT) / 100;
     const xOffsetPx = (viewportWidth / 2) - (cardWidthPx / 2) - (index * (cardWidthPx + GAP_PIXELS));
 
@@ -107,15 +111,14 @@ export const Carousel = ({ items, height = "h-[500px]" }: CarouselProps) => {
     const canScrollNext = index < items.length - 1;
 
     const renderItem = (item: any) => {
-        // We try to intelligently map common field names if the exact props aren't present
         const cardProps = {
-            imageSrc: item.image_path, // Map 'image_path' from JSON to 'imageSrc'
+            imageSrc: item.image_path,
             title: item.title,
             description: item.description,
             datetime: item.datetime,
             location: item.location,
             tall: true,
-            height: "h-full" // Force full height as required by Carousel layout
+            height: "h-full"
         };
         return <Card {...cardProps} />;
     };
@@ -138,9 +141,7 @@ export const Carousel = ({ items, height = "h-[500px]" }: CarouselProps) => {
                     left: canScrollNext ? -Infinity : 0,
                     right: canScrollPrev ? Infinity : 0,
                 }}
-                // Stop momentum immediately on release so 'animate' takes over instantly
                 dragMomentum={false}
-                // Small elasticity for the edge rubber-band effect
                 dragElastic={0.1}
                 onDragEnd={onDragEnd}
                 animate={{ x: xOffsetPx }}
@@ -158,7 +159,7 @@ export const Carousel = ({ items, height = "h-[500px]" }: CarouselProps) => {
                         style={{
                             width: cardWidthPx > 0 ? cardWidthPx : `${CARD_WIDTH_UNIT}%`
                         }}
-                        onClick={() => console.log("Clicked item ID:", item.id)} 
+                        onClick={() => onCardClick(item)} 
                         animate={{
                             scale: i === index ? 1 : 0.95,
                             opacity: i === index ? 1 : 0.6
@@ -174,14 +175,11 @@ export const Carousel = ({ items, height = "h-[500px]" }: CarouselProps) => {
             {/* PREV BUTTON */}
             <div className="absolute left-2 z-50 top-1/2 -translate-y-1/2">
                 <button
-                    onClick={handlePrev}
+                    onClick={handleClickPrev}
                     disabled={index === 0}
                     className={clsx(
                         "flex items-center justify-center w-12 h-12 rounded-full transition-all duration-200 border-2",
-                        index === 0
-                            ? "bg-zinc-300 border-zinc-400 text-zinc-500 cursor-not-allowed"
-                            : "bg-white border-black text-black shadow-neobrutalist hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-neobrutalist-hover active:translate-x-0 active:translate-y-0 active:shadow-neobrutalist"
-                    )}
+                        getNavButtonClasses(index === 0, clickedPrev))}
                     aria-label="Previous card"
                 >
                     <ArrowBackIcon className="w-6 h-6" />
@@ -191,14 +189,11 @@ export const Carousel = ({ items, height = "h-[500px]" }: CarouselProps) => {
             {/* NEXT BUTTON */}
             <div className="absolute right-2 z-50 top-1/2 -translate-y-1/2">
                 <button
-                    onClick={handleNext}
+                    onClick={handleClickNext}
                     disabled={index === items.length - 1}
                     className={clsx(
                         "flex items-center justify-center w-12 h-12 rounded-full transition-all duration-200 border-2",
-                        index === items.length - 1
-                            ? "bg-zinc-300 border-zinc-400 text-zinc-500 cursor-not-allowed"
-                            : "bg-white border-black text-black shadow-neobrutalist hover:translate-x-0.5 hover:-translate-y-0.5 hover:shadow-neobrutalist-hover active:translate-x-0 active:translate-y-0 active:shadow-neobrutalist"
-                    )}
+                        getNavButtonClasses(index === items.length - 1, clickedNext))}
                     aria-label="Next card"
                 >
                     <ArrowForwardIcon className="w-6 h-6" />

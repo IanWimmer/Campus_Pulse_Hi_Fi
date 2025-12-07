@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import NegativeButton from "../buttons/NegativeButton";
 
-import { formatEventDateTime } from "./formatDateTime";
+import { formatEventDateTime } from "@/utils/formatDateTime";
 
 const Card = ({
   imageSrc = "images/image_placeholder.jpg",
@@ -12,7 +12,7 @@ const Card = ({
   tall = false,
   height = null,
   enrolled = false,
-  onCancel = () => {},
+  onCancel = () => { },
 }: {
   imageSrc?: string;
   title?: string | null;
@@ -35,8 +35,9 @@ const Card = ({
   return (
     <div
       className={clsx(
-        "shadow-neobrutalist border-2 border-black flex flex-col bg-white",
-        height
+        "border-2 border-black flex flex-col bg-white transition-all duration-200",
+        "shadow-neobrutalist hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-neobrutalist-hover",
+        heightClass
       )}
     >
       <div className="h-3 bg-white border-b-2 border-b-black shrink-0" />

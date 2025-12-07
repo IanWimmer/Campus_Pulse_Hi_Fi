@@ -1,22 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
+import { useClickAnimation } from "@/utils/useClickAnimation";
 import clsx from "clsx";
 
 const AddEventButton = ({ onClick = () => {} }: { onClick?: () => void }) => {
-  const delay = 300;
-  const [clicked, setClicked] = useState(false);
+  const {clicked, handleClick} = useClickAnimation(onClick, {delay: 300});
 
-  const handleClick = () => {
-    setClicked(true);
-    setTimeout(() => {
-      setClicked(false);
-    }, delay / 2);
-    setTimeout(() => {
-      onClick();
-    }, delay);
-  };
   return (
     <div
       className={clsx(
@@ -26,7 +16,7 @@ const AddEventButton = ({ onClick = () => {} }: { onClick?: () => void }) => {
           : "shadow-neobrutalist"
       )}
     >
-      <button onClick={() => handleClick()} className="">
+      <button onClick={handleClick} className="">
         <AddIcon fontSize="large" className="fill-black!" />
       </button>
     </div>
