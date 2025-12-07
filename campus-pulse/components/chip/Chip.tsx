@@ -1,3 +1,4 @@
+import { useClickAnimation } from "@/utils/useClickAnimation";
 import clsx from "clsx";
 import React, { useState } from "react";
 
@@ -12,22 +13,9 @@ const Chip = ({
   initialState?: boolean;
   content?: string | React.ReactNode;
 }) => {
-  const delay = 300;
-  const [clicked, setClicked] = useState(false);
   const [active, setActive] = useState<boolean>(initialState);
 
-  const handleClick = () => {
-    if (clickable) {
-      setActive(!active);
-      setClicked(true);
-      setTimeout(() => {
-        setClicked(false);
-      }, delay / 2);
-      setTimeout(() => {
-        onClick();
-      }, delay);
-    }
-  };
+  const {clicked, handleClick} = useClickAnimation(onClick, {delay: 200});
 
   return (
     <button

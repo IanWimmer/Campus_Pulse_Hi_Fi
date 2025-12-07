@@ -1,7 +1,8 @@
 "use client";
 
 import clsx from "clsx";
-import React, { useState } from "react";
+import React from "react";
+import { useClickAnimation } from "@/utils/useClickAnimation";
 
 const NegativeButton = ({
   onClick = () => {
@@ -14,22 +15,12 @@ const NegativeButton = ({
   text: string | React.ReactElement;
   containerClassName?: string;
 }) => {
-  const delay = 300;
-  const [clicked, setClicked] = useState(false);
+  const {clicked, handleClick} = useClickAnimation(onClick, {delay: 300})
 
-  const handleClick = () => {
-    setClicked(true);
-    setTimeout(() => {
-      setClicked(false);
-    }, delay / 2);
-    setTimeout(() => {
-      onClick();
-    }, delay);
-  };
   return (
     <div className={clsx(containerClassName, "pr-1.5")}>
       <button
-        onClick={() => handleClick()}
+        onClick={handleClick}
         className={clsx(
           "w-full h-12 bg-negative text-white rounded-md border-2 border-black text-xl font-semibold transition",
           clicked
