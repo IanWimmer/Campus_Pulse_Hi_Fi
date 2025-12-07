@@ -239,8 +239,8 @@ const ComponentsPage = () => {
                 }, 300);
               }}
               title="Spontaneous Chess Tournament 🏆"
-              time="This Friday, 12:00"
-              location="CAB G 61"
+              datetime="2025-12-16T20:13:20.000Z"
+              location="CAB G 56"
               categories={[
                 "Boardgames",
                 "For all",
@@ -251,8 +251,8 @@ const ComponentsPage = () => {
               max_participants={8}
               description={
                 <p>
-                  We’re searching for contestants in a spontaneous chess
-                  tournament this Friday at CAB G61. We will organize the boards
+                  We're searching for contestants in a spontaneous chess
+                  tournament this Friday. We will organize the boards
                   and clocks and provide snacks and drinks, so all you have to
                   bring is a good mood.
                   <br />
