@@ -173,7 +173,7 @@ export const Carousel = ({ items, height = "h-[500px]" }: CarouselProps) => {
             {/* FLOATING NAVIGATION BUTTONS (Neobrutalist) */}
 
             {/* PREV BUTTON */}
-            <div className="absolute left-2 z-50 top-1/2 -translate-y-1/2">
+            <div className="absolute left-2 z-40 top-1/2 -translate-y-1/2">
                 <button
                     onClick={handleClickPrev}
                     disabled={index === 0}
@@ -187,7 +187,7 @@ export const Carousel = ({ items, height = "h-[500px]" }: CarouselProps) => {
             </div>
 
             {/* NEXT BUTTON */}
-            <div className="absolute right-2 z-50 top-1/2 -translate-y-1/2">
+            <div className="absolute right-2 z-40 top-1/2 -translate-y-1/2">
                 <button
                     onClick={handleClickNext}
                     disabled={index === items.length - 1}

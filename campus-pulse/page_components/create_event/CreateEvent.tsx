@@ -107,7 +107,7 @@ const CreateEvent = ({
   return createPortal(
     <motion.div
       className={clsx(
-        "fixed top-0 left-0 w-full h-[calc(var(--vh,1vh)*100)] z-40 pointer-events-auto flex flex-col bg-white overflow-y-scroll"
+        "fixed top-0 left-0 w-full h-[calc(var(--vh,1vh)*100)] z-50 pointer-events-auto flex flex-col bg-white overflow-y-scroll"
       )}
       initial={{ x: "100%" }}
       animate={{ x: show ? 0 : "100%" }}
