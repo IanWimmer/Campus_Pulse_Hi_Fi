@@ -1,9 +1,6 @@
-"use client";
-
 import { NavigationTabType } from "@/types/types";
 import clsx from "clsx";
 
-import { useState } from "react";
 import AddEventButton from "./buttons/AddEventButton";
 
 const NavigationBarButton = ({
@@ -65,15 +62,16 @@ const NavigationBarButton = ({
 };
 
 const NavigationBar = ({
+  selected,
   onChange = (selected) => {},
   onOpenCreateEvent = () => {},
   options = [],
 }: {
+  selected: number;
   onChange?: (selected: number) => any;
   onOpenCreateEvent?: () => any;
   options: NavigationTabType[];
 }) => {
-  const [selected, setSelected] = useState<number>(0);
 
   return (
     <>
@@ -86,8 +84,8 @@ const NavigationBar = ({
             <NavigationBarButton
               key={tab.id}
               tabInfo={tab}
-              selected={selected == tab.id}
-              onClick={() => setSelected(tab.id)}
+              selected={selected === tab.id} 
+              onClick={() => onChange(tab.id!)} // Pass ID back to parent
             />
           );
         })}
