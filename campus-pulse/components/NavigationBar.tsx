@@ -1,9 +1,6 @@
-"use client";
-
 import { NavigationTabType } from "@/types/types";
 import clsx from "clsx";
 
-import { useState } from "react";
 import AddEventButton from "./buttons/AddEventButton";
 
 const NavigationBarButton = ({
@@ -34,7 +31,7 @@ const NavigationBarButton = ({
             height="50"
             viewBox="0 0 77 50"
             fill="none"
-            className="absolute"
+            className="absolute scale-90"
           >
             <rect
               width="74.5776"
@@ -65,18 +62,19 @@ const NavigationBarButton = ({
 };
 
 const NavigationBar = ({
+  selected,
   onChange = (selected) => {},
   onOpenCreateEvent = () => {},
   options = [],
 }: {
+  selected: number;
   onChange?: (selected: number) => any;
   onOpenCreateEvent?: () => any;
   options: NavigationTabType[];
 }) => {
-  const [selected, setSelected] = useState<number>(0);
 
   return (
-    <div className="">
+    <>
       <div className="absolute right-1.5 bottom-20">
         <AddEventButton onClick={() => onOpenCreateEvent()}/>
       </div>
@@ -86,13 +84,13 @@ const NavigationBar = ({
             <NavigationBarButton
               key={tab.id}
               tabInfo={tab}
-              selected={selected == tab.id}
-              onClick={() => setSelected(tab.id)}
+              selected={selected === tab.id} 
+              onClick={() => onChange(tab.id!)} // Pass ID back to parent
             />
           );
         })}
       </div>
-    </div>
+    </>
   );
 };
 

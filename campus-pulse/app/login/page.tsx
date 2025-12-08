@@ -31,7 +31,7 @@ const LoginPage = () => {
 
   return (
     <main className="h-[calc(var(--vh,1vh)*100)] w-full bg-white">
-      <div className="h-[calc(100%-72px)] absolute flex items-center justify-center pr-4">
+      <div className="h-[calc(100%-72px)] flex items-center justify-center pr-4">
         <img src={"/icons/raw/campus_pulse_logo.svg"} alt="Logo" />
       </div>
       <div className="fixed bottom-0 left-0 w-full h-fit pb-6 px-2">

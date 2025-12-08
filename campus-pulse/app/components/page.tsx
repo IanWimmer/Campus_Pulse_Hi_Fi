@@ -16,13 +16,14 @@ import NavigationBar from "@/components/NavigationBar";
 import OnboardingProgressionBar from "@/components/OnboardingProgressionBar";
 import ProgressBar from "@/components/progress_bar/ProgressBar";
 import Switch from "@/components/switch/Switch";
-import EventAvailable from "@/components/icons/EventAvailable";
-import HomeFilled from "@/components/icons/HomeFilled";
-import MapSearch from "@/components/icons/MapSearch";
-import Person from "@/components/icons/Person";
+import EventAvailable from "@mui/icons-material/EventAvailable";
+import HomeFilled from "@mui/icons-material/HomeFilled";
+import Map from "@mui/icons-material/Map";
+import Person from "@mui/icons-material/Person";
 
 import { useState } from "react";
-import Search from "@/components/icons/Search";
+import Search from "@mui/icons-material/Search";
+
 import EventDetails from "@/page_components/event_details/EventDetails";
 import { NavigationTabType } from "@/types/types";
 import { motion } from "motion/react";
@@ -69,7 +70,7 @@ const ComponentsPage = () => {
   const navigationTabs = [
     {
       id: 0,
-      icon: <MapSearch className="h-6!" />,
+      icon: <Map className="h-6!" />,
     },
     {
       id: 1,
@@ -238,8 +239,8 @@ const ComponentsPage = () => {
                 }, 300);
               }}
               title="Spontaneous Chess Tournament 🏆"
-              time="This Friday, 12:00"
-              location="CAB G 61"
+              datetime="2025-12-16T20:13:20.000Z"
+              location="CAB G 56"
               categories={[
                 "Boardgames",
                 "For all",
@@ -250,8 +251,8 @@ const ComponentsPage = () => {
               max_participants={8}
               description={
                 <p>
-                  We’re searching for contestants in a spontaneous chess
-                  tournament this Friday at CAB G61. We will organize the boards
+                  We're searching for contestants in a spontaneous chess
+                  tournament this Friday. We will organize the boards
                   and clocks and provide snacks and drinks, so all you have to
                   bring is a good mood.
                   <br />

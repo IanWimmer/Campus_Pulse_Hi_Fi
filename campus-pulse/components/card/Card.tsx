@@ -1,6 +1,8 @@
 import clsx from "clsx";
 import NegativeButton from "../buttons/NegativeButton";
 
+import { formatEventDateTime } from "@/utils/formatDateTime";
+
 const Card = ({
   imageSrc = "images/image_placeholder.jpg",
   title = null,
@@ -10,7 +12,7 @@ const Card = ({
   tall = false,
   height = null,
   enrolled = false,
-  onCancel = () => {},
+  onCancel = () => { },
 }: {
   imageSrc?: string;
   title?: string | null;
@@ -22,14 +24,20 @@ const Card = ({
   enrolled?: boolean;
   onCancel?: () => void;
 }) => {
-  if (height === null && tall) height = "h-112";
-  else if (height === null && !tall) height = "h-64";
+  let heightClass = height;
+  if (height === null && tall) heightClass = "h-112";
+  else if (height === null && !tall) heightClass = "h-64";
+
+  const formattedDatetime = datetime
+    ? formatEventDateTime(datetime)
+    : null;
 
   return (
     <div
       className={clsx(
-        "shadow-neobrutalist border-2 border-black flex flex-col bg-white",
-        height
+        "border-2 border-black flex flex-col bg-white transition-all duration-200",
+        "shadow-neobrutalist hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-neobrutalist-hover",
+        heightClass
       )}
     >
       <div className="h-3 bg-white border-b-2 border-b-black shrink-0" />
@@ -40,10 +48,10 @@ const Card = ({
         {title && (
           <h3 className="font-secondary font-bold text-base">{title}</h3>
         )}
-        {(datetime || location) && (
+        {(formattedDatetime || location) && (
           <div className="text-grayed font-secondary text-sm">
             <div className="">
-              {datetime && <div>{datetime}</div>}
+              {formattedDatetime && <div>{formattedDatetime}</div>}
               {location && <div>{location}</div>}
             </div>
           </div>

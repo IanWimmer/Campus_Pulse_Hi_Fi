@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Spinner from "@/components/icons/Spinner";
 
+import { formatEventDateTime } from "@/utils/formatDateTime";
+
 type loadingType = {
   image: boolean;
 };
@@ -20,9 +22,8 @@ const EventDetails = ({
   visible = true,
   onClose = () => {},
   title = "",
-  time = "",
+  datetime = "",
   location = "",
-  geo_location = "",
   categories = [],
   participants = 0,
   max_participants = 0,
@@ -34,7 +35,7 @@ const EventDetails = ({
   visible?: boolean;
   onClose?: () => void;
   title?: string;
-  time?: string;
+  datetime?: string;
   location?: string;
   geo_location?: string;
   categories?: string[];
@@ -161,7 +162,7 @@ const EventDetails = ({
             <h1 className="font-secondary font-bold text-xl">{title}</h1>
             <div className="font-secondary flex justify-between text-grayed mt-[9px] h-[27px]">
               <p className="flex items-center gap-2">
-                {time}
+                {formatEventDateTime(datetime)}
                 <CheckCircle className="[&_path]:fill-primary!" />
               </p>
               <p>{location}</p>

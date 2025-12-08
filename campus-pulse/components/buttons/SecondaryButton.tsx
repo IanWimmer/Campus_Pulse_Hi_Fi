@@ -1,7 +1,8 @@
 "use client";
 
+import { useClickAnimation } from "@/utils/useClickAnimation";
 import clsx from "clsx";
-import React, { useState } from "react";
+import React from "react";
 
 const SecondaryButton = ({
   onClick = () => {
@@ -16,23 +17,12 @@ const SecondaryButton = ({
   containerClassName?: string;
   buttonClassName?: string;
 }) => {
-  const delay = 300;
-  const [clicked, setClicked] = useState(false);
-
-  const handleClick = () => {
-    setClicked(true);
-    setTimeout(() => {
-      setClicked(false);
-    }, delay / 2);
-    setTimeout(() => {
-      onClick();
-    }, delay);
-  };
+  const {clicked, handleClick} = useClickAnimation(onClick, {delay: 300});
 
   return (
     <div className={clsx(containerClassName, "pr-1.5")}>
       <button
-        onClick={() => handleClick()}
+        onClick={handleClick}
         className={clsx(
           buttonClassName,
           "w-full h-12 bg-white text-secondary rounded-md border-2 border-black text-xl font-semibold transition",
