@@ -28,7 +28,7 @@ const ProgressBar = ({
 
   useEffect(() => {
     if (containerRef && containerRef.current) {
-      console.log(containerRef.current.offsetWidth)
+      // console.log(containerRef.current.offsetWidth)
       setWidth(Math.max(containerRef.current.offsetWidth - 2, 0))
     } else {
       setWidth(0)

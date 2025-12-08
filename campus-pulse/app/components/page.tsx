@@ -16,13 +16,13 @@ import NavigationBar from "@/components/NavigationBar";
 import OnboardingProgressionBar from "@/components/OnboardingProgressionBar";
 import ProgressBar from "@/components/progress_bar/ProgressBar";
 import Switch from "@/components/switch/Switch";
-import EventAvailable from "@/public/icons/EventAvailable";
-import HomeFilled from "@/public/icons/HomeFilled";
-import MapSearch from "@/public/icons/MapSearch";
-import Person from "@/public/icons/Person";
+import EventAvailable from "@/components/icons/EventAvailable";
+import HomeFilled from "@/components/icons/HomeFilled";
+import MapSearch from "@/components/icons/MapSearch";
+import Person from "@/components/icons/Person";
 
 import { useState } from "react";
-import Search from "@/public/icons/Search";
+import Search from "@/components/icons/Search";
 import EventDetails from "@/page_components/event_details/EventDetails";
 import { NavigationTabType } from "@/types/types";
 import { motion } from "motion/react";

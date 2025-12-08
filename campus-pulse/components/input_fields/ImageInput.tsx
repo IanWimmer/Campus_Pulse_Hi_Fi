@@ -1,6 +1,6 @@
 "use client";
 
-import ImagePlaceholderPlus from "@/public/icons/ImagePlaceholderPlus";
+import ImagePlaceholderPlus from "@/components/icons/ImagePlaceholderPlus";
 import clsx from "clsx";
 import { useState, ChangeEvent } from "react";
 
@@ -8,22 +8,32 @@ const ImageInput = ({
   withPlaceholder = true,
   placeholder = "Select an image...",
   withIcon = true,
+  defaultImagePath = null,
+  onFileSelect,
 }: {
   withPlaceholder?: boolean;
   placeholder?: string | React.ReactNode;
   withIcon?: boolean;
+  defaultImagePath?: string | null;
+  onFileSelect?: (file: File | null) => void;
 }) => {
-  const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [imageSrc, setImageSrc] = useState<string | null>(defaultImagePath);
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (!file) return;
+    if (!file) {
+      setImageSrc(defaultImagePath)
+      onFileSelect?.(null)
+      return;
+    };
 
     const reader = new FileReader();
     reader.onload = (e) => {
       setImageSrc(e.target?.result as string);
     };
     reader.readAsDataURL(file);
+
+    onFileSelect?.(file);
   };
 
   return (

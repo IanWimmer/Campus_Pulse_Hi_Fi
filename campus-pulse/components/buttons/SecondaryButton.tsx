@@ -12,7 +12,7 @@ const SecondaryButton = ({
   buttonClassName = "",
 }: {
   onClick?: () => void;
-  text: string | React.ReactElement;
+  text: string | React.ReactNode;
   containerClassName?: string;
   buttonClassName?: string;
 }) => {

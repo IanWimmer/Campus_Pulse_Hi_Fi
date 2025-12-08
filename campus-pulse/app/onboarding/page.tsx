@@ -135,12 +135,6 @@ const OnboardingPage = () => {
     // If stage !== 0, do nothing and no timer is set
   }, [onboardingContext.state.stage]);
 
-  useEffect(() => {
-    if (onboardingContext.state.done) {
-      router.replace("/");
-    }
-  }, []);
-
   if (onboardingContext.state.stage == 0) {
     output = (
       <div
@@ -263,7 +257,6 @@ const OnboardingPage = () => {
         className="h-full w-full"
         onClick={() => {
           onboardingContext.actions.stage(6);
-          router.replace("/");
         }}
       >
         <h1 className="fixed top-[max(144px,30%)] text-5xl/tight font-semibold text-center w-full">

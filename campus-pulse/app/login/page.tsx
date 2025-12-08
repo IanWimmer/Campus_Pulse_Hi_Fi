@@ -12,20 +12,22 @@ const LoginPage = () => {
   const router = useRouter();
 
   const switchToLogin = () => {
-    if (!loginContext.state) {
+    if (!loginContext.state.state) {
       loginContext.actions(true);
     }
   };
 
+  /*
   useEffect(() => {
-    if (loginContext.state) {
+    if (loginContext.state.state) {
       if (onboradingContext.state.done) {
         router.replace("/");
       } else {
         router.replace("/onboarding");
       }
     }
-  }, [loginContext.state]);
+  }, [loginContext.state.state]);
+  */
 
   return (
     <main className="h-[calc(var(--vh,1vh)*100)] w-full bg-white">

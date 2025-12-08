@@ -1,8 +1,8 @@
 [
   {
-    "id": 0,
-    "title": "Spontaneous Boardgame Night",
-    "image_path": "/images/image_placeholder.jpg",
+    "id": "0",
+    "title": "Spontaneous Boardgame Night!",
+    "image_path": "uploads\\3acf0cf0-6a7b-4976-9e74-d58845670026.jpg",
     "description": "Quick boardgame session with favorite classics. Perfect for casual fun!",
     "datetime": "2025-12-02T00:13:20.000Z",
     "recurring": false,
@@ -10,27 +10,16 @@
     "location": "Campus Lounge",
     "geo_location": "40.7128,-74.0060",
     "public_status": "public",
-    "categories": ["Boardgame", "Casual"],
+    "categories": [
+      "Boardgame",
+      "Casual",
+      "Fun"
+    ],
     "max_participants": 6,
-    "participants": 2
-  },
-  {
-    "id": 1,
-    "title": "Flash Coffee Chat",
-    "image_path": "/images/image_placeholder.jpg",
-    "description": "Grab coffee and chat about random topics. No agenda needed!",
-    "datetime": "2025-12-02T01:13:20.000Z",
-    "recurring": true,
-    "recurrence_intervall": "daily",
-    "location": "Campus Cafe",
-    "geo_location": "40.7128,-74.0060",
-    "public_status": "public",
-    "categories": ["Spontaneous", "Networking"],
-    "max_participants": 4,
     "participants": 1
   },
   {
-    "id": 2,
+    "id": "2",
     "title": "Speed Portrait Sketches",
     "image_path": "/images/image_placeholder.jpg",
     "description": "1-minute sketches of each other. Hilarious results guaranteed!",
@@ -40,12 +29,15 @@
     "location": "Student Union",
     "geo_location": "40.7128,-74.0060",
     "public_status": "public",
-    "categories": ["Creative", "Art"],
+    "categories": [
+      "Creative",
+      "Art"
+    ],
     "max_participants": 8,
     "participants": 3
   },
   {
-    "id": 3,
+    "id": "3",
     "title": "Indoor Scavenger Hunt",
     "image_path": "/images/image_placeholder.jpg",
     "description": "Find quirky items around campus in teams. Fast-paced fun!",
@@ -55,12 +47,15 @@
     "location": "Library Area",
     "geo_location": "40.7128,-74.0060",
     "public_status": "public",
-    "categories": ["Adventure", "Team"],
+    "categories": [
+      "Adventure",
+      "Team"
+    ],
     "max_participants": 10,
     "participants": 4
   },
   {
-    "id": 4,
+    "id": "4",
     "title": "Weekly Trivia Blitz",
     "image_path": "/images/image_placeholder.jpg",
     "description": "Quick trivia rounds on random topics. Prizes for winners!",
@@ -70,12 +65,15 @@
     "location": "Dining Hall",
     "geo_location": "40.7128,-74.0060",
     "public_status": "public",
-    "categories": ["Trivia", "Competitive"],
+    "categories": [
+      "Trivia",
+      "Competitive"
+    ],
     "max_participants": 12,
     "participants": 5
   },
   {
-    "id": 5,
+    "id": "5",
     "title": "Pop-up Picnic",
     "image_path": "/images/image_placeholder.jpg",
     "description": "Bring your snack and join casual picnic chat.",
@@ -85,12 +83,15 @@
     "location": "Campus Green",
     "geo_location": "40.7128,-74.0060",
     "public_status": "public",
-    "categories": ["Outdoor", "Food"],
+    "categories": [
+      "Outdoor",
+      "Food"
+    ],
     "max_participants": 8,
     "participants": 2
   },
   {
-    "id": 6,
+    "id": "6",
     "title": "Two Truths Game",
     "image_path": "/images/image_placeholder.jpg",
     "description": "Share two truths and one lie. Guess correctly!",
@@ -100,12 +101,15 @@
     "location": "Residence Hall",
     "geo_location": "40.7128,-74.0060",
     "public_status": "private",
-    "categories": ["Icebreaker", "Fun"],
+    "categories": [
+      "Icebreaker",
+      "Fun"
+    ],
     "max_participants": 6,
     "participants": 3
   },
   {
-    "id": 7,
+    "id": "7",
     "title": "Glow Stick Games",
     "image_path": "/images/image_placeholder.jpg",
     "description": "Night games with glow sticks. Dodgeball/volleyball!",
@@ -115,12 +119,15 @@
     "location": "Sports Field",
     "geo_location": "40.7128,-74.0060",
     "public_status": "public",
-    "categories": ["Night", "Active"],
+    "categories": [
+      "Night",
+      "Active"
+    ],
     "max_participants": 10,
     "participants": 1
   },
   {
-    "id": 8,
+    "id": "8",
     "title": "Mini Terrarium Build",
     "image_path": "/images/image_placeholder.jpg",
     "description": "Build tiny terrariums to keep. Relaxing craft time.",
@@ -130,12 +137,15 @@
     "location": "Art Room",
     "geo_location": "40.7128,-74.0060",
     "public_status": "public",
-    "categories": ["Craft", "Relaxing"],
+    "categories": [
+      "Craft",
+      "Relaxing"
+    ],
     "max_participants": 5,
     "participants": 2
   },
   {
-    "id": 9,
+    "id": "9",
     "title": "Flash Study Break",
     "image_path": "/images/image_placeholder.jpg",
     "description": "Quick yoga/stretch session during study time.",
@@ -145,12 +155,15 @@
     "location": "Study Lounge",
     "geo_location": "40.7128,-74.0060",
     "public_status": "public",
-    "categories": ["Wellness", "Quick"],
+    "categories": [
+      "Wellness",
+      "Quick"
+    ],
     "max_participants": 8,
     "participants": 4
   },
   {
-    "id": 10,
+    "id": "10",
     "title": "Spontaneous Karaoke",
     "image_path": "/images/image_placeholder.jpg",
     "description": "Sing your heart out! Phone karaoke session.",
@@ -160,13 +173,16 @@
     "location": "Common Room",
     "geo_location": "40.7128,-74.0060",
     "public_status": "public",
-    "categories": ["Music", "Fun"],
+    "categories": [
+      "Music",
+      "Fun"
+    ],
     "max_participants": 7,
     "participants": 3
   },
   {
-    "id": 11,
-    "title": "Park Clean-up & Chat",
+    "id": "11",
+    "title": "Park Clean-up & Chat!",
     "image_path": "/images/image_placeholder.jpg",
     "description": "Clean campus area then casual hangout.",
     "datetime": "2025-12-02T11:13:20.000Z",
@@ -175,12 +191,15 @@
     "location": "Campus Paths",
     "geo_location": "40.7128,-74.0060",
     "public_status": "public",
-    "categories": ["Community", "Outdoor"],
+    "categories": [
+      "Community",
+      "Outdoor"
+    ],
     "max_participants": 6,
     "participants": 1
   },
   {
-    "id": 12,
+    "id": "12",
     "title": "Skill Share Circle",
     "image_path": "/images/image_placeholder.jpg",
     "description": "Teach/learn quick skills (tying knots, magic tricks).",
@@ -190,13 +209,16 @@
     "location": "Meeting Room",
     "geo_location": "40.7128,-74.0060",
     "public_status": "public",
-    "categories": ["Learning", "Skills"],
+    "categories": [
+      "Learning",
+      "Skills"
+    ],
     "max_participants": 8,
     "participants": 2
   },
   {
-    "id": 13,
-    "title": "Sunset Walk Meetup",
+    "id": "13",
+    "title": "Sunset Walk Meetup!",
     "image_path": "/images/image_placeholder.jpg",
     "description": "Casual evening walk around campus.",
     "datetime": "2025-12-02T13:13:20.000Z",
@@ -205,23 +227,70 @@
     "location": "Campus Lake",
     "geo_location": "40.7128,-74.0060",
     "public_status": "public",
-    "categories": ["Walk", "Relaxing"],
+    "categories": [
+      "Walk",
+      "Relaxing"
+    ],
     "max_participants": 10,
     "participants": 5
   },
   {
-    "id": 14,
+    "id": "14",
     "title": "Emergency Dance Party",
-    "image_path": "/images/image_placeholder.jpg",
+    "image_path": "uploads\\d73c1b37-b8e8-47a2-8e8d-982b0da6e74f.jpg",
     "description": "30-min dance break! Bring your energy.",
     "datetime": "2025-12-02T14:13:20.000Z",
     "recurring": false,
     "recurrence_intervall": null,
-    "location": "Quad",
+    "location": "CAB G61",
     "geo_location": "40.7128,-74.0060",
     "public_status": "public",
-    "categories": ["Dance", "Energy"],
+    "categories": [
+      "Dance",
+      "Energy"
+    ],
     "max_participants": 15,
     "participants": 6
+  },
+  {
+    "id": "0ff10075-df37-438e-9c85-87be2821bbee",
+    "title": "Volleyball",
+    "image_path": "uploads\\a0788a24-ac2f-4b99-95c0-c7eb32be55e3.jpeg",
+    "description": "Volleysession this monday, no way.",
+    "datetime": "2025-12-08T16:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "Irchel YPT Halle B",
+    "geo_location": "",
+    "public_status": "private",
+    "categories": [
+      "Casual",
+      "Fun",
+      "Sports"
+    ],
+    "max_participants": "14",
+    "participants": 2,
+    "user_enrolled": false
+  },
+  {
+    "id": "acf675c0-7650-4659-a331-de1615f2a40d",
+    "title": "Movie night",
+    "image_path": "uploads\\20c09002-5512-4fe5-bac7-5150248ac29d.jpg",
+    "description": "Spontaneous movie night this evening et ETH",
+    "datetime": "2025-12-08T19:00:00.000Z",
+    "recurring": true,
+    "recurrence_intervall": "",
+    "location": "HG F1",
+    "geo_location": "",
+    "public_status": "public",
+    "categories": [
+      "Fun",
+      "Night",
+      "Relaxing",
+      "Film"
+    ],
+    "max_participants": "300",
+    "participants": 0,
+    "user_enrolled": false
   }
 ]

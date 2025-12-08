@@ -2,8 +2,8 @@ import PrimaryButton from "@/components/buttons/PrimaryButton";
 import SecondaryButton from "@/components/buttons/SecondaryButton";
 import CheckboxInputForm from "@/components/input_fields/CheckboxInput";
 import TextInput from "@/components/input_fields/TextInput";
-import PersonOutlined from "@/public/icons/PersonOutlined";
-import QRCode from "@/public/icons/QRCode";
+import PersonOutlined from "@/components/icons/PersonOutlined";
+import QRCode from "@/components/icons/QRCode";
 import React, { MouseEvent, useState } from "react";
 
 const AddFriends = ({

@@ -5,11 +5,11 @@ import { EventType } from "@/types/types";
 import { randomUUID } from "crypto";
 
 const EventTypeDefault: Partial<EventType> = {
-  id: -1,
+  id: "",
   title: "Title",
   image_path: "",
   description: "",
-  datetime: 0,
+  datetime: "",
   recurring: false,
   recurrence_intervall: null,
   location: "",
@@ -18,49 +18,57 @@ const EventTypeDefault: Partial<EventType> = {
   categories: [],
   max_participants: 0,
   participants: 0,
+  user_enrolled: false,
 };
 
-const dataPath = path.join(process.cwd(), "data", "events.json");
+const eventDataPath = path.join(process.cwd(), "public", "data", "events.json");
+const eventLockPath = path.join(process.cwd(), "public", "data", "events.lock");
 const uploadsPath = path.join(process.cwd(), "public", "uploads");
-const uploadsPathForClient = path.join("uploads")
-const placholderImagePath = path.join(
-  process.cwd(),
-  "images",
-  "image_placeholder.jpg"
-);
-
+const uploadsPathForClient = "uploads";
+const placeholderImagePath = path.join(process.cwd(), "images", "image_placeholder.jpg");
 
 function withDefaults<T>(data: Partial<T>, defaults: Partial<T>) {
-  return { ...defaults, ... data } as T
+  return { ...defaults, ...data } as T;
 }
 
+/** File locking */
+async function acquireEventLock(): Promise<void> {
+  const maxAttempts = 50;
+  const delay = 100;
+  for (let i = 0; i < maxAttempts; i++) {
+    try {
+      await fs.access(eventLockPath);
+      await new Promise(resolve => setTimeout(resolve, delay));
+    } catch {
+      await fs.writeFile(eventLockPath, Date.now().toString());
+      return;
+    }
+  }
+  throw new Error("Could not acquire events lock");
+}
 
-async function readData(): Promise<EventType[]> {
+async function releaseEventLock(): Promise<void> {
   try {
-    const data = await fs.readFile(dataPath, "utf8");
+    await fs.unlink(eventLockPath);
+  } catch { }
+}
+
+async function readEventData(): Promise<EventType[]> {
+  try {
+    const data = await fs.readFile(eventDataPath, "utf8");
     return JSON.parse(data) as EventType[];
   } catch {
-    return [] as EventType[]; // empty array if file doesn't exist
+    return [];
   }
 }
 
-async function writeData(data: any[]) {
-  await fs.mkdir(path.dirname(dataPath), { recursive: true });
-  await fs.writeFile(dataPath, JSON.stringify(data, null, 2));
-}
-
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: number } }
-) {
-  const events = await readData();
-  const event = events.find((value) => value.id == params.id);
-  return NextResponse.json(event);
+async function writeEventData(data: any[]) {
+  await fs.mkdir(path.dirname(eventDataPath), { recursive: true });
+  await fs.writeFile(eventDataPath, JSON.stringify(data, null, 2));
 }
 
 export async function POST(request: NextRequest) {
   const formData = await request.formData();
-
   const file = formData.get("image") as File;
   const data_json = formData.get("data") as string;
 
@@ -70,37 +78,34 @@ export async function POST(request: NextRequest) {
 
   let data = withDefaults<EventType>(JSON.parse(data_json) as Partial<EventType>, EventTypeDefault);
 
-  if (!file) {
-    console.log("no file found");
-    data.image_path = placholderImagePath;
-  } else {
-    const fileExtension = path.extname(file.name);
-    const filename = `${randomUUID()}${fileExtension}`;
-    const filePath = path.join(uploadsPath, filename);
+  try {
+    // **LOCK → READ → MODIFY → WRITE → UNLOCK**
+    await acquireEventLock();
+    
+    if (!file) {
+      data.image_path = placeholderImagePath;
+    } else {
+      const fileExtension = path.extname(file.name);
+      const filename = `${randomUUID()}${fileExtension}`;
+      const filePath = path.join(uploadsPath, filename);
 
-    await fs.mkdir(uploadsPath, { recursive: true });
+      await fs.mkdir(uploadsPath, { recursive: true });
+      const bytes = await file.arrayBuffer();
+      await fs.writeFile(filePath, Buffer.from(bytes));
+      data.image_path = path.join(uploadsPathForClient, filename);
+    }
 
-    const bytes = await file.arrayBuffer();
-    await fs.writeFile(filePath, Buffer.from(bytes))
-    data.image_path = path.join(uploadsPathForClient, filename)
+    const events = await readEventData();
+    data.id = randomUUID();
+    events.push(data);
+    await writeEventData(events);
+    
+    await releaseEventLock();
+    
+    return NextResponse.json(data, { status: 201 });
+  } catch (error) {
+    await releaseEventLock();
+    console.error("Event creation failed:", error);
+    return NextResponse.json({ error: "Failed to create event" }, { status: 500 });
   }
-
-  
-  const events = await readData();
-  data.id = events.length;
-  events.push(data);
-  await writeData(events);
-  return NextResponse.json(data, { status: 201 });
-}
-
-export async function PUT(request: NextRequest) {
-  const updatedEvent = await request.json();
-  const events = await readData();
-  const index = events.findIndex((e: any) => e.id === updatedEvent.id);
-  if (index !== -1) {
-    events[index] = updatedEvent;
-    await writeData(events);
-    return NextResponse.json(updatedEvent);
-  }
-  return NextResponse.json({ error: "Not found" }, { status: 404 });
 }

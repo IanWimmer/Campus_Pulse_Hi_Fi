@@ -8,11 +8,12 @@ import LocationInput from "@/components/input_fields/LocationInput";
 import TextAreaInput from "@/components/input_fields/TextAreaInput";
 import TextInput from "@/components/input_fields/TextInput";
 import Switch from "@/components/switch/Switch";
-import CrossOutlined from "@/public/icons/CrossOutlined";
-import RightArrow from "@/public/icons/RightArrow";
+import CrossOutlined from "@/components/icons/CrossOutlined";
+import RightArrow from "@/components/icons/RightArrow";
+import { EventType } from "@/types/types";
 import clsx from "clsx";
 import { motion } from "motion/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 type loadingType = {
@@ -26,60 +27,6 @@ const recurrenceOptions = [
   { label: "Yearly", value: "yearly" },
 ];
 
-const categories = [
-  "Boardgame",
-  "Casual",
-  "Spontaneous",
-  "Networking",
-  "Creative",
-  "Art",
-  "Adventure",
-  "Team",
-  "Trivia",
-  "Competitive",
-  "Outdoor",
-  "Food",
-  "Icebreaker",
-  "Fun",
-  "Night",
-  "Active",
-  "Craft",
-  "Relaxing",
-  "Wellness",
-  "Quick",
-  "Music",
-  "Community",
-  "Learning",
-  "Skills",
-  "Walk",
-  "Dance",
-  "Energy",
-  "Sports",
-  "Workshop",
-  "Technology",
-  "Lecture",
-  "Debate",
-  "Film",
-  "Performance",
-  "Meditation",
-  "Volunteering",
-  "Charity",
-  "Festival",
-  "Cultural",
-  "Cooking",
-  "Book Club",
-  "Photography",
-  "Yoga",
-  "Gaming",
-  "Coding",
-  "Hiking",
-  "Language Exchange",
-  "Mindfulness",
-  "Business",
-  "Startup",
-  "Comedy",
-];
-
 const CreateEvent = ({
   visible = true,
   onClose = () => {},
@@ -88,20 +35,115 @@ const CreateEvent = ({
   onClose?: () => void;
 }) => {
   const [show, setShow] = useState(visible);
-  const [loading, setLoading] = useState<loadingType>({
-    image: false,
-  });
+  const [loadingSubmit, setLoadingSubmit] = useState<boolean>();
   const [loadingDone, setLoadingDone] = useState<boolean>(true);
   const [showRecurring, setShowRecurring] = useState<boolean>(false);
   const [categoriesFocused, setCategoriesFocused] = useState<boolean>(false);
 
+  const [categories, setCategories] = useState<string[]>([])
   const [categorySearchSelection, setCategorySearchSelection] =
-    useState<string[]>(categories);
+    useState<string[]>([]);
+
+  const [eventData, setEventData] = useState<EventType>({
+    id: "",
+    title: "",
+    image_path: "",
+    description: "",
+    datetime: "",
+    recurring: false,
+    recurrence_intervall: null,
+    location: "",
+    geo_location: "",
+    public_status: "public",
+    categories: [],
+    max_participants: -1,
+    participants: 0,
+  });
   const [categorySelection, setCategorySelection] = useState<string[]>([]);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const res = await fetch("api/categories");
+
+      if (!res.ok) {
+        console.error("Failed to fetch categories")
+        return;
+      }
+
+      const rc = await res.json() as string[]
+      setCategories(rc)
+      setCategorySearchSelection(prev => {return prev.length > 0 ? prev : rc})
+    }
+
+    fetchCategories()
+  }, [])
+
 
   const handleClose = () => {
     setShow(false); // Start exit animation
     onClose(); // for full animation call onClose after 300ms delay
+  };
+
+  const handleEventDataChange = (
+    key: string,
+    value: string | boolean | number | string[]
+  ) => {
+    setEventData((prev) => {
+      // console.log({...prev, [key]: value})
+      return { ...prev, [key]: value };
+    });
+  };
+
+  const onSubmit = async () => {
+    const final_data: EventType = {
+      ...eventData,
+      categories: categorySelection,
+    };
+
+    const errors: string[] = [];
+    if (!final_data.title.trim()) errors.push("Title is required");
+    if (!final_data.description.trim()) errors.push("Description is required");
+    if (!final_data.datetime) errors.push("Date and time are required");
+    if (!final_data.location.trim()) errors.push("Location is required");
+    if (final_data.max_participants <= 0)
+      errors.push("Max participants must be greater than 0");
+
+    if (final_data.recurring && !final_data.recurrence_intervall)
+
+    if (errors.length > 0) {
+      // replace with your own toast / UI
+      alert(errors.join("\n"));
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(final_data));
+    if (imageFile) {
+      formData.append("image", imageFile, imageFile.name);
+    }
+
+    try {
+      setLoadingSubmit(true);
+
+      const res = await fetch("/api/event", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) {
+        console.error("Failed to create event", await res.text());
+      }
+
+      const created = await res.json();
+      console.log("Event created:", created);
+      handleClose();
+    } catch (err) {
+      console.error("Error creating event", err);
+    } finally {
+      setLoadingSubmit(false);
+    }
   };
 
   return createPortal(
@@ -135,15 +177,26 @@ const CreateEvent = ({
       >
         {/* General */}
         <div className={clsx("mx-7")}>
-          <TextInput placeholder="Event title" />
+          <TextInput
+            placeholder="Event title"
+            onChange={(event) =>
+              handleEventDataChange("title", event.target.value)
+            }
+          />
         </div>
         <div className="border-y-2 border-y-black w-full min-h-34 bg-gray-200">
-          <ImageInput placeholder="Add a describing image" />
+          <ImageInput
+            placeholder="Add a describing image"
+            onFileSelect={setImageFile}
+          />
         </div>
         <div className="px-7">
           <TextAreaInput
             heightClass="h-44"
             placeholder="Please provide a description for your event..."
+            onChange={(event) =>
+              handleEventDataChange("description", event.target.value)
+            }
           />
         </div>
 
@@ -155,18 +208,33 @@ const CreateEvent = ({
           </div>
           <div className="mt-2 px-7 flex flex-col gap-4">
             <div>
-              <DateTimeInput />
+              <DateTimeInput
+                onChange={(event) =>
+                  handleEventDataChange(
+                    "datetime",
+                    new Date(event.target.value).toISOString()
+                  )
+                }
+              />
             </div>
             <div className="flex items-center justify-between">
               <span className="font-secondary ml-3 font-medium">
                 Recurring Event
               </span>
-              <Switch onSwitch={(new_state) => setShowRecurring(new_state)} />
+              <Switch
+                onSwitch={(new_state) => {
+                  setShowRecurring(new_state);
+                  handleEventDataChange("recurring", new_state);
+                }}
+              />
             </div>
             {showRecurring && (
               <DropDownMenu
                 options={recurrenceOptions}
                 placeholder="Please select a recurrence interval..."
+                onChange={(new_selection) =>
+                  handleEventDataChange("recurrence_intervall", new_selection)
+                }
               />
             )}
           </div>
@@ -181,7 +249,11 @@ const CreateEvent = ({
             <span className="bg-black w-full h-0.5 rounded-full mt-1" />
           </div>
           <div className="px-7 mt-2">
-            <LocationInput />
+            <LocationInput
+              onChange={(event) =>
+                handleEventDataChange("location", event.target.value)
+              }
+            />
           </div>
         </div>
 
@@ -197,6 +269,9 @@ const CreateEvent = ({
             <TextInput
               placeholder="What is the max amount of participants?"
               type="number"
+              onChange={(event) =>
+                handleEventDataChange("max_participants", event.target.value)
+              }
             />
           </div>
           <div className="px-7 mt-4">
@@ -204,7 +279,14 @@ const CreateEvent = ({
               <span className="font-secondary ml-3 font-medium">
                 Private event
               </span>
-              <Switch />
+              <Switch
+                onSwitch={(new_state) =>
+                  handleEventDataChange(
+                    "public_status",
+                    new_state ? "private" : "public"
+                  )
+                }
+              />
             </div>
           </div>
         </div>
@@ -322,8 +404,8 @@ const CreateEvent = ({
               </div>
             </div>
           )}
-          {categorySelection.length > 0 && (
-            <div className="mt-4 px-7 overflow-hidden">
+          {categorySelection.length > 0 && !categoriesFocused && (
+            <div className="mt-4 px-7 overflow-hidden z-40">
               <div className="flex gap-2 overflow-x-scroll w-full">
                 {categorySelection.map((value, index) => {
                   return (
@@ -352,7 +434,7 @@ const CreateEvent = ({
 
       {/* Submit button */}
       <div className="fixed bottom-0 left-0 w-full p-4 z-42">
-        <PrimaryButton text={"Create Event!"} />
+        <PrimaryButton text={"Create Event!"} onClick={onSubmit} />
       </div>
     </motion.div>,
     document.body

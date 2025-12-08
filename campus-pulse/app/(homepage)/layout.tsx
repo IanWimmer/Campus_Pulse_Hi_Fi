@@ -2,10 +2,10 @@
 
 import type { Metadata } from "next";
 import NavigationBar from "@/components/NavigationBar";
-import MapSearch from "@/public/icons/MapSearch";
-import HomeFilled from "@/public/icons/HomeFilled";
-import EventAvailable from "@/public/icons/EventAvailable";
-import Person from "@/public/icons/Person";
+import MapSearch from "@/components/icons/MapSearch";
+import HomeFilled from "@/components/icons/HomeFilled";
+import EventAvailable from "@/components/icons/EventAvailable";
+import Person from "@/components/icons/Person";
 import { NavigationTabType } from "@/types/types";
 import CreateEvent from "@/page_components/create_event/CreateEvent";
 import { useState } from "react";
