@@ -61,7 +61,7 @@ export default function RootLayout({
 
   return (
     <main>
-      <div className="fixed bottom-0 left-0 pb-3.5">
+      <div className="fixed bottom-0 left-0 pb-3.5 z-30">
         <NavigationBar
           options={NAVIGATION_TABS}
           selected={activeTabId}
