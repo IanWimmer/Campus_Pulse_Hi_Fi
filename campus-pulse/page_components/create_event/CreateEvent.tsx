@@ -63,7 +63,7 @@ const CreateEvent = ({
   });
   const [categorySelection, setCategorySelection] = useState<string[]>([]);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [enrollOnCreation, setEnrollOnCreation] = useState<boolean>(true)
+  const [enrollOnCreation, setEnrollOnCreation] = useState<boolean>(true);
 
   const loginContext = useLoginContext();
 
@@ -114,17 +114,23 @@ const CreateEvent = ({
     if (!final_data.location.trim()) errors.push("Location is required");
     if (final_data.max_participants <= 0)
       errors.push("Max participants must be greater than 0");
-
     if (final_data.recurring && !final_data.recurrence_intervall)
-      if (errors.length > 0) {
-        // replace with your own toast / UI
-        alert(errors.join("\n"));
-        return;
-      }
+      errors.push(
+        "Event is labeled as recurring but no recurrence interval was given"
+      );
+
+    console.log(errors);
+
+    if (errors.length > 0) {
+      console.log(errors);
+      // replace with your own toast / UI
+      alert(errors.join("\n"));
+      return;
+    }
 
     const formData = new FormData();
     formData.append("data", JSON.stringify(final_data));
-    formData.append("enroll", JSON.stringify(enrollOnCreation))
+    formData.append("enroll", JSON.stringify(enrollOnCreation));
     if (imageFile) {
       formData.append("image", imageFile, imageFile.name);
     }
@@ -443,9 +449,7 @@ const CreateEvent = ({
             </span>
             <Switch
               initialState={true}
-              onSwitch={(new_state) =>
-                setEnrollOnCreation(new_state)
-              }
+              onSwitch={(new_state) => setEnrollOnCreation(new_state)}
             />
           </div>
         </div>
