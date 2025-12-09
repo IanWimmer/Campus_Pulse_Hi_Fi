@@ -3,6 +3,7 @@
 import { ChevronLeftOutlined } from "@mui/icons-material";
 import clsx from "clsx";
 import { motion } from "motion/react";
+import React from "react";
 import { useEffect, useRef, useState } from "react";
 
 const DropDownItem = ({
@@ -38,15 +39,27 @@ const DropDownMenu = ({
   placeholder = "",
   withPlaceholder = true,
   multiple = false,
+  disableChevronCircle = false,
+  withStartIcon = false,
+  startIcon = null,
+  disableStartIconCircle = false,
+  className = "",
 }: {
   onChange?: (newSelection: string | string[]) => void;
   options?: { label: string | React.ReactNode; value: string }[];
   initialValue?: string | string[];
   withoutShadow?: boolean;
-  placeholder?: string;
+  placeholder?: string | React.ReactNode;
   withPlaceholder?: boolean;
   multiple?: boolean;
+  disableChevronCircle?: boolean;
+  withStartIcon?: boolean;
+  startIcon?: React.ReactNode | null;
+  disableStartIconCircle?: boolean;
+  className?: string;
 }) => {
+  if (withStartIcon && !startIcon) throw new Error("Add a startIcon.");
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<string[]>(
     Array.isArray(initialValue) ? initialValue : [initialValue]
@@ -99,16 +112,47 @@ const DropDownMenu = ({
   }, [selected]);
 
   return (
-    <div ref={dropdownRef}>
+    <div ref={dropdownRef} className="w-full">
       <div
         className={clsx(
           "font-secondary flex w-full h-12 items-center justify-between border-2 border-black p-2 pl-5",
-          !withoutShadow && "shadow-neobrutalist"
+          !withoutShadow && "shadow-neobrutalist",
+          className
         )}
         onClick={handleOpenChange}
         ref={dropdownButtonRef}
       >
-        <div className={clsx("text-nowrap flex-1 max-w-[calc(100%-40px)] overflow-x-hidden", selected.length == 0 || (selected.length == 1 && selected.includes("")) ? "text-placeholder" : "text-black")}>
+        {withStartIcon && (
+          <div
+            className={clsx(
+              "rounded-full shrink-0 box-content flex justify-center items-center px-1.5",
+              disableStartIconCircle ? "border-none" : "border-2 border-black"
+            )}
+          >
+            {React.isValidElement(startIcon) ? (
+              React.cloneElement(startIcon as React.ReactElement<any>, {
+                className: clsx(
+                  "h-[18px] w-[18px] object-contain",
+                  (startIcon as React.ReactElement<any>)?.props?.className || ""
+                ),
+              })
+            ) : (
+              <span className="h-full w-full flex items-center justify-center">
+                {startIcon}
+              </span>
+            )}
+          </div>
+        )}
+        <div
+          className={clsx(
+            "text-nowrap flex-1 overflow-x-hidden",
+            withStartIcon ? "max-w-[calc(100%-56px)]" : "max-w-[calc(100%-40px)]",
+            selected.length == 0 ||
+              (selected.length == 1 && selected.includes(""))
+              ? "text-placeholder"
+              : "text-black"
+          )}
+        >
           {(selected.length == 1 && selected.includes("")) ||
           selected.length == 0
             ? withPlaceholder
@@ -123,7 +167,12 @@ const DropDownMenu = ({
                 .replaceAll(",", ", ")
                 .replaceAll(",  ", ", ")}
         </div>
-        <div className="h-8 w-8 border-2 border-black rounded-full flex items-center justify-center shrink-0">
+        <div
+          className={clsx(
+            "h-8 w-8 rounded-full flex items-center justify-center shrink-0",
+            disableChevronCircle ? "" : "border-2 border-black"
+          )}
+        >
           <ChevronLeftOutlined
             sx={{
               transform: isOpen ? "rotate(-90deg)" : "rotate(0deg)",

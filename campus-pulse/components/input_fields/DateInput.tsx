@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React, { useState } from "react";
 import { ChangeEvent, useRef } from "react";
-import CalendarMonthOutlined from "@/public/icons/CalendarMonthOutlined";
+import CalendarMonthOutlined from "@/components/icons/CalendarMonthOutlined";
 
 
 

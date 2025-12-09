@@ -10,7 +10,7 @@ const AddEventButton = ({ onClick = () => {} }: { onClick?: () => void }) => {
   return (
     <div
       className={clsx(
-        "w-12 h-12 border-2 rounded-md flex justify-center items-center transition bg-white",
+        "w-12 h-12 border-2 rounded-md flex justify-center items-center transition bg-white flex-30",
         clicked
           ? "shadow-[0_0_0_0_rgba(0,0,0,1.00)] translate-x-1.5 translate-y-1.5"
           : "shadow-neobrutalist"

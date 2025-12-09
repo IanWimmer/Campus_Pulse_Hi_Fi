@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import React, { useState } from "react";
 import { ChangeEvent, useRef } from "react";
-import CalendarMonthOutlined from "@/public/icons/CalendarMonthOutlined";
-import CalendarDateAndTimeOutlined from "@/public/icons/CalendarDateAndTimeOutlined";
+import CalendarMonthOutlined from "@/components/icons/CalendarMonthOutlined";
+import CalendarDateAndTimeOutlined from "@/components/icons/CalendarDateAndTimeOutlined";
 
 
 
@@ -13,18 +13,20 @@ const DateTimeInput = ({
   placeholder = "Please select a date and time ... ",
   id = 0,
   withoutShadow = false,
+  value = null,
 }: {
-  onChange?: (event: ChangeEvent) => any,
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => any,
   withIcon?: boolean,
   withPlaceholder?: boolean
   placeholder?: string,
   id?: any,
   withoutShadow?: boolean,
+  value?: string | null
 }) => {
 
   const inputRef = useRef<HTMLInputElement>(null)
-  const [datetime, setDatetime] = useState<Date | null>(null)
-  const [datetimeISO, setDatetimeISO] = useState<string | null>(null)
+  const [datetime, setDatetime] = useState<Date | null>(value ? new Date(value) : null)
+  const [datetimeISO, setDatetimeISO] = useState<string | null>(value)
   
   const openNativePicker = () => {
     if (inputRef.current?.showPicker) {

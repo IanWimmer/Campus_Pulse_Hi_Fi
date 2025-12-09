@@ -1,0 +1,30 @@
+[
+  {
+    "id": "d82a562b-1c28-4614-8256-06e32f318a49",
+    "name": "iwimmer",
+    "enrollments": [
+      "0ff10075-df37-438e-9c85-87be2821bbee",
+      "14",
+      "0"
+    ],
+    "my_events": [
+      "efb5bec9-e7f4-4ce7-80e4-9a9605617c0b",
+      "a7e0fb02-5b75-4258-b915-2a9a9ebcdb71",
+      "acf675c0-7650-4659-a331-de1615f2a40d",
+      "0ff10075-df37-438e-9c85-87be2821bbee",
+      "7d706df0-1353-4c9f-82f6-126c8f3adb58",
+      "d1f5322b-3d8a-4d42-9798-9ce490ed2304",
+      "70fce555-36b2-4a8b-bdd3-e62e6a23798d",
+      "794a3abc-f277-423d-926d-3dc5a74aa9e3",
+      "bbd590b7-4cf3-4ed9-a22e-dbef371a63e9"
+    ]
+  },
+  {
+    "id": "4febe08b-7c42-4d87-bc84-e78df4b95597",
+    "name": "4febe0",
+    "enrollments": [
+      "efb5bec9-e7f4-4ce7-80e4-9a9605617c0b"
+    ],
+    "my_events": []
+  }
+]

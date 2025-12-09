@@ -55,7 +55,7 @@ const RootLayout = ({
 
   return (
     <html lang="en">
-      <body className={`antialiased bg-white h-[calc(var(--vh,1vh)*100)]`}>
+      <body className={"antialiased bg-white"}>
         <Providers>
           {children}
         </Providers>

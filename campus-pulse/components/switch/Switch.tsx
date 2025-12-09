@@ -2,7 +2,7 @@
 
 import clsx from "clsx"
 import { useEffect, useState } from "react"
-import CrossCheckAnimated from "../../public/icons/CrossCheckAnimated"
+import CrossCheckAnimated from "../icons/CrossCheckAnimated"
 import { motion } from "motion/react"
 
 

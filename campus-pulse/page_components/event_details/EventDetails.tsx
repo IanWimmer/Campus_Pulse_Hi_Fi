@@ -2,16 +2,21 @@ import NegativeButton from "@/components/buttons/NegativeButton";
 import PrimaryButton from "@/components/buttons/PrimaryButton";
 import Chip from "@/components/chip/Chip";
 import ProgressBar from "@/components/progress_bar/ProgressBar";
-import CheckCircle from "@/public/icons/CheckCircle";
-import Map from "@mui/icons-material/Map";
-import RightArrow from "@/public/icons/RightArrow";
-import Share from "@mui/icons-material/Share";
+import CheckCircle from "@/components/icons/CheckCircle";
+import Map from "@/components/icons/Map";
+import RightArrow from "@/components/icons/RightArrow";
+import Share from "@/components/icons/Share";
 import clsx from "clsx";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import Spinner from "@/components/icons/Spinner";
 
 import { formatEventDateTime } from "@/utils/formatDateTime";
+import { EventType } from "@/types/types";
+import { useLoginContext } from "@/contexts/LoginContext";
+import CrossOutlined from "@/components/icons/CrossOutlined";
+import { useClickAnimation } from "@/utils/useClickAnimation";
 
 type loadingType = {
   image: boolean;
@@ -20,28 +25,13 @@ type loadingType = {
 const EventDetails = ({
   visible = true,
   onClose = () => {},
-  title = "",
-  datetime = "",
-  location = "",
-  categories = [],
-  participants = 0,
-  max_participants = 0,
-  description = "",
-  enrolled = false,
+  id = null,
   onEnroll = () => {},
   onCancel = () => {},
 }: {
   visible?: boolean;
   onClose?: () => void;
-  title?: string;
-  datetime?: string;
-  location?: string;
-  geo_location?: string;
-  categories?: string[];
-  participants?: number;
-  max_participants?: number;
-  description?: string | React.ReactNode;
-  enrolled?: boolean;
+  id?: string | null;
   onEnroll?: () => void;
   onCancel?: () => void;
 }) => {
@@ -49,8 +39,43 @@ const EventDetails = ({
   const [loading, setLoading] = useState<loadingType>({
     image: false,
   });
+  const [eventData, setEventData] = useState<EventType | null>(null);
 
   const [loadingDone, setLoadingDone] = useState<boolean>(false);
+  const loginContext = useLoginContext();
+
+  const fetchEvent = async () => {
+    try {
+      // console.log("fetching event");
+      const res = await fetch(`api/event/${id}`, {
+        method: "GET",
+        headers: { "X-Device-Id": loginContext.state.deviceId },
+      });
+
+      // console.log(res);
+
+      if (!res.ok) {
+        const errorResponse = await res.json();
+        console.error(
+          "Failed to fetch event:",
+          (errorResponse as { error: string }).error
+        );
+      }
+
+      const data = (await res.json()) as EventType;
+      setEventData(data);
+    } catch (err) {
+      console.error("Failed to fetch event:", err);
+    }
+  };
+
+  useEffect(() => {
+    if (id === null) {
+      setLoadingDone(true);
+    } else {
+      fetchEvent();
+    }
+  }, []);
 
   useEffect(() => {
     let stillLoading = false;
@@ -80,6 +105,29 @@ const EventDetails = ({
     onClose(); // for full animation call onClose after 300ms delay
   };
 
+  // id === null
+  if (id === null) {
+    const { clicked, handleClick } = useClickAnimation(onClose, { delay: 300 });
+    return (
+      <div className="bg-white fixed top-0 left-0 w-screen h-[calc(var(--vh,1vh)*100)] z-40 pointer-events-auto flex items-center justify-center">
+        <button
+          className={clsx(
+            "fixed top-0 right-0 m-3 border-2 border-black p-2 rounded-full transition",
+            clicked
+              ? "shadow-[0_0_0_0_rgba(0,0,0,1.00)] translate-x-1.5 translate-y-1.5"
+              : "shadow-neobrutalist-sm"
+          )}
+          onClick={() => {
+            handleClick();
+          }}
+        >
+          <CrossOutlined />
+        </button>
+        Error...
+      </div>
+    );
+  }
+
   return createPortal(
     <motion.div
       className="fixed top-0 left-0 w-screen h-[calc(var(--vh,1vh)*100)] z-40 pointer-events-auto"
@@ -96,21 +144,7 @@ const EventDetails = ({
           loadingDone ? "opacity-0 h-0! w-0!" : "opacity-100"
         )}
       >
-        <svg
-          aria-hidden="true"
-          className="w-12 h-12 text-neutral-tertiary animate-spin fill-brand"
-          viewBox="0 0 100 101"
-          fill="none"
-        >
-          <path
-            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-            className="fill-primary-background"
-          />
-          <path
-            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-            className="fill-primary"
-          />
-        </svg>
+        <Spinner />
         <span className="sr-only">Loading...</span>
       </div>
 
@@ -160,59 +194,91 @@ const EventDetails = ({
         </div>
 
         {/* Main body */}
-        <div className="absolute top-32 border-t-2 border-black h-[calc(100%-128px)] w-full bg-white overflow-y-auto">
-          <img
-            src={"/images/image_placeholder.jpg"}
-            onLoad={() =>
-              setLoading((prev) => ({
-                ...prev,
-                image: true, // update image flag immutably
-              }))
-            }
-            className="max-h-[50%] w-full object-cover flex-1"
-          />
-          <div className="border-t-2 border-black pt-6 px-6 h-fit">
-            <h1 className="font-secondary font-bold text-xl">{title}</h1>
-            <div className="font-secondary flex justify-between text-grayed mt-[9px] h-[27px]">
-              <p className="flex items-center gap-2">
-                {formatEventDateTime(datetime)}
-                <CheckCircle className="[&_path]:fill-primary!" />
-              </p>
-              <p>{location}</p>
+        {eventData !== null && (
+          <div className="absolute top-32 border-t-2 border-black h-[calc(100%-128px)] w-full bg-white overflow-y-auto">
+            <img
+              src={eventData.image_path}
+              onLoad={() =>
+                setLoading((prev) => ({
+                  ...prev,
+                  image: true, // update image flag immutably
+                }))
+              }
+              className="max-h-[50%] w-full object-cover flex-1"
+            />
+            <div className="border-t-2 border-black pt-6 px-6 h-fit">
+              <h1 className="font-secondary font-bold text-xl">
+                {eventData.title}
+              </h1>
+              <div className="font-secondary flex justify-between text-grayed mt-[9px] h-[27px]">
+                <p className="flex items-center gap-2">
+                  {formatEventDateTime(eventData.datetime)}
+                  <CheckCircle className="[&_path]:fill-primary!" />
+                </p>
+                <p>{eventData.location}</p>
+              </div>
+              <div className="flex gap-1 overflow-x-scroll hide-scrollbar mt-4">
+                {eventData.categories.map((value, index) => {
+                  return (
+                    <Chip
+                      key={value + index}
+                      clickable={false}
+                      content={value}
+                    />
+                  );
+                })}
+              </div>
+              <div className="mt-5 w-full">
+                <ProgressBar
+                  progress={
+                    (eventData.participants / eventData.max_participants) * 100
+                  }
+                  content={`${eventData.participants} / ${eventData.max_participants} Participants`}
+                  className="z-41"
+                />
+              </div>
+              <div className="font-secondary mt-5 pb-20">
+                {eventData.description}
+              </div>
             </div>
-            <div className="flex gap-1 overflow-x-scroll hide-scrollbar mt-4">
-              {categories.map((value, index) => {
-                return (
-                  <Chip key={value + index} clickable={false} content={value} />
-                );
-              })}
-            </div>
-            <div className="mt-5 w-full">
-              <ProgressBar
-                progress={(participants / max_participants) * 100}
-                content={`${participants} / ${max_participants} Participants`}
-                className="z-41"
-              />
-            </div>
-            <div className="font-secondary mt-5 pb-20">{description}</div>
           </div>
-        </div>
-      </div>
-      <div className="absolute bottom-0 left-0 w-full p-4 flex">
-        {enrolled ? (
-          <NegativeButton
-            text={"CANCEL ENROLLEMENT"}
-            containerClassName="w-full"
-            onClick={() => onCancel()}
-          />
-        ) : (
-          <PrimaryButton
-            text={"ENROLL ME!"}
-            containerClassName="w-full"
-            onClick={() => onEnroll()}
-          />
         )}
       </div>
+      {eventData !== null && (
+        <div className="absolute bottom-0 left-0 w-full p-4 flex">
+          {eventData.user_enrolled ? (
+            <NegativeButton
+              text={"CANCEL ENROLLEMENT"}
+              containerClassName="w-full"
+              onClick={async () => {
+                await fetch(`api/enrollment/unenroll/${id}`, {
+                  method: "PUT",
+                  headers: { "X-Device-Id": loginContext.state.deviceId },
+                });
+
+                onCancel();
+
+                await fetchEvent();
+              }}
+            />
+          ) : (
+            <PrimaryButton
+              text={"ENROLL ME!"}
+              containerClassName="w-full"
+              onClick={async () => {
+                await fetch(`api/enrollment/enroll/${id}`, {
+                  method: "PUT",
+                  headers: { "X-Device-Id": loginContext.state.deviceId },
+                });
+                
+                onEnroll();
+
+                await fetchEvent();
+              }}
+            />
+          )}
+        </div>
+      )}
     </motion.div>,
     document.body
   );
