@@ -53,6 +53,7 @@ export function LoginProvider({ children }: { children: React.ReactNode }) {
         id: id,
         name: id.slice(0, 6),
         enrollments: [],
+        my_events: [],
       } as UserType)
     );
     fetch("api/user/", {
