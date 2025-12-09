@@ -11,38 +11,39 @@ export default function CalendarPage() {
   const loginContext = useLoginContext();
 
   // --- Data Fetching ---
-  useEffect(() => {
-    const fetchEvents = async () => {
-      // Guard clause if deviceId isn't ready
-      if (!loginContext?.state?.deviceId) return;
 
-      try {
-        const response = await fetch("/api/events", {
-          method: "GET",
-          headers: { "X-Device-Id": loginContext.state.deviceId },
-        });
+  const fetchEvents = async () => {
+    // Guard clause if deviceId isn't ready
+    if (!loginContext?.state?.deviceId) return;
 
-        if (response.ok) {
-          const data: EventType[] = await response.json();
+    try {
+      const response = await fetch("/api/events", {
+        method: "GET",
+        headers: { "X-Device-Id": loginContext.state.deviceId },
+      });
 
-          // Filter: Keep only events where user is enrolled
-          const enrolledEvents = data.filter(event => event.user_enrolled === true);
+      if (response.ok) {
+        const data: EventType[] = await response.json();
 
-          setEvents(enrolledEvents);
-        } else {
-          console.error("Failed to fetch events");
-        }
-      } catch (error) {
-        console.error("Error fetching events:", error);
+        // Filter: Keep only events where user is enrolled
+        const enrolledEvents = data.filter(event => event.user_enrolled === true);
+
+        setEvents(enrolledEvents);
+      } else {
+        console.error("Failed to fetch events");
       }
-    };
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchEvents();
   }, [loginContext?.state?.deviceId]); // Re-run if deviceId changes
 
   return (
     <div className="min-h-screen pt-10">
-      <Calendar events={events} />
+      <Calendar events={events} onFetchEvents={fetchEvents} />
     </div>
   );
 }

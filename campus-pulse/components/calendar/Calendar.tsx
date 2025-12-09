@@ -5,16 +5,48 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { CalendarTop } from "@/public/background_patterns/CalendarTop";
 import { EventType } from "@/types/types";
+import EventDetails from "@/page_components/event_details/EventDetails";
+import { useLoginContext } from "@/contexts/LoginContext";
 
 
 interface CalendarProps {
   events?: EventType[];
+  onFetchEvents?: () => any;
 }
 
 // --- 2. Main Calendar Component ---
-export default function Calendar({ events = [] }: CalendarProps) {
+export default function Calendar({ events = [], onFetchEvents = () => {}, }: CalendarProps) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [view, setView] = useState<"month" | "week">("month");
+  const [detailViewId, setDetailViewId] = useState<string | null>(null);
+  const loginContext = useLoginContext();
+
+  const onEventClick = (item: EventType) => {
+    setDetailViewId(item.id);
+  };
+
+  const onEventCancel = async (eid: string, withFetch = false as boolean) => {
+    if (!eid) {
+      console.error("No eventId was provided");
+    }
+
+    if (withFetch) {
+      await fetch(`api/enrollment/unenroll/${eid}`, {
+                  method: "PUT",
+                  headers: { "X-Device-Id": loginContext.state.deviceId },
+                });
+    }
+
+    onFetchEvents();
+  };
+
+  const onEventEnroll = async (eid: string) => {
+    if (!eid) {
+      console.error("No eventId was provided");
+    }
+
+    onFetchEvents();
+  };
 
   // Navigation Logic
   const handlePrevClick = () => {
@@ -202,7 +234,7 @@ export default function Calendar({ events = [] }: CalendarProps) {
                     <div
                       key={event.id}
                       className="cursor-pointer group"
-                      onClick={() => console.log("Clicked event:", event.title)}
+                      onClick={() => onEventClick(event)}
                     >
                       {/* --- Event Item Styling based on View --- */}
                       {view === 'month' ? (
@@ -238,6 +270,20 @@ export default function Calendar({ events = [] }: CalendarProps) {
           })}
         </div>
       </div>
+
+      {/* DETAILS VIEW */}
+      {detailViewId !== null && (
+        <EventDetails
+          id={detailViewId}
+          onCancel={() => onEventCancel(detailViewId)}
+          onEnroll={() => onEventEnroll(detailViewId)}
+          onClose={() => {
+            setTimeout(() => {
+              setDetailViewId(null);
+            }, 300);
+          }}
+        />
+      )}
     </div>
   );
 }
