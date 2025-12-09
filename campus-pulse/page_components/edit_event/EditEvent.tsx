@@ -157,12 +157,15 @@ const EditEvent = ({
     if (!final_data.location.trim()) errors.push("Location is required");
     if (final_data.max_participants <= 0)
       errors.push("Max participants must be greater than 0");
-
     if (final_data.recurring && !final_data.recurrence_intervall)
-      if (errors.length > 0) {
-        alert(errors.join("\n"));
-        return;
-      }
+      errors.push(
+        "Event is labeled as recurring but no recurrence interval was given"
+      );
+
+    if (errors.length > 0) {
+      alert(errors.join("\n"));
+      return;
+    }
 
     const formData = new FormData();
     formData.append("data", JSON.stringify(final_data));
