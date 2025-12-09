@@ -23,8 +23,30 @@ const EventTypeDefault: Partial<EventType> = {
 const eventDataPath = path.join(process.cwd(), "public", "data", "events.json");
 const eventLockPath = path.join(process.cwd(), "public", "data", "events.lock");
 const userDataPath = path.join(process.cwd(), "public", "data", "users.json");
+const userLockPath = path.join(process.cwd(), "public", "data", "users.lock");
 const uploadsPath = path.join(process.cwd(), "public", "uploads");
 const uploadsPathForClient = "uploads";
+
+/**
+ * Simple file lock - prevents concurrent writes
+ */
+async function acquireUserLock(): Promise<void> {
+  const maxAttempts = 50;
+  const delay = 100; // ms
+
+  for (let i = 0; i < maxAttempts; i++) {
+    try {
+      await fs.access(userLockPath);
+      // Lock exists, wait and retry
+      await new Promise((resolve) => setTimeout(resolve, delay));
+    } catch {
+      // Lock doesn't exist, create it
+      await fs.writeFile(userLockPath, Date.now().toString());
+      return;
+    }
+  }
+  throw new Error("Could not acquire lock after retries");
+}
 
 /** Event file locking */
 async function acquireEventLock(): Promise<void> {
@@ -33,7 +55,7 @@ async function acquireEventLock(): Promise<void> {
   for (let i = 0; i < maxAttempts; i++) {
     try {
       await fs.access(eventLockPath);
-      await new Promise(resolve => setTimeout(resolve, delay));
+      await new Promise((resolve) => setTimeout(resolve, delay));
     } catch {
       await fs.writeFile(eventLockPath, Date.now().toString());
       return;
@@ -42,10 +64,18 @@ async function acquireEventLock(): Promise<void> {
   throw new Error("Could not acquire events lock");
 }
 
+async function releaseUserLock(): Promise<void> {
+  try {
+    await fs.unlink(userLockPath);
+  } catch {
+    // Ignore if lock doesn't exist
+  }
+}
+
 async function releaseEventLock(): Promise<void> {
   try {
     await fs.unlink(eventLockPath);
-  } catch { }
+  } catch {}
 }
 
 async function readEventData(): Promise<EventType[]> {
@@ -66,36 +96,50 @@ async function readUserData(): Promise<UserType[]> {
   }
 }
 
+async function writeUserData(data: UserType[]): Promise<void> {
+  await fs.mkdir(path.dirname(userDataPath), { recursive: true });
+  await fs.writeFile(userDataPath, JSON.stringify(data, null, 2));
+}
+
 async function writeEventData(data: any[]) {
   await fs.mkdir(path.dirname(eventDataPath), { recursive: true });
   await fs.writeFile(eventDataPath, JSON.stringify(data, null, 2));
 }
 
-export async function GET(request: NextRequest, { params }: { params: Promise<{ eid: string }> }) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ eid: string }> }
+) {
   const userId = request.headers.get("X-Device-Id") ?? "anonymous";
   const { eid } = await params;
 
   const events = await readEventData();
   let event = events.find((value) => value.id === eid);
-  
+
   if (!event) {
-    return NextResponse.json({ error: `Event with id ${eid} not found.` }, { status: 404 });
+    return NextResponse.json(
+      { error: `Event with id ${eid} not found.` },
+      { status: 404 }
+    );
   }
 
   if (userId !== "anonymous") {
     const users = await readUserData();
     const user = users.find((ele) => ele.id === userId);
-    if (user && user.enrollments.includes(eid)) {
-      event = { ...event, user_enrolled: true };
-    } else {
-      event = { ...event, user_enrolled: false };
-    }
+    event = {
+      ...event,
+      user_enrolled: user?.enrollments.includes(event.id),
+      created_by_user: user?.my_events.includes(event.id),
+    };
   }
 
   return NextResponse.json(event, { status: 200 });
 }
 
-export async function PUT(request: NextRequest, { params }: { params: Promise<{ eid: string }> }) {
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ eid: string }> }
+) {
   const { eid } = await params;
   const formData = await request.formData();
   const data_json = formData.get("data") as string;
@@ -107,26 +151,35 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
 
   const data = JSON.parse(data_json) as Partial<EventType>;
   if (!eid) {
-    return NextResponse.json({ error: "Missing or invalid id" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Missing or invalid id" },
+      { status: 400 }
+    );
   }
 
   const keys = Object.keys(data);
   if (!((keys.length === 1 && file) || keys.length > 1)) {
-    return NextResponse.json({
-      error: "Only id was given, add at least one more parameter or an image",
-    }, { status: 400 });
+    return NextResponse.json(
+      {
+        error: "Only id was given, add at least one more parameter or an image",
+      },
+      { status: 400 }
+    );
   }
 
   try {
     // **LOCK → READ → MODIFY → WRITE → UNLOCK**
     await acquireEventLock();
-    
+
     const events = await readEventData();
     const index = events.findIndex((e: any) => e.id === eid);
-    
+
     if (index === -1) {
       await releaseEventLock();
-      return NextResponse.json({ error: `Event with id ${eid} not found` }, { status: 404 });
+      return NextResponse.json(
+        { error: `Event with id ${eid} not found` },
+        { status: 404 }
+      );
     }
 
     let updatedEvent = events[index];
@@ -147,7 +200,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
           console.warn("Failed to delete old image:", error);
         }
       }
-      
+
       const fileExtension = path.extname(file.name);
       const filename = `${randomUUID()}${fileExtension}`;
       const filePath = path.join(uploadsPath, filename);
@@ -155,38 +208,51 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       await fs.mkdir(uploadsPath, { recursive: true });
       const bytes = await file.arrayBuffer();
       await fs.writeFile(filePath, Buffer.from(bytes));
-      
+
       updatedEvent.image_path = path.join(uploadsPathForClient, filename);
     }
 
     events[index] = updatedEvent;
     await writeEventData(events);
     await releaseEventLock();
-    
+
     return NextResponse.json({ message: "successful" }, { status: 200 });
   } catch (error) {
     await releaseEventLock();
     console.error("Event update failed:", error);
-    return NextResponse.json({ error: "Failed to update event" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to update event" },
+      { status: 500 }
+    );
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: Promise<{ eid: string }> }) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ eid: string }> }
+) {
+  const userId = request.headers.get("X-Device-Id") ?? "anonymous";
   const { eid } = await params;
-  
+
   if (!eid) {
-    return NextResponse.json({ error: "Missing or invalid id" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Missing or invalid id" },
+      { status: 400 }
+    );
   }
 
   try {
     await acquireEventLock();
-    
+
     const events = await readEventData();
     const index = events.findIndex((e: EventType) => e.id === eid);
-    
+
     if (index === -1) {
       await releaseEventLock();
-      return NextResponse.json({ error: `Event with id ${eid} not found` }, { status: 404 });
+      return NextResponse.json(
+        { error: `Event with id ${eid} not found` },
+        { status: 404 }
+      );
     }
 
     // Delete image first
@@ -203,12 +269,33 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
 
     events.splice(index, 1);
     await writeEventData(events);
+
+    const users = await readUserData();
+    const userIndex = users.findIndex((ele) => ele.id === userId);
+    if (userIndex === -1) {
+      await releaseUserLock();
+      await releaseEventLock();
+      return NextResponse.json(
+        { error: `No user found with id ${userId}.` },
+        { status: 404 }
+      );
+    }
+
+    const user = users[userIndex];
+    user.my_events.filter((ele) => ele !== eid);
+    await writeUserData(users);
     await releaseEventLock();
-    
-    return NextResponse.json({ message: "Event deleted successfully" }, { status: 200 });
+
+    return NextResponse.json(
+      { message: "Event deleted successfully" },
+      { status: 200 }
+    );
   } catch (error) {
     await releaseEventLock();
     console.error("Event deletion failed:", error);
-    return NextResponse.json({ error: "Failed to delete event" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to delete event" },
+      { status: 500 }
+    );
   }
 }

@@ -2,6 +2,7 @@ import clsx from "clsx";
 import NegativeButton from "../buttons/NegativeButton";
 
 import { formatEventDateTime } from "@/utils/formatDateTime";
+import PrimaryButton from "../buttons/PrimaryButton";
 
 const Card = ({
   imageSrc = "images/image_placeholder.jpg",
@@ -12,7 +13,9 @@ const Card = ({
   tall = false,
   height = null,
   enrolled = false,
-  onCancel = () => { },
+  enrollmentAllowed = false,
+  onEnroll = () => {},
+  onCancel = () => {},
 }: {
   imageSrc?: string;
   title?: string | null;
@@ -22,15 +25,15 @@ const Card = ({
   tall?: boolean;
   height?: string | number | null;
   enrolled?: boolean;
-  onCancel?: () => void;
+  enrollmentAllowed?: boolean
+  onEnroll?: () => any;
+  onCancel?: () => any;
 }) => {
   let heightClass = height;
   if (height === null && tall) heightClass = "h-112";
   else if (height === null && !tall) heightClass = "h-64";
 
-  const formattedDatetime = datetime
-    ? formatEventDateTime(datetime)
-    : null;
+  const formattedDatetime = datetime ? formatEventDateTime(datetime) : null;
 
   return (
     <div
@@ -62,14 +65,37 @@ const Card = ({
           </p>
         )}
       </div>
-      {enrolled && <div className="h-18 flex justify-evenly items-center border-t-2 border-black">
-        <p className=" font-semibold text-primary h-12 text-center content-center">
-          ENROLLED
-        </p>
-        <div className="w-fit text-xl">
-          <NegativeButton text={"CANCEL"} containerClassName="[&_button]:px-4" onClick={() => onCancel()} />
+      {enrolled && (
+        <div className="h-16 flex justify-evenly pt-1.25 border-t-2 border-black">
+          <p className="pt-1 font-semibold text-primary h-12 text-center content-center">
+            ENROLLED
+          </p>
+          <div className="w-fit text-xl">
+            <NegativeButton
+              stopPropagation
+              text={"CANCEL"}
+              containerClassName="[&_button]:px-4"
+              onClick={() => {
+                onCancel();
+              }}
+            />
+          </div>
         </div>
-      </div>}
+      )}
+      {enrollmentAllowed && !enrolled && (
+        <div className="h-16 flex justify-evenly pt-1.25 border-t-2 border-black w-full">
+          <div className="w-full text-xl px-2">
+            <PrimaryButton
+              stopPropagation
+              text={"ENROLL"}
+              onClick={() => {
+                console.log("enroll")
+                onEnroll();
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

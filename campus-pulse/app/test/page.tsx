@@ -27,7 +27,7 @@ const page = () => {
     fetchEvents();
   }, []);
 
-  function handleCardClick(id: number | string) {
+  function handleCardClick(id: string) {
     setEditEvent(id);
   }
 
@@ -74,14 +74,14 @@ const page = () => {
               }
               location={event.location}
               enrolled={event.user_enrolled}
-              onCancel={() => {
-                fetch(`api/enrollment/unenroll/${event.id}`, {
+              onCancel={async () => {
+                await fetch(`api/enrollment/unenroll/${event.id}`, {
                   method: "PUT",
                   headers: { "X-Device-Id": loginContext.state.deviceId },
                 });
                 setTimeout(() => {
                   fetchEvents();
-                }, 500);
+                }, 200);
               }}
             />
           </div>

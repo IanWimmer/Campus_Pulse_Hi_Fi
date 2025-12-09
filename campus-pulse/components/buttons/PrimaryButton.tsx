@@ -11,19 +11,26 @@ const PrimaryButton = ({
   },
   text,
   containerClassName = "",
-  buttonClassName = ""
+  buttonClassName = "",
+  stopPropagation = false,
 }: {
   onClick?: () => void;
   text: string | React.ReactNode;
   containerClassName?: string;
   buttonClassName?: string;
+  stopPropagation?: boolean;
 }) => {
-  const {clicked, handleClick} = useClickAnimation(onClick, {delay: 300})
+  const { clicked, handleClick } = useClickAnimation(onClick, { delay: 300 });
 
   return (
     <div className={clsx(containerClassName, "pr-1.5")}>
       <motion.button
-        onClick={handleClick}
+        onClick={(event) => {
+          if (stopPropagation) {
+            event.stopPropagation();
+          }
+          handleClick();
+        }}
         className={clsx(
           "w-full h-12 bg-primary text-white rounded-md border-2 border-black text-xl font-semibold transition",
           buttonClassName,

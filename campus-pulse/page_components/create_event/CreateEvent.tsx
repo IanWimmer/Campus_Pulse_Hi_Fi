@@ -15,6 +15,7 @@ import clsx from "clsx";
 import { motion } from "motion/react";
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { useLoginContext } from "@/contexts/LoginContext";
 
 type loadingType = {
   image: boolean;
@@ -40,9 +41,10 @@ const CreateEvent = ({
   const [showRecurring, setShowRecurring] = useState<boolean>(false);
   const [categoriesFocused, setCategoriesFocused] = useState<boolean>(false);
 
-  const [categories, setCategories] = useState<string[]>([])
-  const [categorySearchSelection, setCategorySearchSelection] =
-    useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [categorySearchSelection, setCategorySearchSelection] = useState<
+    string[]
+  >([]);
 
   const [eventData, setEventData] = useState<EventType>({
     id: "",
@@ -61,25 +63,28 @@ const CreateEvent = ({
   });
   const [categorySelection, setCategorySelection] = useState<string[]>([]);
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [enrollOnCreation, setEnrollOnCreation] = useState<boolean>(true)
 
+  const loginContext = useLoginContext();
 
   useEffect(() => {
     const fetchCategories = async () => {
       const res = await fetch("api/categories");
 
       if (!res.ok) {
-        console.error("Failed to fetch categories")
+        console.error("Failed to fetch categories");
         return;
       }
 
-      const rc = await res.json() as string[]
-      setCategories(rc)
-      setCategorySearchSelection(prev => {return prev.length > 0 ? prev : rc})
-    }
+      const rc = (await res.json()) as string[];
+      setCategories(rc);
+      setCategorySearchSelection((prev) => {
+        return prev.length > 0 ? prev : rc;
+      });
+    };
 
-    fetchCategories()
-  }, [])
-
+    fetchCategories();
+  }, []);
 
   const handleClose = () => {
     setShow(false); // Start exit animation
@@ -111,15 +116,15 @@ const CreateEvent = ({
       errors.push("Max participants must be greater than 0");
 
     if (final_data.recurring && !final_data.recurrence_intervall)
-
-    if (errors.length > 0) {
-      // replace with your own toast / UI
-      alert(errors.join("\n"));
-      return;
-    }
+      if (errors.length > 0) {
+        // replace with your own toast / UI
+        alert(errors.join("\n"));
+        return;
+      }
 
     const formData = new FormData();
     formData.append("data", JSON.stringify(final_data));
+    formData.append("enroll", JSON.stringify(enrollOnCreation))
     if (imageFile) {
       formData.append("image", imageFile, imageFile.name);
     }
@@ -130,6 +135,7 @@ const CreateEvent = ({
       const res = await fetch("/api/event", {
         method: "POST",
         body: formData,
+        headers: { "X-Device-Id": loginContext.state.deviceId },
       });
 
       if (!res.ok) {
@@ -429,6 +435,19 @@ const CreateEvent = ({
               </div>
             </div>
           )}
+        </div>
+        <div className="px-7 mt-10">
+          <div className="flex items-center justify-between">
+            <span className="font-secondary ml-3 font-medium">
+              Enroll me upon creation
+            </span>
+            <Switch
+              initialState={true}
+              onSwitch={(new_state) =>
+                setEnrollOnCreation(new_state)
+              }
+            />
+          </div>
         </div>
       </div>
 

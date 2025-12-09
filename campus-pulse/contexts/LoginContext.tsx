@@ -16,8 +16,6 @@ export function LoginProvider({ children }: { children: React.ReactNode }) {
   const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
   const [deviceId, setDeviceId] = useState<string>("");
 
-  const loginContext = useLoginContext();
-
   const key = "campus-pulse-device-id";
 
   function generateUUID(): string {
@@ -49,14 +47,17 @@ export function LoginProvider({ children }: { children: React.ReactNode }) {
 
   const createNewUser = async (id: string) => {
     const formData = new FormData();
-    formData.append("data", JSON.stringify({
-      id: id,
-      name: id.slice(0, 6),
-      enrollments: [],
-    } as UserType))
+    formData.append(
+      "data",
+      JSON.stringify({
+        id: id,
+        name: id.slice(0, 6),
+        enrollments: [],
+      } as UserType)
+    );
     fetch("api/user/", {
       method: "POST",
-      body: formData
+      body: formData,
     });
   };
 
@@ -66,7 +67,7 @@ export function LoginProvider({ children }: { children: React.ReactNode }) {
 
     if (!id) {
       setLoggedIn(false);
-      setDeviceId("")
+      setDeviceId("");
       return;
     }
 
@@ -86,19 +87,17 @@ export function LoginProvider({ children }: { children: React.ReactNode }) {
 
     setLoggedIn(true);
 
-    setDeviceId(id)
+    setDeviceId(id);
   };
 
   const createAsyncDeviceId = async () => {
     const id = await createNewDeviceId();
-    createNewUser(id)
+    createNewUser(id);
     setDeviceId(id);
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      getDeviceId();
-    }, 500);
+    getDeviceId();
   }, []);
 
   return (

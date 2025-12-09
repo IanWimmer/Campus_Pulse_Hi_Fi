@@ -19,6 +19,7 @@ import { motion } from "motion/react";
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import AcceptanceModal from "@/components/acceptance_modal/AcceptanceModal";
+import { useLoginContext } from "@/contexts/LoginContext";
 
 type loadingType = {
   image: boolean;
@@ -54,6 +55,8 @@ const EditEvent = ({
   const [imageFile, setImageFile] = useState<File | null>(null);
 
   const [modal, setModal] = useState<React.ReactNode | undefined>();
+
+  const loginContext = useLoginContext();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -171,11 +174,12 @@ const EditEvent = ({
       const res = await fetch(`api/event/${id}`, {
         method: "PUT",
         body: formData,
+        headers: { "X-Device-Id": loginContext.state.deviceId },
       });
 
       if (!res.ok) {
         if (res.status == 500) {
-          alert("Something went wrong in the server.\n Try again!")
+          alert("Something went wrong in the server.\n Try again!");
         }
         console.error("Failed to create event", await res.text());
       }
@@ -201,22 +205,29 @@ const EditEvent = ({
         onAcceptance={() => setModal(undefined)}
         onRejection={async () => {
           try {
-            setLoadingSubmit(true)
-            setModal(undefined)
+            setLoadingSubmit(true);
+            setModal(undefined);
 
-            const res = await fetch(`api/event/${id}`, {method: "DELETE"})
+            const res = await fetch(`api/event/${id}`, {
+              method: "DELETE",
+              headers: { "X-Device-Id": loginContext.state.deviceId },
+            });
 
             if (!res.ok) {
               const errorResponse = await res.json();
-              console.error("Failed to delete event:", (errorResponse as {error: string}).error)
-              return
+              console.error(
+                "Failed to delete event:",
+                (errorResponse as { error: string }).error
+              );
+              return;
             }
 
-            handleClose()
-
-          } catch(err) {
-            console.error("Failed to delete event:", err)
-          } finally {setLoadingSubmit(false)}
+            handleClose();
+          } catch (err) {
+            console.error("Failed to delete event:", err);
+          } finally {
+            setLoadingSubmit(false);
+          }
         }}
       />
     );
@@ -225,7 +236,7 @@ const EditEvent = ({
   return createPortal(
     <motion.div
       className={clsx(
-        "fixed top-0 left-0 w-full h-[calc(var(--vh,1vh)*100)] z-40 pointer-events-auto flex flex-col bg-white overflow-y-scroll"
+        "fixed top-0 left-0 w-full h-[calc(var(--vh,1vh)*100)] z-41 pointer-events-auto flex flex-col bg-white overflow-y-scroll"
       )}
       initial={{ x: "100%" }}
       animate={{ x: show ? 0 : "100%" }}

@@ -2,6 +2,7 @@ import { NavigationTabType } from "@/types/types";
 import clsx from "clsx";
 
 import AddEventButton from "./buttons/AddEventButton";
+import { createPortal } from "react-dom";
 
 const NavigationBarButton = ({
   tabInfo,
@@ -74,11 +75,11 @@ const NavigationBar = ({
 }) => {
 
   return (
-    <>
+    <div className="pb-3.5">
       <div className="absolute right-1.5 bottom-20">
-        <AddEventButton onClick={() => onOpenCreateEvent()}/>
+        <AddEventButton onClick={() => {onOpenCreateEvent(); console.log("open")}}/>
       </div>
-      <div className="w-[calc(100vw-24px)] h-[50px] z-30 ml-2 bg-primary-background border-2 border-black shadow-neobrutalist rounded-full flex justify-between">
+      <div className="w-[calc(100vw-24px)] h-[50px] ml-2 bg-primary-background border-2 border-black shadow-neobrutalist rounded-full flex justify-between">
         {options.map((tab) => {
           return (
             <NavigationBarButton
@@ -90,7 +91,7 @@ const NavigationBar = ({
           );
         })}
       </div>
-    </>
+    </div>
   );
 };
 

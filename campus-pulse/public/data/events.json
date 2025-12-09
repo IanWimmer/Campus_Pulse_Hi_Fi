@@ -35,23 +35,6 @@
     "participants": 3
   },
   {
-    "id": "3",
-    "title": "Indoor Scavenger Hunt",
-    "image_path": "/images/image_placeholder.jpg",
-    "description": "Find quirky items around campus in teams. Fast-paced fun!",
-    "datetime": "2025-12-17T16:12:20.000Z",
-    "recurring": false,
-    "recurrence_intervall": null,
-    "location": "HG E 4",
-    "public_status": "public",
-    "categories": [
-      "Adventure",
-      "Team"
-    ],
-    "max_participants": 10,
-    "participants": 4
-  },
-  {
     "id": "4",
     "title": "Weekly Trivia Blitz",
     "image_path": "/images/trivia-feed.jpg",
@@ -84,40 +67,6 @@
     ],
     "max_participants": 8,
     "participants": 2
-  },
-  {
-    "id": "6",
-    "title": "Two Truths Game",
-    "image_path": "/images/image_placeholder.jpg",
-    "description": "Share two truths and one lie. Guess correctly!",
-    "datetime": "2025-12-19T19:15:20.000Z",
-    "recurring": false,
-    "recurrence_intervall": null,
-    "location": "CAB G 56",
-    "public_status": "private",
-    "categories": [
-      "Icebreaker",
-      "Fun"
-    ],
-    "max_participants": 6,
-    "participants": 3
-  },
-  {
-    "id": "7",
-    "title": "Glow Stick Games",
-    "image_path": "/images/image_placeholder.jpg",
-    "description": "Night games with glow sticks. Dodgeball/volleyball!",
-    "datetime": "2025-12-19T22:00:20.000Z",
-    "recurring": true,
-    "recurrence_intervall": "weekly",
-    "location": "MM ASVZ Halle 2",
-    "public_status": "public",
-    "categories": [
-      "Night",
-      "Active"
-    ],
-    "max_participants": 10,
-    "participants": 1
   },
   {
     "id": "8",
@@ -171,57 +120,6 @@
     "participants": 3
   },
   {
-    "id": "11",
-    "title": "Park Clean-up & Chat!",
-    "image_path": "/images/image_placeholder.jpg",
-    "description": "Clean campus area then casual hangout.",
-    "datetime": "2025-12-20T11:20:20.000Z",
-    "recurring": true,
-    "recurrence_intervall": "monthly",
-    "location": "HPZ Wiese",
-    "public_status": "public",
-    "categories": [
-      "Community",
-      "Outdoor"
-    ],
-    "max_participants": 6,
-    "participants": 1
-  },
-  {
-    "id": "12",
-    "title": "Skill Share Circle",
-    "image_path": "/images/image_placeholder.jpg",
-    "description": "Teach/learn quick skills (tying knots, magic tricks).",
-    "datetime": "2025-12-22T18:15:20.000Z",
-    "recurring": false,
-    "recurrence_intervall": null,
-    "location": "HG F 33.4",
-    "public_status": "public",
-    "categories": [
-      "Learning",
-      "Skills"
-    ],
-    "max_participants": 8,
-    "participants": 2
-  },
-  {
-    "id": "13",
-    "title": "Sunset Walk Meetup!",
-    "image_path": "/images/image_placeholder.jpg",
-    "description": "Casual evening walk around campus.",
-    "datetime": "2025-12-18T16:45:20.000Z",
-    "recurring": true,
-    "recurrence_intervall": "weekly",
-    "location": "Hönggerberg Student Village",
-    "public_status": "public",
-    "categories": [
-      "Walk",
-      "Relaxing"
-    ],
-    "max_participants": 10,
-    "participants": 5
-  },
-  {
     "id": "14",
     "title": "Emergency Dance Party",
     "image_path": "uploads\\d73c1b37-b8e8-47a2-8e8d-982b0da6e74f.jpg",
@@ -237,7 +135,7 @@
       "Energy"
     ],
     "max_participants": 15,
-    "participants": 6
+    "participants": 7
   },
   {
     "id": "0ff10075-df37-438e-9c85-87be2821bbee",
@@ -263,7 +161,7 @@
     "id": "acf675c0-7650-4659-a331-de1615f2a40d",
     "title": "Movie night",
     "image_path": "uploads\\20c09002-5512-4fe5-bac7-5150248ac29d.jpg",
-    "description": "Spontaneous movie night this evening et ETH",
+    "description": "Spontaneous movie night this evening et ETH!",
     "datetime": "2025-12-08T19:00:00.000Z",
     "recurring": true,
     "recurrence_intervall": "",
@@ -277,6 +175,73 @@
       "Film"
     ],
     "max_participants": "300",
+    "participants": 0,
+    "user_enrolled": false
+  },
+  {
+    "id": "a7e0fb02-5b75-4258-b915-2a9a9ebcdb71",
+    "title": "Weihnachtsmarkt",
+    "image_path": "uploads\\f5e16710-43be-461f-9b76-806541b57215.jpg",
+    "description": "Lets go to the Weihnachtsmarkt",
+    "datetime": "2025-12-08T19:45:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "Europaallee",
+    "geo_location": "",
+    "public_status": "public",
+    "categories": [
+      "Casual",
+      "Spontaneous",
+      "Fun",
+      "Night",
+      "Food",
+      "Outdoor",
+      "Icebreaker"
+    ],
+    "max_participants": "15",
+    "participants": 0,
+    "user_enrolled": false
+  },
+  {
+    "id": "efb5bec9-e7f4-4ce7-80e4-9a9605617c0b",
+    "title": "Jogging along the Limmat",
+    "image_path": "uploads\\483389a8-f21f-4f88-ab8e-f0249edd43d7.jpg",
+    "description": "Let's go",
+    "datetime": "2025-12-09T12:45:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "Bahnhofsbrücke",
+    "geo_location": "",
+    "public_status": "public",
+    "categories": [
+      "Fun",
+      "Casual",
+      "Sports",
+      "Active"
+    ],
+    "max_participants": "15",
+    "participants": 1,
+    "user_enrolled": false
+  },
+  {
+    "id": "d1f5322b-3d8a-4d42-9798-9ce490ed2304",
+    "title": "Boardgame Evening",
+    "image_path": "uploads\\97a40cea-03e7-4d25-bec0-ede69b8022f9.jpg",
+    "description": "We'll be playing some boardgames and have a fun time together!!!",
+    "datetime": "2025-12-12T19:20:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "HG F41.1",
+    "geo_location": "",
+    "public_status": "public",
+    "categories": [
+      "Fun",
+      "Casual",
+      "Boardgame",
+      "Night",
+      "Food"
+    ],
+    "max_participants": "12",
     "participants": 0,
     "user_enrolled": false
   }

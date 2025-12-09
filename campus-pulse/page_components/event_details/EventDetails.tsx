@@ -13,6 +13,10 @@ import { createPortal } from "react-dom";
 import Spinner from "@/components/icons/Spinner";
 
 import { formatEventDateTime } from "@/utils/formatDateTime";
+import { EventType } from "@/types/types";
+import { useLoginContext } from "@/contexts/LoginContext";
+import CrossOutlined from "@/components/icons/CrossOutlined";
+import { useClickAnimation } from "@/utils/useClickAnimation";
 
 type loadingType = {
   image: boolean;
@@ -21,28 +25,13 @@ type loadingType = {
 const EventDetails = ({
   visible = true,
   onClose = () => {},
-  title = "",
-  datetime = "",
-  location = "",
-  categories = [],
-  participants = 0,
-  max_participants = 0,
-  description = "",
-  enrolled = false,
+  id = null,
   onEnroll = () => {},
   onCancel = () => {},
 }: {
   visible?: boolean;
   onClose?: () => void;
-  title?: string;
-  datetime?: string;
-  location?: string;
-  geo_location?: string;
-  categories?: string[];
-  participants?: number;
-  max_participants?: number;
-  description?: string | React.ReactNode;
-  enrolled?: boolean;
+  id?: string | null;
   onEnroll?: () => void;
   onCancel?: () => void;
 }) => {
@@ -50,8 +39,43 @@ const EventDetails = ({
   const [loading, setLoading] = useState<loadingType>({
     image: false,
   });
+  const [eventData, setEventData] = useState<EventType | null>(null);
 
   const [loadingDone, setLoadingDone] = useState<boolean>(false);
+  const loginContext = useLoginContext();
+
+  const fetchEvent = async () => {
+    try {
+      // console.log("fetching event");
+      const res = await fetch(`api/event/${id}`, {
+        method: "GET",
+        headers: { "X-Device-Id": loginContext.state.deviceId },
+      });
+
+      // console.log(res);
+
+      if (!res.ok) {
+        const errorResponse = await res.json();
+        console.error(
+          "Failed to fetch event:",
+          (errorResponse as { error: string }).error
+        );
+      }
+
+      const data = (await res.json()) as EventType;
+      setEventData(data);
+    } catch (err) {
+      console.error("Failed to fetch event:", err);
+    }
+  };
+
+  useEffect(() => {
+    if (id === null) {
+      setLoadingDone(true);
+    } else {
+      fetchEvent();
+    }
+  }, []);
 
   useEffect(() => {
     let stillLoading = false;
@@ -80,6 +104,29 @@ const EventDetails = ({
     setShow(false); // Start exit animation
     onClose(); // for full animation call onClose after 300ms delay
   };
+
+  // id === null
+  if (id === null) {
+    const { clicked, handleClick } = useClickAnimation(onClose, { delay: 300 });
+    return (
+      <div className="bg-white fixed top-0 left-0 w-screen h-[calc(var(--vh,1vh)*100)] z-40 pointer-events-auto flex items-center justify-center">
+        <button
+          className={clsx(
+            "fixed top-0 right-0 m-3 border-2 border-black p-2 rounded-full transition",
+            clicked
+              ? "shadow-[0_0_0_0_rgba(0,0,0,1.00)] translate-x-1.5 translate-y-1.5"
+              : "shadow-neobrutalist-sm"
+          )}
+          onClick={() => {
+            handleClick();
+          }}
+        >
+          <CrossOutlined />
+        </button>
+        Error...
+      </div>
+    );
+  }
 
   return createPortal(
     <motion.div
@@ -147,59 +194,91 @@ const EventDetails = ({
         </div>
 
         {/* Main body */}
-        <div className="absolute top-32 border-t-2 border-black h-[calc(100%-128px)] w-full bg-white overflow-y-auto">
-          <img
-            src={"/images/image_placeholder.jpg"}
-            onLoad={() =>
-              setLoading((prev) => ({
-                ...prev,
-                image: true, // update image flag immutably
-              }))
-            }
-            className="max-h-[50%] w-full object-cover flex-1"
-          />
-          <div className="border-t-2 border-black pt-6 px-6 h-fit">
-            <h1 className="font-secondary font-bold text-xl">{title}</h1>
-            <div className="font-secondary flex justify-between text-grayed mt-[9px] h-[27px]">
-              <p className="flex items-center gap-2">
-                {formatEventDateTime(datetime)}
-                <CheckCircle className="[&_path]:fill-primary!" />
-              </p>
-              <p>{location}</p>
+        {eventData !== null && (
+          <div className="absolute top-32 border-t-2 border-black h-[calc(100%-128px)] w-full bg-white overflow-y-auto">
+            <img
+              src={eventData.image_path}
+              onLoad={() =>
+                setLoading((prev) => ({
+                  ...prev,
+                  image: true, // update image flag immutably
+                }))
+              }
+              className="max-h-[50%] w-full object-cover flex-1"
+            />
+            <div className="border-t-2 border-black pt-6 px-6 h-fit">
+              <h1 className="font-secondary font-bold text-xl">
+                {eventData.title}
+              </h1>
+              <div className="font-secondary flex justify-between text-grayed mt-[9px] h-[27px]">
+                <p className="flex items-center gap-2">
+                  {formatEventDateTime(eventData.datetime)}
+                  <CheckCircle className="[&_path]:fill-primary!" />
+                </p>
+                <p>{eventData.location}</p>
+              </div>
+              <div className="flex gap-1 overflow-x-scroll hide-scrollbar mt-4">
+                {eventData.categories.map((value, index) => {
+                  return (
+                    <Chip
+                      key={value + index}
+                      clickable={false}
+                      content={value}
+                    />
+                  );
+                })}
+              </div>
+              <div className="mt-5 w-full">
+                <ProgressBar
+                  progress={
+                    (eventData.participants / eventData.max_participants) * 100
+                  }
+                  content={`${eventData.participants} / ${eventData.max_participants} Participants`}
+                  className="z-41"
+                />
+              </div>
+              <div className="font-secondary mt-5 pb-20">
+                {eventData.description}
+              </div>
             </div>
-            <div className="flex gap-1 overflow-x-scroll hide-scrollbar mt-4">
-              {categories.map((value, index) => {
-                return (
-                  <Chip key={value + index} clickable={false} content={value} />
-                );
-              })}
-            </div>
-            <div className="mt-5 w-full">
-              <ProgressBar
-                progress={(participants / max_participants) * 100}
-                content={`${participants} / ${max_participants} Participants`}
-                className="z-41"
-              />
-            </div>
-            <div className="font-secondary mt-5 pb-20">{description}</div>
           </div>
-        </div>
-      </div>
-      <div className="absolute bottom-0 left-0 w-full p-4 flex">
-        {enrolled ? (
-          <NegativeButton
-            text={"CANCEL ENROLLEMENT"}
-            containerClassName="w-full"
-            onClick={() => onCancel()}
-          />
-        ) : (
-          <PrimaryButton
-            text={"ENROLL ME!"}
-            containerClassName="w-full"
-            onClick={() => onEnroll()}
-          />
         )}
       </div>
+      {eventData !== null && (
+        <div className="absolute bottom-0 left-0 w-full p-4 flex">
+          {eventData.user_enrolled ? (
+            <NegativeButton
+              text={"CANCEL ENROLLEMENT"}
+              containerClassName="w-full"
+              onClick={async () => {
+                await fetch(`api/enrollment/unenroll/${id}`, {
+                  method: "PUT",
+                  headers: { "X-Device-Id": loginContext.state.deviceId },
+                });
+
+                onCancel();
+
+                await fetchEvent();
+              }}
+            />
+          ) : (
+            <PrimaryButton
+              text={"ENROLL ME!"}
+              containerClassName="w-full"
+              onClick={async () => {
+                await fetch(`api/enrollment/enroll/${id}`, {
+                  method: "PUT",
+                  headers: { "X-Device-Id": loginContext.state.deviceId },
+                });
+                
+                onEnroll();
+
+                await fetchEvent();
+              }}
+            />
+          )}
+        </div>
+      )}
     </motion.div>,
     document.body
   );
