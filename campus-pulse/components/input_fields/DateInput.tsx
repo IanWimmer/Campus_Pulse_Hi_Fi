@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React, { useState } from "react";
 import { ChangeEvent, useRef } from "react";
-import CalendarMonthOutlined from "@/public/icons/CalendarMonthOutlined";
+import CalendarMonthOutlined from "@/components/icons/CalendarMonthOutlined";
 
 
 
@@ -9,7 +9,7 @@ const DateInput = ({
   onChange = (event) => {},
   withIcon = false,
   withPlaceholder = true,
-  placeholder = "Search...",
+  placeholder = "Please select a date ...",
   id = 0,
   withoutShadow = false,
 }: {
@@ -64,9 +64,9 @@ const DateInput = ({
       {/* Custom visible input */}
       <div className="h-full aspect-square flex items-center justify-center"><CalendarMonthOutlined /></div>
       <div
-        className={clsx("font-secondary border-2 border-black flex-1 h-full flex items-center pl-5 cursor-pointer select-none", !withoutShadow && "shadow-neobrutalist")}
+        className={clsx("font-secondary border-2 border-black flex-1 h-full flex items-center pl-5 cursor-pointer select-none", !withoutShadow && "shadow-neobrutalist", date ? "text-black" : "text-placeholder")}
       >
-        {date || "Select a date..."}
+        {date || (withPlaceholder ? placeholder : "")}
       </div>
     </div>
   );

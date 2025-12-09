@@ -1,5 +1,6 @@
-import clsx from 'clsx';
-import React, { useState } from 'react'
+import { useClickAnimation } from "@/utils/useClickAnimation";
+import clsx from "clsx";
+import React, { useState } from "react";
 
 const Chip = ({
   onClick = () => {},
@@ -10,28 +11,26 @@ const Chip = ({
   onClick?: () => void;
   clickable?: boolean;
   initialState?: boolean;
-  content?: string | React.ReactNode
+  content?: string | React.ReactNode;
 }) => {
-  const [active, setActive] = useState<boolean>(initialState)
+  const [active, setActive] = useState<boolean>(initialState);
 
-  const handleClick = () => {
-    if (clickable) {
-      setActive(!active)
-    }
-  }
+  const {clicked, handleClick} = useClickAnimation(onClick, {delay: 200});
 
   return (
-    <button className={clsx(
-        "font-secondary h-8 border-2 border-black min-w-[70px] w-fit flex items-center justify-center rounded-md",
+    <button
+      className={clsx(
+        "font-secondary h-8 border-2 border-black w-fit flex items-center justify-center rounded-md transition",
         active ? "bg-primary text-white" : "bg-white text-black",
-        clickable && "shadow-neobrutalist-sm"
+        clickable && clicked
+          ? "shadow-[0_0_0_0_rgba(0,0,0,1.00)] translate-x-1 translate-y-1"
+          : clickable && "shadow-neobrutalist-sm"
       )}
       onClick={handleClick}
-
     >
-      {content}
+      <span className="px-3 text-nowrap">{content}</span>
     </button>
-  )
-}
+  );
+};
 
-export default Chip
+export default Chip;

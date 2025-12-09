@@ -3,6 +3,7 @@
 import Card from "@/components/card/Card";
 import OnboardingProgressionBar from "@/components/OnboardingProgressionBar";
 import { useOnboardingContext } from "@/contexts/OnboardingContext";
+import AddFriends from "@/page_components/add_friends/AddFriends";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
@@ -43,6 +44,8 @@ const CardArrangement = ({
                 ? 'url("/background_patterns/background_pattern_dotted_green.svg")'
                 : 'url("/background_patterns/background_pattern_dotted.svg")',
             backgroundRepeat: "repeat",
+            backgroundSize: '300px auto',
+            backgroundPositionX: 'center'
           }}
         >
           <Card
@@ -64,6 +67,8 @@ const CardArrangement = ({
                 ? 'url("/background_patterns/background_pattern_striped_green.svg")'
                 : 'url("/background_patterns/background_pattern_striped.svg")',
             backgroundRepeat: "repeat",
+            backgroundSize: '300px auto',
+            backgroundPositionX: 'center'
           }}
         >
           <Card
@@ -81,7 +86,7 @@ const CardArrangement = ({
 const GoBackButton = ({ onboardingContext }: { onboardingContext: any; }) => {
   return <button
     className="h-10 flex items-center justify-center px-6 gap-2 font-secondary text-zinc-500"
-    onClick={() => onboardingContext.actions.stage(1)}
+    onClick={() => onboardingContext.actions.stage(onboardingContext.state.stage - 1)}
   >
     <ChevronLeft className="[&_path]:fill-zinc-400" /> Go back to
     previous
@@ -129,12 +134,6 @@ const OnboardingPage = () => {
     }
     // If stage !== 0, do nothing and no timer is set
   }, [onboardingContext.state.stage]);
-
-  useEffect(() => {
-    if (onboardingContext.state.done) {
-      router.replace("/");
-    }
-  }, []);
 
   if (onboardingContext.state.stage == 0) {
     output = (
@@ -238,6 +237,12 @@ const OnboardingPage = () => {
   if (onboardingContext.state.stage == 4) {
     output = (
       <>
+        <div className="text-center text-2xl font-semibold h-15">
+          Add friends now!
+        </div>
+        <div className="w-full h-[calc(100%-120px)]">
+          <AddFriends />
+        </div>
         <div className="fixed bottom-0 left-0 w-full h-15 flex items-center justify-center bg-white">
           <GoBackButton onboardingContext={onboardingContext} />
           <SkipButton onboardingContext={onboardingContext}/>
@@ -252,7 +257,6 @@ const OnboardingPage = () => {
         className="h-full w-full"
         onClick={() => {
           onboardingContext.actions.stage(6);
-          router.replace("/");
         }}
       >
         <h1 className="fixed top-[max(144px,30%)] text-5xl/tight font-semibold text-center w-full">

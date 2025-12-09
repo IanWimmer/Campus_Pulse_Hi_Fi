@@ -1,0 +1,139 @@
+[
+  {
+    "id": "0",
+    "title": "Spontaneous Boardgame Night!",
+    "image_path": "uploads\\3acf0cf0-6a7b-4976-9e74-d58845670026.jpg",
+    "description": "Quick boardgame session with favorite classics. Perfect for casual fun!",
+    "datetime": "2025-12-16T20:13:20.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "CAB VIS Raum",
+    "public_status": "public",
+    "categories": [
+      "Boardgame",
+      "Casual",
+      "Fun"
+    ],
+    "max_participants": 6,
+    "participants": 1
+  },
+  {
+    "id": "2",
+    "title": "Speed Portrait Sketches",
+    "image_path": "/images/sketch-feed.jpg",
+    "description": "1-minute sketches of each other. Hilarious results guaranteed!",
+    "datetime": "2025-12-17T14:00:20.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "HG D 1.1",
+    "public_status": "public",
+    "categories": [
+      "Creative",
+      "Art"
+    ],
+    "max_participants": 8,
+    "participants": 3
+  },
+  {
+    "id": "4",
+    "title": "Weekly Trivia Blitz",
+    "image_path": "/images/trivia-feed.jpg",
+    "description": "Quick trivia rounds on random topics. Prizes for winners!",
+    "datetime": "2025-12-17T19:00:20.000Z",
+    "recurring": true,
+    "recurrence_intervall": "weekly",
+    "location": "CAB Papperlapub",
+    "public_status": "public",
+    "categories": [
+      "Trivia",
+      "Competitive"
+    ],
+    "max_participants": 12,
+    "participants": 5
+  },
+  {
+    "id": "5",
+    "title": "Pop-up Picnic",
+    "image_path": "/images/picnic-feed.jpg",
+    "description": "Bring your snack and join casual picnic chat.",
+    "datetime": "2025-12-18T12:00:20.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "Alumni-Pavillon",
+    "public_status": "public",
+    "categories": [
+      "Outdoor",
+      "Food"
+    ],
+    "max_participants": 8,
+    "participants": 2
+  },
+  {
+    "id": "8",
+    "title": "Mini Terrarium Build",
+    "image_path": "/images/terrarium-feed.jpg",
+    "description": "Build tiny terrariums to keep. Relaxing craft time.",
+    "datetime": "2025-12-22T16:47:20.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "CAB G 11",
+    "public_status": "public",
+    "categories": [
+      "Craft",
+      "Relaxing"
+    ],
+    "max_participants": 5,
+    "participants": 2
+  },
+  {
+    "id": "9",
+    "title": "Flash Study Break",
+    "image_path": "/images/yoga-feed.jpg",
+    "description": "Quick yoga/stretch session during study time.",
+    "datetime": "2025-12-16T13:10:20.000Z",
+    "recurring": true,
+    "recurrence_intervall": "daily",
+    "location": "CAB ASVZ Relax",
+    "public_status": "public",
+    "categories": [
+      "Wellness",
+      "Quick"
+    ],
+    "max_participants": 8,
+    "participants": 4
+  },
+  {
+    "id": "10",
+    "title": "Spontaneous Karaoke",
+    "image_path": "/images/karaoke-feed.jpg",
+    "description": "Sing your heart out! Phone karaoke session.",
+    "datetime": "2025-12-16T20:15:20.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "CAB Papperlapub",
+    "public_status": "public",
+    "categories": [
+      "Music",
+      "Fun"
+    ],
+    "max_participants": 7,
+    "participants": 3
+  },
+  {
+    "id": "14",
+    "title": "Emergency Dance Party",
+    "image_path": "uploads\\d73c1b37-b8e8-47a2-8e8d-982b0da6e74f.jpg",
+    "description": "30-min dance break! Bring your energy.",
+    "datetime": "2025-12-16T17:30:20.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "MM ASVZ Halle 2",
+    "public_status": "public",
+    "categories": [
+      "Dance",
+      "Energy"
+    ],
+    "max_participants": 15,
+    "participants": 7
+  }
+]

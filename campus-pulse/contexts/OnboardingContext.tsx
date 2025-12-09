@@ -10,7 +10,7 @@ const OnboardingContext = createContext({
   state: {
     stage: 0, 
     max_stages: max_stages, 
-    done: false,
+    done: false as boolean | null,
     selection: Array(max_stages).fill(0)
   }, 
   actions: {
@@ -21,8 +21,8 @@ const OnboardingContext = createContext({
 
 // Step 2: Create Provider component
 export const OnboardingProvider = ({ children}: {children: React.ReactNode }) => {
-  const [onboardingStage, setOnboardingStage] = useState<number>(0)
-  const [onboardingDone, setOnboardingDone] = useState<boolean>(false)
+  const [onboardingStage, setOnboardingStage] = useState<number>(6)
+  const [onboardingDone, setOnboardingDone] = useState<boolean | null>(true)
   const [onboardingSelection, setOnboardingSelection] = useState<number[]>(Array(max_stages).fill(0))
 
   useEffect(() => {
