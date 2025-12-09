@@ -2,8 +2,7 @@
 
 import QRCodeButton from "@/components/buttons/QrCodeButton";
 import SecondaryButton from "@/components/buttons/SecondaryButton";
-import QRCode from "@/components/icons/QRCode";
-import RightArrow from "@/components/icons/RightArrow";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 import LoadingPageOverlay from "@/components/loading_page_overlay/LoadingPageOverlay";
 import { useLoginContext } from "@/contexts/LoginContext";
 import AddFriends from "@/page_components/add_friends/AddFriends";
@@ -13,7 +12,7 @@ import { UserType } from "@/types/types";
 import { PersonOutline } from "@mui/icons-material";
 import clsx from "clsx";
 import { motion } from "motion/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const AddFriendsContainer = ({
   visible = true,
@@ -43,7 +42,7 @@ const AddFriendsContainer = ({
           className="w-8 h-8 flex items-center justify-center"
           onClick={() => handleClose()}
         >
-          <RightArrow />
+          <ArrowBack fontSize="large"/>
         </button>
         <h1 className="w-full h-8 text-center content-center text-2xl font-semibold text-white-border">
           Friends

@@ -3,7 +3,6 @@
 import { useClickAnimation } from "@/utils/useClickAnimation";
 import clsx from "clsx";
 import { motion } from "motion/react";
-import React from "react";
 import QRCode from "../icons/QRCode";
 
 const QRCodeButton = ({
