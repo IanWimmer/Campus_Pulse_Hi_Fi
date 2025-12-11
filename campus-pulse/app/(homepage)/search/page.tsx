@@ -272,6 +272,7 @@ const page = () => {
         withEndIcon
         endIcon={<Search />}
         onChange={(event) => setSearchInput(event.target.value)}
+        value={searchInput === null ? undefined : searchInput}
       />
       <div
         className={clsx(
@@ -452,6 +453,7 @@ const page = () => {
         onChange={(event) => setSearchInput(event.target.value)}
         className="h-9! shadow-neobrutalist-sm pl-1.5!"
         startIconBorderDisabled
+        value={searchInput === null ? undefined : searchInput}
       />
 
       {/* Row 2 */}
@@ -893,7 +895,7 @@ const page = () => {
                 </span>
               </span>
             )}
-            {dateTimeRange && (
+            {dateTimeRange && (dateTimeRange.start !== null || dateTimeRange.end !== null) && (
               <span className="w-fit max-w-40 h-7 shrink-0 border rounded-md border-black text-nowrap overflow-x-hidden flex items-center px-2">
                 <span className="overflow-x-hidden">
                   {(dateTimeRange.start

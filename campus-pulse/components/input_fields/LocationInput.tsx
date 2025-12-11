@@ -79,6 +79,7 @@ const LocationInput = ({
           onRoomSelectionChange={(newSelection) =>
             handleChange(newSelection)
           }
+          initialSelection={roomSelection}
           directCloseSingle
         />
       )}

@@ -49,8 +49,7 @@ const TextInput = ({
   const [internalValue, setInternalValue] = useState<string>(value);
 
   useEffect(() => {
-    // ✅ Handles all edge cases
-    const newValue = value == null ? "" : String(value);
+    const newValue = value === null || value === undefined ? "" : String(value);
     setInternalValue(newValue);
   }, [value]);
 

@@ -32,8 +32,6 @@ const RoomSelection = ({
 
   const [roomSelection, setRoomSelection] = useRoomSelection(multiple);
 
-  const [firstSelection, setFirstSelection] = useState<number>(0);
-
   useEffect(() => {
     const fetchRooms = async () => {
       const res = await fetch("api/rooms");
@@ -49,9 +47,7 @@ const RoomSelection = ({
     };
 
     fetchRooms();
-  }, []);
 
-  useEffect(() => {
     if (multiple) {
       setRoomSelection(
         Array.isArray(initialSelection)
@@ -69,6 +65,37 @@ const RoomSelection = ({
         setRoomSelection(initialSelection);
       }
     }
+  }, []);
+
+  useEffect(() => {
+    if (multiple) {
+      setRoomSelection(
+        Array.isArray(initialSelection)
+          ? initialSelection
+          : initialSelection !== null
+          ? [initialSelection]
+          : null
+      );
+    } else {
+      if (Array.isArray(initialSelection)) {
+        console.error(
+          "Provided initial selection should be a single value but is a list"
+        );
+      } else {
+        if (
+          roomSelection &&
+          !Array.isArray(roomSelection) &&
+          roomSelection.roomName !== initialSelection?.roomName &&
+          initialSelection
+        ) {
+          console.log(initialSelection);
+          setRoomSelection(initialSelection);
+        } else if (roomSelection === null && initialSelection !== null) {
+          console.log(initialSelection);
+          setRoomSelection(initialSelection);
+        }
+      }
+    }
   }, [initialSelection]);
 
   useEffect(() => {
@@ -76,11 +103,6 @@ const RoomSelection = ({
       onRoomSelectionChangeMultiple(roomSelection);
     } else if (!Array.isArray(roomSelection) && !multiple) {
       onRoomSelectionChange(roomSelection);
-      if (firstSelection > 1 && roomSelection !== null && directCloseSingle) {
-        onClose();
-      } else if (firstSelection < 2) {
-        setFirstSelection((prev) => prev + 1);
-      }
     }
   }, [roomSelection]);
 

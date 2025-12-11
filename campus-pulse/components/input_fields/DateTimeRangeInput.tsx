@@ -48,21 +48,22 @@ const DateTimeRangeInput = ({
   };
 
   const handleStartChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = new Date(e.target.value);
+    
+    const val = e.target.value ? new Date(e.target.value) : null;
     setStartDate(val);
-    setStartISO(val.toISOString());
+    setStartISO(val ? val.toISOString() : null);
 
     onChange({
-      start: val.toISOString(),
+      start: val ? val.toISOString() : null,
       end: endISO,
     });
   };
 
   const handleEndChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = new Date(e.target.value);
+    const val = e.target.value ? new Date(e.target.value) : null;
     setEndDate(val);
-    setEndISO(val.toISOString());
-    onChange({ start: startISO, end: val.toISOString() });
+    setEndISO(val ? val.toISOString() : null);
+    onChange({ start: startISO, end: val ? val.toISOString() : null });
   };
 
   const displayStartText = () => {
