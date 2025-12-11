@@ -26,10 +26,10 @@ type loadingType = {
 
 const EventDetails = ({
   visible = true,
-  onClose = () => {},
+  onClose = () => { },
   id = null,
-  onEnroll = () => {},
-  onCancel = () => {},
+  onEnroll = () => { },
+  onCancel = () => { },
 }: {
   visible?: boolean;
   onClose?: () => void;
@@ -46,6 +46,8 @@ const EventDetails = ({
   const [showMap, setShowMap] = useState(false);
 
   const [loadingDone, setLoadingDone] = useState<boolean>(false);
+  const [isShareAnimating, setIsShareAnimating] = useState(false);
+  const [isMapAnimating, setIsMapAnimating] = useState(false);
   const loginContext = useLoginContext();
 
   const fetchEvent = async () => {
@@ -131,7 +133,7 @@ const EventDetails = ({
       </div>
     );
   }
-  
+
   const onShareClick = () => {
     setModal(
       <AcceptanceModal
@@ -149,8 +151,29 @@ const EventDetails = ({
     );
   }
 
+  const handleShareClick = () => {
+    if (isShareAnimating) return; // avoid double click spam during animation
+    setIsShareAnimating(true);
+
+    // length of animation must match Tailwind duration below
+    setTimeout(() => {
+      setIsShareAnimating(false);
+      onShareClick();
+    }, 200);
+  };
+
   const onMapClick = () => {
     setShowMap(true);
+  };
+
+  const handleMapClick = () => {
+    if (isMapAnimating) return;
+    setIsMapAnimating(true);
+
+    setTimeout(() => {
+      setIsMapAnimating(false);
+      onMapClick();
+    }, 200);
   };
 
   return createPortal(
@@ -200,23 +223,35 @@ const EventDetails = ({
               className="absolute top-12 left-3 w-8 h-8 flex items-center justify-center"
               onClick={() => handleClose()}
             >
-              <ArrowBack fontSize="large"/>
+              <ArrowBack fontSize="large" />
             </button>
           </div>
 
           <div className="absolute bottom-0 w-full flex justify-center">
             <div className="w-[355px] flex justify-center mx-6">
               <button
-                className="w-1/2 h-9.5 rounded-tl-[20px] border-b-0 border-l-2 border-t-2 border-r-2 border-black bg-white flex justify-center items-center gap-2 font-semibold"
-                onClick={onShareClick}
-                >
+                className={clsx(
+                  "w-1/2 h-9.5 rounded-tl-[20px]",
+                  "border-b-0 border-l-2 border-t-2 border-r-2 border-black",
+                  "bg-white flex justify-center items-center gap-2 font-semibold",
+                  "transition-transform duration-150 ease-out",
+                  isShareAnimating ? "translate-y-1" : "translate-y-0",
+                )}
+                onClick={handleShareClick}
+              >
                 <Share />
                 Share
               </button>
               <button
-                className="w-1/2 h-9.5 rounded-tr-[20px] border-b-0 border-r-2 border-t-2 border-black bg-white flex justify-center items-center gap-2 font-semibold"
-                onClick={onMapClick}
-                >
+                className={clsx(
+                  "w-1/2 h-9.5 rounded-tr-[20px]",
+                  "border-b-0 border-r-2 border-t-2 border-black",
+                  "bg-white flex justify-center items-center gap-2 font-semibold",
+                  "transition-transform duration-150 ease-out",
+                  isMapAnimating ? "translate-y-1" : "translate-y-0",
+                )}
+                onClick={handleMapClick}
+              >
                 <Map />
                 View on map
               </button>
@@ -301,7 +336,7 @@ const EventDetails = ({
                   method: "PUT",
                   headers: { "X-Device-Id": loginContext.state.deviceId },
                 });
-                
+
                 onEnroll();
 
                 await fetchEvent();
