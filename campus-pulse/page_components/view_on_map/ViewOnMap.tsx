@@ -7,6 +7,7 @@ import { motion } from "motion/react";
 import { AffineTransform2D, MapPinData } from "@/components/map/CampusMap";
 import CampusMap from "@/components/map/CampusMap";
 import { CampusMapZentrum } from "@/public/maps/CampusMapZentrum";
+import Spinner from "@/components/icons/Spinner";
 
 
 const MAP_DIMENSIONS = { width: 1342, height: 1034 };
@@ -34,6 +35,7 @@ const ViewOnMap = ({
 }) => {
     const [show, setShow] = useState(visible);
     const [pins, setPins] = useState<MapPinData[]>([]);
+    const [loadingDone, setLoadingDone] = useState<boolean>(false);
 
     const fetchLocation = async () => {
         if (!location || location.trim().length === 0) {
@@ -74,6 +76,7 @@ const ViewOnMap = ({
             ];
 
             setPins(newPins);
+            setLoadingDone(true);
         } catch (err) {
             console.error("Failed to fetch location:", err);
         }
@@ -103,11 +106,25 @@ const ViewOnMap = ({
             animate={{ x: show ? 0 : "100%" }}
             transition={{ type: "tween", ease: "easeInOut" }}
         >
+            {/* loading screen */}
+            <div
+                role="status"
+                className={clsx(
+                    "absolute top-0 left-0 w-full h-full bg-white flex items-center justify-center",
+                    visible ? "opacity-100" : "opacity-0",
+                    loadingDone ? "opacity-0 h-0! w-0!" : "opacity-100"
+                )}
+            >
+                <Spinner />
+                <span className="sr-only">Loading...</span>
+            </div>
+
             {/* main part */}
             <div
                 className={clsx(
                     "absolute top-0 left-0 w-full h-full",
                     visible ? "opacity-100" : "opacity-0",
+                    !loadingDone ? "opacity-0! h-0!" : "opacity-100"
                 )}
             >
                 {/* Header */}
