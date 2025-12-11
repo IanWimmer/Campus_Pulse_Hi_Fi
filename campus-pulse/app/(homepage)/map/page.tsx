@@ -2,15 +2,15 @@
 
 import { useEffect, useState } from "react";
 
-import { EventType } from "@/types/types";
-import CampusMap, { GeoCoordinate, MapPinData, AffineTransform2D } from "@/components/map/CampusMap";
+import { EventType, RoomCoordinates } from "@/types/types";
+import CampusMap, { MapPinData, AffineTransform2D } from "@/components/map/CampusMap";
 import { CampusMapZentrum } from "@/public/maps/CampusMapZentrum";
 
 // --- Configuration ---
 
 const MAP_DIMENSIONS = { width: 1342, height: 1034 };
 
-const INITIAL_CENTER: GeoCoordinate = { lat: 47.37725219458089, lon: 8.548436963403903 };
+const INITIAL_CENTER: RoomCoordinates = { lat: 47.37725219458089, lon: 8.548436963403903 };
 
 const ETH_ZENTRUM_TRANSFORM: AffineTransform2D = {
     a: 119431.10532923735,

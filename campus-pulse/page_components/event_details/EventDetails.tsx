@@ -17,6 +17,8 @@ import { EventType } from "@/types/types";
 import { useLoginContext } from "@/contexts/LoginContext";
 import CrossOutlined from "@/components/icons/CrossOutlined";
 import { useClickAnimation } from "@/utils/useClickAnimation";
+import AcceptanceModal from "@/components/acceptance_modal/AcceptanceModal";
+import ViewOnMap from "../view_on_map/ViewOnMap";
 
 type loadingType = {
   image: boolean;
@@ -40,6 +42,8 @@ const EventDetails = ({
     image: false,
   });
   const [eventData, setEventData] = useState<EventType | null>(null);
+  const [modal, setModal] = useState<React.ReactNode | undefined>();
+  const [showMap, setShowMap] = useState(false);
 
   const [loadingDone, setLoadingDone] = useState<boolean>(false);
   const loginContext = useLoginContext();
@@ -127,6 +131,27 @@ const EventDetails = ({
       </div>
     );
   }
+  
+  const onShareClick = () => {
+    setModal(
+      <AcceptanceModal
+        modalTitle={"Share with friends"}
+        modalContent={
+          "Work in progress... In the future, you will be able to send event info to your friends here."
+        }
+        acceptanceButtonText={"Okay"}
+        rejectionButtonText={"Close"}
+        buttonDirectionReversed
+        acceptanceButtonPrimary={false}
+        onAcceptance={() => setModal(undefined)}
+        onRejection={() => setModal(undefined)}
+      />
+    );
+  }
+
+  const onMapClick = () => {
+    setShowMap(true);
+  };
 
   return createPortal(
     <motion.div
@@ -183,14 +208,17 @@ const EventDetails = ({
             <div className="w-[355px] flex justify-center mx-6">
               <button
                 className="w-1/2 h-9.5 rounded-tl-[20px] border-b-0 border-l-2 border-t-2 border-r-2 border-black bg-white flex justify-center items-center gap-2 font-semibold"
-                onClick={() => {}}
+                onClick={onShareClick}
                 >
                 <Share />
                 Share
               </button>
-              <button className="w-1/2 h-9.5 rounded-tr-[20px] border-b-0 border-r-2 border-t-2 border-black bg-white flex justify-center items-center gap-2 font-semibold">
+              <button
+                className="w-1/2 h-9.5 rounded-tr-[20px] border-b-0 border-r-2 border-t-2 border-black bg-white flex justify-center items-center gap-2 font-semibold"
+                onClick={onMapClick}
+                >
                 <Map />
-                Karte ansehen
+                View on map
               </button>
             </div>
           </div>
@@ -281,6 +309,18 @@ const EventDetails = ({
             />
           )}
         </div>
+      )}
+      {modal ? modal : ""}
+      {showMap && eventData && (
+        <ViewOnMap
+          location={eventData.location}
+          image={eventData.image_path}
+          onClose={() => {
+            setTimeout(() => {
+              setShowMap(false);
+            }, 300);
+          }}
+        />
       )}
     </motion.div>,
     document.body

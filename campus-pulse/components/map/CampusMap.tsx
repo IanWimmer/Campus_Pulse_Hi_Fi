@@ -5,16 +5,11 @@ import ZoomIn from "@mui/icons-material/ZoomIn";
 import ZoomOut from "@mui/icons-material/ZoomOut";
 
 import Pin from "./Pin";
-
-
-export type GeoCoordinate = {
-    lat: number;
-    lon: number;
-};
+import { RoomCoordinates } from "@/types/types";
 
 export type MapPinData = {
     id: string | number;
-    position: GeoCoordinate;
+    position: RoomCoordinates;
     img: string;
 };
 
@@ -34,16 +29,17 @@ interface CampusMapProps {
     mapPixelDimensions: { width: number; height: number };
     geoToPixelTransform: AffineTransform2D;
     pins: MapPinData[];
-    initialCenter?: GeoCoordinate;
+    initialCenter?: RoomCoordinates;
     minZoom?: number;
     maxZoom?: number;
     initialZoom?: number;
     zoomControlsOffset?: { x: number; y: number };
+    zBase?: number;
 }
 
 
 const latLonToPixel = (
-    geo: GeoCoordinate,
+    geo: RoomCoordinates,
     t: AffineTransform2D
 ): { x: number; y: number } => {
     const { lat, lon } = geo;
@@ -68,6 +64,7 @@ const CampusMap: React.FC<CampusMapProps> = ({
     maxZoom = 4,
     initialZoom = 1.5,
     zoomControlsOffset = { x: 20, y: 20 },
+    zBase = 0
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -277,7 +274,7 @@ const CampusMap: React.FC<CampusMapProps> = ({
             {pinRenderList.map(({ pin, screenX, screenY }) => (
                 <div
                     key={pin.id}
-                    className="absolute z-10 pointer-events-none"
+                    className={`absolute z-[${zBase + 10}] pointer-events-none`}
                     style={{
                         left: screenX,
                         top: screenY,
@@ -290,7 +287,7 @@ const CampusMap: React.FC<CampusMapProps> = ({
 
             {/* Zoom Controls */}
             <div
-                className="absolute flex flex-col gap-2 z-20 pointer-events-auto"
+                className={`absolute flex flex-col gap-2 z-[${zBase + 20}] pointer-events-auto`}
                 style={{
                     bottom: zoomControlsOffset.y,
                     right: zoomControlsOffset.x,

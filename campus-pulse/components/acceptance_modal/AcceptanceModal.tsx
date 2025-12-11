@@ -32,7 +32,7 @@ const AcceptanceModal = ({
       )}
     >
       <div className="w-full h-fit bg-white shadow-neobrutalist border-2 border-black">
-        <h1 className="text-2xl font-bold border-b-2 border-b-black p-2">
+        <h1 className="text-2xl font-semibold border-b-2 border-b-black p-2">
           {modalTitle}
         </h1>
         <div className="p-2">
