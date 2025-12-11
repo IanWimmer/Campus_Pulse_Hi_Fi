@@ -136,6 +136,7 @@ const ViewOnMap = ({
                         initialCenter={pins[0].position}
                         initialZoom={3}
                         zBase={40}
+                        pinsClickable={false}
                     />
                 )}
             </div>

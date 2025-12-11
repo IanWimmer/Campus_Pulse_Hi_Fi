@@ -15,7 +15,7 @@ interface CalendarProps {
 }
 
 // --- 2. Main Calendar Component ---
-export default function Calendar({ events = [], onFetchEvents = () => {}, }: CalendarProps) {
+export default function Calendar({ events = [], onFetchEvents = () => { }, }: CalendarProps) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [view, setView] = useState<"month" | "week">("month");
   const [detailViewId, setDetailViewId] = useState<string | null>(null);
@@ -32,9 +32,9 @@ export default function Calendar({ events = [], onFetchEvents = () => {}, }: Cal
 
     if (withFetch) {
       await fetch(`api/enrollment/unenroll/${eid}`, {
-                  method: "PUT",
-                  headers: { "X-Device-Id": loginContext.state.deviceId },
-                });
+        method: "PUT",
+        headers: { "X-Device-Id": loginContext.state.deviceId },
+      });
     }
 
     onFetchEvents();

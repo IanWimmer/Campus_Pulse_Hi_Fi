@@ -8,7 +8,7 @@ import Pin from "./Pin";
 import { RoomCoordinates } from "@/types/types";
 
 export type MapPinData = {
-    id: string | number;
+    id: string;
     position: RoomCoordinates;
     img: string;
 };
@@ -35,6 +35,7 @@ interface CampusMapProps {
     initialZoom?: number;
     zoomControlsOffset?: { x: number; y: number };
     zBase?: number;
+    pinsClickable?: boolean;
 }
 
 
@@ -64,7 +65,8 @@ const CampusMap: React.FC<CampusMapProps> = ({
     maxZoom = 4,
     initialZoom = 1.5,
     zoomControlsOffset = { x: 20, y: 20 },
-    zBase = 0
+    zBase = 0,
+    pinsClickable = true
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -274,14 +276,14 @@ const CampusMap: React.FC<CampusMapProps> = ({
             {pinRenderList.map(({ pin, screenX, screenY }) => (
                 <div
                     key={pin.id}
-                    className={`absolute z-[${zBase + 10}] pointer-events-none`}
+                    className={`absolute z-[${zBase + 10}]`}
                     style={{
                         left: screenX,
                         top: screenY,
                         transform: `translate(${-PIN_TIP_X}px, ${-PIN_TIP_Y}px)`,
                     }}
                 >
-                    <Pin imgPath={pin.img} />
+                    <Pin clickable={pinsClickable} id={pin.id} imgPath={pin.img} />
                 </div>
             ))}
 
