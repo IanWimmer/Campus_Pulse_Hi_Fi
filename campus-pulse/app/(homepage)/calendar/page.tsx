@@ -1,49 +1,49 @@
 "use client";
 
-import Calendar, {CalendarEvent} from "@/components/calendar/Calendar";
+import { useEffect, useState } from "react";
+import Calendar from "@/components/calendar/Calendar";
+import { useLoginContext } from "@/contexts/LoginContext";
+import { EventType } from "@/types/types";
 
-const EVENTS: CalendarEvent[] = [
-    {
-        "id": 0,
-        "title": "Spontaneous Boardgame Night",
-        "datetime": "2025-12-16T20:13:20.000Z"
-      },
-      {
-        "id": 1,
-        "title": "Flash Coffee Chat",
-        "datetime": "2025-12-16T12:30:20.000Z",
-      },
-      {
-        "id": 2,
-        "title": "Speed Portrait Sketches",
-        "datetime": "2025-12-17T14:00:20.000Z",
-      },
-      {
-        "id": 3,
-        "title": "Indoor Scavenger Hunt",
-        "datetime": "2025-12-17T16:12:20.000Z",
-      },
-      {
-        "id": 4,
-        "title": "Weekly Trivia Blitz",
-        "datetime": "2025-12-17T19:00:20.000Z",
-      },
-      {
-        "id": 8,
-        "title": "Mini Terrarium Build",
-        "datetime": "2025-12-22T16:47:20.000Z",
-      },
-      {
-        "id": 11,
-        "title": "Park Clean-up & Chat",
-        "datetime": "2025-12-20T11:20:20.000Z",
-      },
-];
 
 export default function CalendarPage() {
-    return (
-        <div className="min-h-screen pt-10">
-            <Calendar events={EVENTS}/>
-        </div>
-    );
+  const [events, setEvents] = useState<EventType[]>([]);
+  const loginContext = useLoginContext();
+
+  // --- Data Fetching ---
+
+  const fetchEvents = async () => {
+    // Guard clause if deviceId isn't ready
+    if (!loginContext?.state?.deviceId) return;
+
+    try {
+      const response = await fetch("/api/events", {
+        method: "GET",
+        headers: { "X-Device-Id": loginContext.state.deviceId },
+      });
+
+      if (response.ok) {
+        const data: EventType[] = await response.json();
+
+        // Filter: Keep only events where user is enrolled
+        const enrolledEvents = data.filter(event => event.user_enrolled === true);
+
+        setEvents(enrolledEvents);
+      } else {
+        console.error("Failed to fetch events");
+      }
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchEvents();
+  }, [loginContext?.state?.deviceId]); // Re-run if deviceId changes
+
+  return (
+    <div className="min-h-screen pt-10">
+      <Calendar events={events} onFetchEvents={fetchEvents} />
+    </div>
+  );
 }

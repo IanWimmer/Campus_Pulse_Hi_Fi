@@ -9,7 +9,7 @@ import TextAreaInput from "@/components/input_fields/TextAreaInput";
 import TextInput from "@/components/input_fields/TextInput";
 import Switch from "@/components/switch/Switch";
 import CrossOutlined from "@/components/icons/CrossOutlined";
-import RightArrow from "@/components/icons/RightArrow";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 import { EventType } from "@/types/types";
 import clsx from "clsx";
 import { motion } from "motion/react";
@@ -170,7 +170,7 @@ const CreateEvent = ({
           className="w-8 h-8 flex items-center justify-center"
           onClick={() => handleClose()}
         >
-          <RightArrow />
+          <ArrowBack fontSize="large"/>
         </button>
         <h1 className="w-full h-8 text-center content-center text-2xl font-semibold text-white-border">
           Create event

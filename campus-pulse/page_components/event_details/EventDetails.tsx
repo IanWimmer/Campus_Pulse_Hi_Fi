@@ -3,9 +3,9 @@ import PrimaryButton from "@/components/buttons/PrimaryButton";
 import Chip from "@/components/chip/Chip";
 import ProgressBar from "@/components/progress_bar/ProgressBar";
 import CheckCircle from "@/components/icons/CheckCircle";
-import Map from "@/components/icons/Map";
-import RightArrow from "@/components/icons/RightArrow";
-import Share from "@/components/icons/Share";
+import Map from "@mui/icons-material/Map";
+import ArrowBack from "@mui/icons-material/ArrowBack";
+import Share from "@mui/icons-material/Share";
 import clsx from "clsx";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
@@ -175,15 +175,18 @@ const EventDetails = ({
               className="absolute top-12 left-3 w-8 h-8 flex items-center justify-center"
               onClick={() => handleClose()}
             >
-              <RightArrow />
+              <ArrowBack fontSize="large"/>
             </button>
           </div>
 
           <div className="absolute bottom-0 w-full flex justify-center">
             <div className="w-[355px] flex justify-center mx-6">
-              <button className="w-1/2 h-9.5 rounded-tl-[20px] border-b-0 border-l-2 border-t-2 border-r-2 border-black bg-white flex justify-center items-center gap-2 font-semibold">
+              <button
+                className="w-1/2 h-9.5 rounded-tl-[20px] border-b-0 border-l-2 border-t-2 border-r-2 border-black bg-white flex justify-center items-center gap-2 font-semibold"
+                onClick={() => {}}
+                >
                 <Share />
-                Teilen
+                Share
               </button>
               <button className="w-1/2 h-9.5 rounded-tr-[20px] border-b-0 border-r-2 border-t-2 border-black bg-white flex justify-center items-center gap-2 font-semibold">
                 <Map />

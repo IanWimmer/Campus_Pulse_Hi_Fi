@@ -1,5 +1,5 @@
 import SecondaryButton from "@/components/buttons/SecondaryButton";
-import RightArrow from "@/components/icons/RightArrow";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 import Spinner from "@/components/icons/Spinner";
 import Switch from "@/components/switch/Switch";
 import { useSearchVersionContext } from "@/contexts/SearchVersionContext";
@@ -43,7 +43,7 @@ const Settings = ({
           className="w-8 h-8 flex items-center justify-center"
           onClick={() => handleClose()}
         >
-          <RightArrow />
+          <ArrowBack fontSize="large"/>
         </button>
         <h1 className="w-full h-8 text-center content-center text-2xl font-semibold text-white-border">
           Settings

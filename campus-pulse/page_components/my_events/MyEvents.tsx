@@ -1,5 +1,5 @@
 import Card from "@/components/card/Card";
-import RightArrow from "@/components/icons/RightArrow";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 import { useLoginContext } from "@/contexts/LoginContext";
 import { EventType } from "@/types/types";
 import clsx from "clsx";
@@ -61,7 +61,7 @@ const MyEvents = ({
           className="w-8 h-8 flex items-center justify-center"
           onClick={() => handleClose()}
         >
-          <RightArrow />
+          <ArrowBack fontSize="large"/>
         </button>
         <h1 className="w-full h-8 text-center content-center text-2xl font-semibold text-white-border">
           My Events

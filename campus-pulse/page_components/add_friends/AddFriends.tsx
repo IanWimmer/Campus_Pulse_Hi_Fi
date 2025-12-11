@@ -4,7 +4,7 @@ import CheckboxInputForm from "@/components/input_fields/CheckboxInput";
 import TextInput from "@/components/input_fields/TextInput";
 import PersonOutlined from "@/components/icons/PersonOutlined";
 import QRCode from "@/components/icons/QRCode";
-import React, { MouseEvent, useState } from "react";
+import { MouseEvent, useState } from "react";
 
 const AddFriends = ({
   onQRCodeClick = (event) => {},
