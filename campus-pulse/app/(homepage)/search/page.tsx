@@ -527,9 +527,9 @@ const page = () => {
       </div>
 
       {/* Row 3 */}
-      <div className="flex w-full items-center gap-2">
+      <div className="flex w-full max-w-full items-center gap-2">
         <div
-          className="w-1/2 flex items-center px-2 full-w h-9 border-black border-2 shadow-neobrutalist-sm pl-1.5"
+          className="flex-1 flex items-center px-2 w-full max-w-[calc(50%-4px)] h-9 border-black border-2 shadow-neobrutalist-sm pl-1.5"
           onClick={() => setRoomsOpen(true)}
         >
           <LocationOnOutlined />
@@ -542,20 +542,19 @@ const page = () => {
               <p className="font-secondary text-placeholder">Location</p>
             ) : (
               roomSelection.map((value, index) => {
-                const roomName = Object.keys(value)[0];
                 return (
                   <span
-                    key={"selection-" + index}
-                    className="px-2 rounded-md h-7 flex items-center text-nowrap border border-black"
+                    key={"location-" + index}
+                    className="px-2 rounded-md h-7 flex items-center text-nowrap"
                   >
-                    {roomName}
+                    {value.roomName}
                   </span>
                 );
               })
             )}
           </div>
         </div>
-        <div className="w-1/2">
+        <div className="flex-1 max-w-[calc(50%-4px)]">
           <DateTimeRangeInput
             className="h-9!"
             onChange={(range) => setDateTimeRange(range)}
@@ -895,19 +894,20 @@ const page = () => {
                 </span>
               </span>
             )}
-            {dateTimeRange && (dateTimeRange.start !== null || dateTimeRange.end !== null) && (
-              <span className="w-fit max-w-40 h-7 shrink-0 border rounded-md border-black text-nowrap overflow-x-hidden flex items-center px-2">
-                <span className="overflow-x-hidden">
-                  {(dateTimeRange.start
-                    ? displayDateTime(new Date(dateTimeRange.start))
-                    : "...") +
-                    " - " +
-                    (dateTimeRange.end
-                      ? displayDateTime(new Date(dateTimeRange.end))
-                      : "...")}
+            {dateTimeRange &&
+              (dateTimeRange.start !== null || dateTimeRange.end !== null) && (
+                <span className="w-fit max-w-40 h-7 shrink-0 border rounded-md border-black text-nowrap overflow-x-hidden flex items-center px-2">
+                  <span className="overflow-x-hidden">
+                    {(dateTimeRange.start
+                      ? displayDateTime(new Date(dateTimeRange.start))
+                      : "...") +
+                      " - " +
+                      (dateTimeRange.end
+                        ? displayDateTime(new Date(dateTimeRange.end))
+                        : "...")}
+                  </span>
                 </span>
-              </span>
-            )}
+              )}
             {publicPrivate && (
               <span className="w-fit max-w-40 h-7 shrink-0 border rounded-md border-black text-nowrap overflow-x-hidden flex items-center px-2">
                 <span className="overflow-x-hidden">

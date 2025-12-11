@@ -88,23 +88,24 @@ const RoomSelection = ({
           roomSelection.roomName !== initialSelection?.roomName &&
           initialSelection
         ) {
-          console.log(initialSelection);
           setRoomSelection(initialSelection);
         } else if (roomSelection === null && initialSelection !== null) {
-          console.log(initialSelection);
           setRoomSelection(initialSelection);
         }
       }
     }
   }, [initialSelection]);
 
-  useEffect(() => {
-    if (Array.isArray(roomSelection) && multiple) {
-      onRoomSelectionChangeMultiple(roomSelection);
-    } else if (!Array.isArray(roomSelection) && !multiple) {
-      onRoomSelectionChange(roomSelection);
+  const handleChange = (newSelection: RoomType[] | RoomType | null) => {
+    if (Array.isArray(newSelection) && multiple) {
+      onRoomSelectionChangeMultiple(newSelection);
+    } else if (!Array.isArray(newSelection) && !multiple) {
+      onRoomSelectionChange(newSelection);
+    } else if (newSelection === null) {
+      onRoomSelectionChange(newSelection);
+      onRoomSelectionChangeMultiple(newSelection);
     }
-  }, [roomSelection]);
+  };
 
   return (
     <div
@@ -164,7 +165,7 @@ const RoomSelection = ({
                     {value.roomName}
                     <div
                       className="h-full aspect-square flex justify-center items-center"
-                      onClick={() =>
+                      onClick={() => {
                         setRoomSelection((prev) => {
                           if (
                             !prev ||
@@ -172,13 +173,18 @@ const RoomSelection = ({
                             (Array.isArray(prev) &&
                               prev.length === 1 &&
                               prev[0].roomName === value.roomName)
-                          )
+                          ) {
+                            handleChange(null);
                             return null;
-                          return prev.filter(
+                          }
+
+                          const n = prev.filter(
                             (room) => room.roomName !== value.roomName
                           );
-                        })
-                      }
+                          handleChange(n);
+                          return n;
+                        });
+                      }}
                     >
                       <CrossOutlined
                         className="h-3!"
@@ -195,7 +201,14 @@ const RoomSelection = ({
                   className="h-full aspect-square flex justify-center items-center"
                   onClick={() =>
                     setRoomSelection((prev) => {
-                      if (!prev || Array.isArray(prev)) return null;
+                      if (!prev || Array.isArray(prev)) {
+                        handleChange(null);
+                        return null;
+                      }
+
+                      handleChange(
+                        prev.roomName !== roomSelection.roomName ? prev : null
+                      );
                       return prev.roomName !== roomSelection.roomName
                         ? prev
                         : null;
@@ -243,18 +256,23 @@ const RoomSelection = ({
                   setRoomSelection((prev) => {
                     const isPrevArray = Array.isArray(prev);
                     if (!prev) {
+                      handleChange(multiple ? [value] : value)
                       return multiple ? [value] : value;
                     }
 
                     if (isPrevArray) {
                       if (selected) {
-                        return prev.filter(
+                        const n = prev.filter(
                           (ele) => ele.roomName !== value.roomName
                         );
+                        handleChange(n)
+                        return n
                       } else {
+                        handleChange([...prev, value])
                         return [...prev, value];
                       }
                     } else {
+                      handleChange(prev.roomName !== value.roomName ? value : null)
                       return prev.roomName !== value.roomName ? value : null;
                     }
                   })
