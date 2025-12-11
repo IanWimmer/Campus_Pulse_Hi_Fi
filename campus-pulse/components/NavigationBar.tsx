@@ -77,7 +77,7 @@ const NavigationBar = ({
   return (
     <div className="pb-3.5">
       <div className="absolute right-1.5 bottom-20">
-        <AddEventButton onClick={() => {onOpenCreateEvent(); console.log("open")}}/>
+        <AddEventButton onClick={() => {onOpenCreateEvent()}}/>
       </div>
       <div className="w-[calc(100vw-24px)] h-[50px] ml-2 bg-primary-background border-2 border-black shadow-neobrutalist rounded-full flex justify-between">
         {options.map((tab) => {

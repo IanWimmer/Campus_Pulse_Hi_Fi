@@ -27,11 +27,7 @@ const userDataPath = path.join(process.cwd(), "public", "data", "users.json");
 const userLockPath = path.join(process.cwd(), "public", "data", "users.lock");
 const uploadsPath = path.join(process.cwd(), "public", "uploads");
 const uploadsPathForClient = "uploads";
-const placeholderImagePath = path.join(
-  process.cwd(),
-  "images",
-  "image_placeholder.jpg"
-);
+const placeholderImagePath = path.join("images", "image_placeholder.jpg");
 
 function withDefaults<T>(data: Partial<T>, defaults: Partial<T>) {
   return { ...defaults, ...data } as T;
@@ -157,6 +153,7 @@ export async function POST(request: NextRequest) {
 
     const events = await readEventData();
     data.id = randomUUID();
+    if (enrollOnCreation) data.participants = 1;
     events.push(data);
     await writeEventData(events);
 

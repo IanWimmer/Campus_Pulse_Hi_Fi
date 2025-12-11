@@ -76,7 +76,7 @@
     "datetime": "2025-12-22T16:47:20.000Z",
     "recurring": false,
     "recurrence_intervall": null,
-    "location": "CAB G 11",
+    "location": "CAB G 56",
     "public_status": "public",
     "categories": [
       "Craft",
@@ -135,5 +135,542 @@
     ],
     "max_participants": 15,
     "participants": 7
+  },
+  {
+    "id": "2c1c2674-9f3c-49d3-af45-f97f85c67680",
+    "title": "Volleyball",
+    "image_path": "uploads\\378c59b4-2152-4a93-99a1-e50d757fd2ce.jpeg",
+    "description": "Volley session this saturday with intermediate to advanced level.",
+    "datetime": "2025-12-13T10:30:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "MM ASVZ Halle 2",
+    "geo_location": "",
+    "public_status": "private",
+    "categories": [
+      "Casual",
+      "Fun",
+      "Sports",
+      "Energy",
+      "Active"
+    ],
+    "max_participants": "14",
+    "participants": 1
+  },
+  {
+    "id": "volleyball-hg-g3-2025-12-22",
+    "title": "Volleyball at HG G3",
+    "image_path": "uploads\\378c59b4-2152-4a93-99a1-e50d757fd2ce.jpeg",
+    "description": "Intermediate volleyball session in the HG G3 gym.",
+    "datetime": "2025-12-22T18:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "HG G 3",
+    "public_status": "private",
+    "categories": [
+      "Casual",
+      "Fun",
+      "Sports",
+      "Energy",
+      "Active"
+    ],
+    "max_participants": 14,
+    "participants": 2
+  },
+  {
+    "id": "tech-language-hangout-2026-01-08",
+    "title": "Tech & Language Hangout",
+    "image_path": "/images/trivia-feed.jpg",
+    "description": "Casual meetup to chat about new tech and practice language skills.",
+    "datetime": "2026-01-08T17:30:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "HG F 33.4",
+    "public_status": "public",
+    "categories": [
+      "Fun",
+      "Technology",
+      "Casual",
+      "Language Exchange"
+    ],
+    "max_participants": 10,
+    "participants": 0
+  },
+  {
+    "id": "perm-chess-hg-g26-20251226",
+    "title": "chess",
+    "image_path": "uploads\\3acf0cf0-6a7b-4976-9e74-d58845670026.jpg",
+    "description": "Casual chess meetup with quick games.",
+    "datetime": "2025-12-26T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "HG G 26.3",
+    "public_status": "public",
+    "categories": [
+      "Boardgame",
+      "Casual",
+      "Fun"
+    ],
+    "max_participants": 8,
+    "participants": 0
+  },
+  {
+    "id": "perm-chess-hg-g26-20251227",
+    "title": "chess",
+    "image_path": "uploads\\3acf0cf0-6a7b-4976-9e74-d58845670026.jpg",
+    "description": "Casual chess meetup with quick games.",
+    "datetime": "2025-12-27T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "HG G 26.3",
+    "public_status": "public",
+    "categories": [
+      "Boardgame",
+      "Casual",
+      "Fun"
+    ],
+    "max_participants": 8,
+    "participants": 0
+  },
+  {
+    "id": "perm-chess-hg-g26-20260102",
+    "title": "chess",
+    "image_path": "uploads\\3acf0cf0-6a7b-4976-9e74-d58845670026.jpg",
+    "description": "Casual chess meetup with quick games.",
+    "datetime": "2026-01-02T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "HG G 26.3",
+    "public_status": "public",
+    "categories": [
+      "Boardgame",
+      "Casual",
+      "Fun"
+    ],
+    "max_participants": 8,
+    "participants": 0
+  },
+  {
+    "id": "perm-chess-ml-e223-20251226",
+    "title": "chess",
+    "image_path": "uploads\\3acf0cf0-6a7b-4976-9e74-d58845670026.jpg",
+    "description": "Casual chess meetup with quick games.",
+    "datetime": "2025-12-26T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "ML E 22.3",
+    "public_status": "public",
+    "categories": [
+      "Boardgame",
+      "Casual",
+      "Fun"
+    ],
+    "max_participants": 8,
+    "participants": 0
+  },
+  {
+    "id": "perm-chess-ml-e223-20251227",
+    "title": "chess",
+    "image_path": "uploads\\3acf0cf0-6a7b-4976-9e74-d58845670026.jpg",
+    "description": "Casual chess meetup with quick games.",
+    "datetime": "2025-12-27T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "ML E 22.3",
+    "public_status": "public",
+    "categories": [
+      "Boardgame",
+      "Casual",
+      "Fun"
+    ],
+    "max_participants": 8,
+    "participants": 0
+  },
+  {
+    "id": "perm-chess-ml-e223-20260102",
+    "title": "chess",
+    "image_path": "uploads\\3acf0cf0-6a7b-4976-9e74-d58845670026.jpg",
+    "description": "Casual chess meetup with quick games.",
+    "datetime": "2026-01-02T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "ML E 22.3",
+    "public_status": "public",
+    "categories": [
+      "Boardgame",
+      "Casual",
+      "Fun"
+    ],
+    "max_participants": 8,
+    "participants": 0
+  },
+  {
+    "id": "perm-chess-cab-h12-20251226",
+    "title": "chess",
+    "image_path": "uploads\\3acf0cf0-6a7b-4976-9e74-d58845670026.jpg",
+    "description": "Casual chess meetup with quick games.",
+    "datetime": "2025-12-26T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "CAB H 12",
+    "public_status": "public",
+    "categories": [
+      "Boardgame",
+      "Casual",
+      "Fun"
+    ],
+    "max_participants": 8,
+    "participants": 0
+  },
+  {
+    "id": "perm-chess-cab-h12-20251227",
+    "title": "chess",
+    "image_path": "uploads\\3acf0cf0-6a7b-4976-9e74-d58845670026.jpg",
+    "description": "Casual chess meetup with quick games.",
+    "datetime": "2025-12-27T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "CAB H 12",
+    "public_status": "public",
+    "categories": [
+      "Boardgame",
+      "Casual",
+      "Fun"
+    ],
+    "max_participants": 8,
+    "participants": 0
+  },
+  {
+    "id": "perm-chess-cab-h12-20260102",
+    "title": "chess",
+    "image_path": "uploads\\3acf0cf0-6a7b-4976-9e74-d58845670026.jpg",
+    "description": "Casual chess meetup with quick games.",
+    "datetime": "2026-01-02T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "CAB H 12",
+    "public_status": "public",
+    "categories": [
+      "Boardgame",
+      "Casual",
+      "Fun"
+    ],
+    "max_participants": 8,
+    "participants": 0
+  },
+  {
+    "id": "perm-cheese-hg-g26-20251226",
+    "title": "cheese",
+    "image_path": "/images/picnic-feed.jpg",
+    "description": "Casual cheese tasting and chat.",
+    "datetime": "2025-12-26T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "HG G 26.3",
+    "public_status": "public",
+    "categories": [
+      "Food",
+      "Casual"
+    ],
+    "max_participants": 10,
+    "participants": 0
+  },
+  {
+    "id": "perm-cheese-hg-g26-20251227",
+    "title": "cheese",
+    "image_path": "/images/picnic-feed.jpg",
+    "description": "Casual cheese tasting and chat.",
+    "datetime": "2025-12-27T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "HG G 26.3",
+    "public_status": "public",
+    "categories": [
+      "Food",
+      "Casual"
+    ],
+    "max_participants": 10,
+    "participants": 0
+  },
+  {
+    "id": "perm-cheese-hg-g26-20260102",
+    "title": "cheese",
+    "image_path": "/images/picnic-feed.jpg",
+    "description": "Casual cheese tasting and chat.",
+    "datetime": "2026-01-02T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "HG G 26.3",
+    "public_status": "public",
+    "categories": [
+      "Food",
+      "Casual"
+    ],
+    "max_participants": 10,
+    "participants": 0
+  },
+  {
+    "id": "perm-cheese-ml-e223-20251226",
+    "title": "cheese",
+    "image_path": "/images/picnic-feed.jpg",
+    "description": "Casual cheese tasting and chat.",
+    "datetime": "2025-12-26T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "ML E 22.3",
+    "public_status": "public",
+    "categories": [
+      "Food",
+      "Casual"
+    ],
+    "max_participants": 10,
+    "participants": 0
+  },
+  {
+    "id": "perm-cheese-ml-e223-20251227",
+    "title": "cheese",
+    "image_path": "/images/picnic-feed.jpg",
+    "description": "Casual cheese tasting and chat.",
+    "datetime": "2025-12-27T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "ML E 22.3",
+    "public_status": "public",
+    "categories": [
+      "Food",
+      "Casual"
+    ],
+    "max_participants": 10,
+    "participants": 0
+  },
+  {
+    "id": "perm-cheese-ml-e223-20260102",
+    "title": "cheese",
+    "image_path": "/images/picnic-feed.jpg",
+    "description": "Casual cheese tasting and chat.",
+    "datetime": "2026-01-02T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "ML E 22.3",
+    "public_status": "public",
+    "categories": [
+      "Food",
+      "Casual"
+    ],
+    "max_participants": 10,
+    "participants": 0
+  },
+  {
+    "id": "perm-cheese-cab-h12-20251226",
+    "title": "cheese",
+    "image_path": "/images/picnic-feed.jpg",
+    "description": "Casual cheese tasting and chat.",
+    "datetime": "2025-12-26T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "CAB H 12",
+    "public_status": "public",
+    "categories": [
+      "Food",
+      "Casual"
+    ],
+    "max_participants": 10,
+    "participants": 0
+  },
+  {
+    "id": "perm-cheese-cab-h12-20251227",
+    "title": "cheese",
+    "image_path": "/images/picnic-feed.jpg",
+    "description": "Casual cheese tasting and chat.",
+    "datetime": "2025-12-27T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "CAB H 12",
+    "public_status": "public",
+    "categories": [
+      "Food",
+      "Casual"
+    ],
+    "max_participants": 10,
+    "participants": 0
+  },
+  {
+    "id": "perm-cheese-cab-h12-20260102",
+    "title": "cheese",
+    "image_path": "/images/picnic-feed.jpg",
+    "description": "Casual cheese tasting and chat.",
+    "datetime": "2026-01-02T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "CAB H 12",
+    "public_status": "public",
+    "categories": [
+      "Food",
+      "Casual"
+    ],
+    "max_participants": 10,
+    "participants": 0
+  },
+  {
+    "id": "perm-boardgames-hg-g26-20251226",
+    "title": "boardgames",
+    "image_path": "uploads\\3acf0cf0-6a7b-4976-9e74-d58845670026.jpg",
+    "description": "Relaxed boardgame session with classic games.",
+    "datetime": "2025-12-26T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "HG G 26.3",
+    "public_status": "public",
+    "categories": [
+      "Boardgame",
+      "Casual",
+      "Fun"
+    ],
+    "max_participants": 10,
+    "participants": 0
+  },
+  {
+    "id": "perm-boardgames-hg-g26-20251227",
+    "title": "boardgames",
+    "image_path": "uploads\\3acf0cf0-6a7b-4976-9e74-d58845670026.jpg",
+    "description": "Relaxed boardgame session with classic games.",
+    "datetime": "2025-12-27T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "HG G 26.3",
+    "public_status": "public",
+    "categories": [
+      "Boardgame",
+      "Casual",
+      "Fun"
+    ],
+    "max_participants": 10,
+    "participants": 0
+  },
+  {
+    "id": "perm-boardgames-hg-g26-20260102",
+    "title": "boardgames",
+    "image_path": "uploads\\3acf0cf0-6a7b-4976-9e74-d58845670026.jpg",
+    "description": "Relaxed boardgame session with classic games.",
+    "datetime": "2026-01-02T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "HG G 26.3",
+    "public_status": "public",
+    "categories": [
+      "Boardgame",
+      "Casual",
+      "Fun"
+    ],
+    "max_participants": 10,
+    "participants": 0
+  },
+  {
+    "id": "perm-boardgames-ml-e223-20251226",
+    "title": "boardgames",
+    "image_path": "uploads\\3acf0cf0-6a7b-4976-9e74-d58845670026.jpg",
+    "description": "Relaxed boardgame session with classic games.",
+    "datetime": "2025-12-26T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "ML E 22.3",
+    "public_status": "public",
+    "categories": [
+      "Boardgame",
+      "Casual",
+      "Fun"
+    ],
+    "max_participants": 10,
+    "participants": 0
+  },
+  {
+    "id": "perm-boardgames-ml-e223-20251227",
+    "title": "boardgames",
+    "image_path": "uploads\\3acf0cf0-6a7b-4976-9e74-d58845670026.jpg",
+    "description": "Relaxed boardgame session with classic games.",
+    "datetime": "2025-12-27T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "ML E 22.3",
+    "public_status": "public",
+    "categories": [
+      "Boardgame",
+      "Casual",
+      "Fun"
+    ],
+    "max_participants": 10,
+    "participants": 0
+  },
+  {
+    "id": "perm-boardgames-ml-e223-20260102",
+    "title": "boardgames",
+    "image_path": "uploads\\3acf0cf0-6a7b-4976-9e74-d58845670026.jpg",
+    "description": "Relaxed boardgame session with classic games.",
+    "datetime": "2026-01-02T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "ML E 22.3",
+    "public_status": "public",
+    "categories": [
+      "Boardgame",
+      "Casual",
+      "Fun"
+    ],
+    "max_participants": 10,
+    "participants": 0
+  },
+  {
+    "id": "perm-boardgames-cab-h12-20251226",
+    "title": "boardgames",
+    "image_path": "uploads\\3acf0cf0-6a7b-4976-9e74-d58845670026.jpg",
+    "description": "Relaxed boardgame session with classic games.",
+    "datetime": "2025-12-26T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "CAB H 12",
+    "public_status": "public",
+    "categories": [
+      "Boardgame",
+      "Casual",
+      "Fun"
+    ],
+    "max_participants": 10,
+    "participants": 0
+  },
+  {
+    "id": "perm-boardgames-cab-h12-20251227",
+    "title": "boardgames",
+    "image_path": "uploads\\3acf0cf0-6a7b-4976-9e74-d58845670026.jpg",
+    "description": "Relaxed boardgame session with classic games.",
+    "datetime": "2025-12-27T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "CAB H 12",
+    "public_status": "public",
+    "categories": [
+      "Boardgame",
+      "Casual",
+      "Fun"
+    ],
+    "max_participants": 10,
+    "participants": 0
+  },
+  {
+    "id": "perm-boardgames-cab-h12-20260102",
+    "title": "boardgames",
+    "image_path": "uploads\\3acf0cf0-6a7b-4976-9e74-d58845670026.jpg",
+    "description": "Relaxed boardgame session with classic games.",
+    "datetime": "2026-01-02T19:00:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "CAB H 12",
+    "public_status": "public",
+    "categories": [
+      "Boardgame",
+      "Casual",
+      "Fun"
+    ],
+    "max_participants": 10,
+    "participants": 0
   }
 ]

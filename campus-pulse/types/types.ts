@@ -36,4 +36,10 @@ export type UserType = {
 export type RoomCoordinates = {
   lat: number;
   lon: number;
+}
+
+export type RoomType = {
+  roomName: string;
+  lat: string;
+  lon: string;
 };

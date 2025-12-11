@@ -1,57 +1,89 @@
+"use client"
+
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChangeEvent, useRef } from "react";
 import LocationSearch from "@/components/icons/LocationSearch";
+import { RoomType } from "@/types/types";
+import RoomSelection from "@/page_components/room_selection/RoomSelection";
 
 const LocationInput = ({
   onChange = (event) => {},
-  withIcon = false,
   withPlaceholder = true,
   placeholder = "Where does your event take place?",
   id = 0,
   withoutShadow = false,
-  value = ""
+  value = "",
 }: {
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => any;
-  withIcon?: boolean;
+  onChange?: (newSelection: RoomType | null) => any;
   withPlaceholder?: boolean;
   placeholder?: string;
   id?: any;
   withoutShadow?: boolean;
-  value?: string
+  value?: string;
 }) => {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [location, setLocation] = useState<string>(value);
+  const [roomSelection, setRoomSelection] = useState<RoomType | null>(null);
+  const [roomsOpen, setRoomsOpen] = useState<boolean>(false);
 
   // Update date when native picker value changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocation(e.target.value);
-    onChange(e);
+  const handleChange = (newSelection: RoomType | null) => {
+    setRoomSelection(newSelection);
+    onChange(newSelection);
   };
 
-  return (
-    <label
-      onClick={() => inputRef.current?.focus()}
-      className={clsx(" w-full flex items-center h-12")}
-    >
-      <div className="h-full aspect-square flex items-center justify-center">
-        <LocationSearch />
-      </div>
+  useEffect(() => {
+    const fetchRoom = async () => {
+      const res = await fetch(`api/rooms/${value}`)
 
-      <input
-        type="text"
-        ref={inputRef}
-        id={id}
-        value={location}
-        autoComplete="off"
-        onChange={(event) => handleChange(event)}
-        placeholder={withPlaceholder ? placeholder : ""}
-        className={clsx(
-          "font-secondary placeholder:text-placeholder flex-1 pl-5 cursor-pointer select-none h-full focus:outline-none focus:ring-0 border-2 border-black",
-          !withoutShadow && "shadow-neobrutalist"
-        )}
-      />
-    </label>
+      if (!res.ok) {
+        console.error("Failed to fetch room")
+        return
+      }
+
+      const r = (await res.json()) as RoomType
+      setRoomSelection(r)
+    }
+    
+    if (value) {
+      fetchRoom();
+    }
+  }, [])
+
+  return (
+    <>
+      <button
+        onClick={() => setRoomsOpen(true)}
+        className={clsx(" w-full flex items-center h-12")}
+      >
+        <div className="h-full aspect-square flex items-center justify-center">
+          <LocationSearch />
+        </div>
+
+        <div
+          className={clsx(
+            "font-secondary flex-1 flex items-center pl-5 cursor-pointer select-none h-full border-2 border-black",
+            !withoutShadow && "shadow-neobrutalist",
+            roomSelection === null && withPlaceholder && "text-placeholder"
+          )}
+        >
+          {roomSelection !== null
+            ? roomSelection.roomName
+            : withPlaceholder
+            ? placeholder
+            : ""}
+        </div>
+      </button>
+      {roomsOpen && (
+        <RoomSelection
+          onClose={() => setRoomsOpen(false)}
+          onRoomSelectionChange={(newSelection) =>
+            handleChange(newSelection)
+          }
+          initialSelection={roomSelection}
+          directCloseSingle
+        />
+      )}
+    </>
   );
 };
 
