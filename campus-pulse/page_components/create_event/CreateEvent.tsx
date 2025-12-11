@@ -95,7 +95,6 @@ const CreateEvent = ({
     key: string,
     value: string | boolean | number | string[]
   ) => {
-    console.log(key, value);
     setEventData((prev) => {
       // console.log({...prev, [key]: value})
       return { ...prev, [key]: value };
@@ -107,8 +106,6 @@ const CreateEvent = ({
       ...eventData,
       categories: categorySelection,
     };
-
-    console.log(eventData);
 
     const errors: string[] = [];
     if (!final_data.title.trim()) errors.push("Title is required");
@@ -123,7 +120,6 @@ const CreateEvent = ({
       );
 
     if (errors.length > 0) {
-      console.log(errors);
       // replace with your own toast / UI
       alert(errors.join("\n"));
       return;
