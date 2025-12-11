@@ -15,7 +15,7 @@
       "Fun"
     ],
     "max_participants": 6,
-    "participants": 1
+    "participants": 0
   },
   {
     "id": "2",
@@ -135,5 +135,27 @@
     ],
     "max_participants": 15,
     "participants": 7
+  },
+  {
+    "id": "2c1c2674-9f3c-49d3-af45-f97f85c67680",
+    "title": "Volleyball",
+    "image_path": "uploads\\378c59b4-2152-4a93-99a1-e50d757fd2ce.jpeg",
+    "description": "Volley session this saturday with intermediate to advanced level.",
+    "datetime": "2025-12-13T10:30:00.000Z",
+    "recurring": false,
+    "recurrence_intervall": null,
+    "location": "MM ASVZ Halle 2",
+    "geo_location": "",
+    "public_status": "private",
+    "categories": [
+      "Casual",
+      "Fun",
+      "Sports",
+      "Energy",
+      "Active"
+    ],
+    "max_participants": "14",
+    "participants": 1,
+    "user_enrolled": false
   }
 ]

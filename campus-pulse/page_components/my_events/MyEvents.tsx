@@ -1,14 +1,10 @@
-import SecondaryButton from "@/components/buttons/SecondaryButton";
 import Card from "@/components/card/Card";
 import RightArrow from "@/components/icons/RightArrow";
-import Spinner from "@/components/icons/Spinner";
-import Switch from "@/components/switch/Switch";
 import { useLoginContext } from "@/contexts/LoginContext";
-import { useSearchVersionContext } from "@/contexts/SearchVersionContext";
-import { EventType, UserType } from "@/types/types";
+import { EventType } from "@/types/types";
 import clsx from "clsx";
 import { motion } from "motion/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import EditEvent from "../edit_event/EditEvent";
 

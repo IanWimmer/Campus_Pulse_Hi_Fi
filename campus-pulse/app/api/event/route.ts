@@ -157,6 +157,7 @@ export async function POST(request: NextRequest) {
 
     const events = await readEventData();
     data.id = randomUUID();
+    if (enrollOnCreation) data.participants = 1;
     events.push(data);
     await writeEventData(events);
 

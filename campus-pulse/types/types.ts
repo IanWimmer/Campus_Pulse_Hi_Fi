@@ -32,3 +32,9 @@ export type UserType = {
   enrollments: string[]; // foreign key list of event ids
   my_events: string[]; // foreign key list of event ids
 };
+
+export type RoomType = {
+  roomName: string;
+  lat: string;
+  lon: string;
+};

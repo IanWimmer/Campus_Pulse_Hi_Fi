@@ -95,6 +95,7 @@ const CreateEvent = ({
     key: string,
     value: string | boolean | number | string[]
   ) => {
+    console.log(key, value);
     setEventData((prev) => {
       // console.log({...prev, [key]: value})
       return { ...prev, [key]: value };
@@ -107,6 +108,8 @@ const CreateEvent = ({
       categories: categorySelection,
     };
 
+    console.log(eventData);
+
     const errors: string[] = [];
     if (!final_data.title.trim()) errors.push("Title is required");
     if (!final_data.description.trim()) errors.push("Description is required");
@@ -118,8 +121,6 @@ const CreateEvent = ({
       errors.push(
         "Event is labeled as recurring but no recurrence interval was given"
       );
-
-    console.log(errors);
 
     if (errors.length > 0) {
       console.log(errors);
@@ -189,6 +190,7 @@ const CreateEvent = ({
       >
         {/* General */}
         <div className={clsx("mx-7")}>
+          {/* Title */}
           <TextInput
             placeholder="Event title"
             onChange={(event) =>
@@ -197,12 +199,14 @@ const CreateEvent = ({
           />
         </div>
         <div className="border-y-2 border-y-black w-full min-h-34 bg-gray-200">
+          {/* Image */}
           <ImageInput
             placeholder="Add a describing image"
             onFileSelect={setImageFile}
           />
         </div>
         <div className="px-7">
+          {/* Description */}
           <TextAreaInput
             heightClass="h-44"
             placeholder="Please provide a description for your event..."
@@ -229,6 +233,7 @@ const CreateEvent = ({
                 }
               />
             </div>
+            {/* Recurring Event? */}
             <div className="flex items-center justify-between">
               <span className="font-secondary ml-3 font-medium">
                 Recurring Event
@@ -262,8 +267,11 @@ const CreateEvent = ({
           </div>
           <div className="px-7 mt-2">
             <LocationInput
-              onChange={(event) =>
-                handleEventDataChange("location", event.target.value)
+              onChange={(newSelection) =>
+                handleEventDataChange(
+                  "location",
+                  newSelection ? newSelection.roomName : ""
+                )
               }
             />
           </div>

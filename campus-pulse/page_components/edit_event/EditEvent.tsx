@@ -353,8 +353,8 @@ const EditEvent = ({
             </div>
             <div className="px-7 mt-2">
               <LocationInput
-                onChange={(event) =>
-                  handleEventDataChange("location", event.target.value)
+                onChange={(newSelection) =>
+                  handleEventDataChange("location", newSelection ? newSelection.roomName : "")
                 }
                 value={eventData.location}
               />
@@ -524,7 +524,7 @@ const EditEvent = ({
                         key={"selection-" + index}
                         className="bg-primary-background px-2 rounded-md h-7 border border-black flex items-center gap-1"
                       >
-                        {value}{" "}
+                        {value}
                         <CrossOutlined
                           className="h-3!"
                           stroke="stroke-[var(--color-placeholder)]"

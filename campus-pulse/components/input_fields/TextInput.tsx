@@ -5,7 +5,7 @@ import React, { useEffect, useId, useState } from "react";
 import { ChangeEvent, useRef, MouseEvent } from "react";
 
 const TextInput = ({
-  onChange = (event) => {},
+  onChange = () => {},
   onFocus = () => {},
   withStartIcon = false,
   startIcon = null,
@@ -49,9 +49,9 @@ const TextInput = ({
   const [internalValue, setInternalValue] = useState<string>(value);
 
   useEffect(() => {
-    if (value !== internalValue) {
-      setInternalValue(value);
-    }
+    // ✅ Handles all edge cases
+    const newValue = value == null ? "" : String(value);
+    setInternalValue(newValue);
   }, [value]);
 
   return (
