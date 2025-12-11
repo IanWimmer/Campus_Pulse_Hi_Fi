@@ -33,6 +33,11 @@ export type UserType = {
   my_events: string[]; // foreign key list of event ids
 };
 
+export type RoomCoordinates = {
+  lat: number;
+  lon: number;
+}
+
 export type RoomType = {
   roomName: string;
   lat: string;
