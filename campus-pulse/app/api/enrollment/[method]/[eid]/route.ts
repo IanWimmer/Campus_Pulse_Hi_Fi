@@ -6,9 +6,14 @@ export async function PUT(
   request: NextRequest,
   {
     params,
-  }: { params: Promise<{ method: "enroll" | "unenroll"; eid: string }> }
+  }: { params: Promise<{ method: string; eid: string }> }
 ) {
   const { method, eid } = await params;
+
+  if (method !== "enroll" && method !== "unenroll") {
+    console.error(`Method has to be 'enroll' or 'unenroll' but '${method}' was given`)
+  }
+  const action = method as "enroll" | "unenroll"
   const uid = request.headers.get("X-Device-Id") ?? "anonymous";
 
   if (!uid || uid === "anonymous") {
@@ -26,7 +31,7 @@ export async function PUT(
     );
   }
 
-  if (method === "unenroll" && !user.enrollments.includes(eid)) {
+  if (action === "unenroll" && !user.enrollments.includes(eid)) {
     console.error(`User not enrolled in event with ID ${eid}`);
     return NextResponse.json(
       { error: `User not enrolled in event with ID ${eid}` },
@@ -34,7 +39,7 @@ export async function PUT(
     );
   }
 
-  const resEvent = await updateEventEnrollmentCount(eid, method);
+  const resEvent = await updateEventEnrollmentCount(eid, action);
   if (
     resEvent.successful === false &&
     resEvent.message === "Max participants reached"
@@ -45,7 +50,7 @@ export async function PUT(
       { status: 400 }
     );
   }
-  const resUser = await updateUser(uid, method, eid);
+  const resUser = await updateUser(uid, action, eid);
 
   console.log([resUser, resEvent]);
 
