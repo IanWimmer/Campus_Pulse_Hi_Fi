@@ -154,13 +154,11 @@ async function updateImages() {
 export async function GET(request: NextRequest) {
   const users = await readUsers();
 
-  const results: any[] = []
-
-  users.forEach(async (user) => {
+  /*.forEach(async (user) => {
     const result = await writeUsers(user)
     results.push(result)
     console.log(result)
-  })
+  })*/
 
   /*
   const result = await getData("0");
@@ -172,5 +170,5 @@ export async function GET(request: NextRequest) {
     );
   }*/
 
-  return NextResponse.json(results);
+  return NextResponse.json(users);
 }
