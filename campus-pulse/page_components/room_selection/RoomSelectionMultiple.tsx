@@ -5,23 +5,21 @@ import { LocationOnOutlined } from "@mui/icons-material";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 
-const RoomSelection = ({
+const RoomSelectionMultiple = ({
   onClose = () => {},
   onRoomSelectionChange = () => {},
-  directCloseSingle = false,
   value = null,
 }: {
   onClose?: () => any;
-  onRoomSelectionChange?: (newSelection: RoomType | null) => any;
-  directCloseSingle?: boolean;
-  value?: RoomType | null;
+  onRoomSelectionChange?: (newSelection: RoomType[] | null) => any;
+  value?: RoomType[] | null;
 }) => {
   const [roomSearchSelection, setRoomSearchSelection] = useState<RoomType[]>(
     []
   );
   const [rooms, setRooms] = useState<RoomType[]>([]);
 
-  const [roomSelection, setRoomSelection] = useState<RoomType | null>(null);
+  const [roomSelection, setRoomSelection] = useState<RoomType[] | null>(null);
 
   const fetchRooms = async () => {
     const res = await fetch("api/rooms");
@@ -41,17 +39,34 @@ const RoomSelection = ({
   }, []);
 
   useEffect(() => {
-    if (!value || value === roomSelection) {
+    const sorted = roomSelection?.toSorted();
+    if (
+      !value ||
+      (value &&
+        sorted &&
+        value
+          .toSorted()
+          .every((val, i) => val.roomName === sorted?.[i].roomName))
+    ) {
       return;
     }
-    setRoomSelection(value);
+    if (Array.isArray(value)) {
+      setRoomSelection((prev) => {
+        if (!prev) {
+          return value;
+        } else {
+          const set = new Set(prev.concat(value))
+          return Array.from(set);
+        }
+      });
+    }
   }, [value]);
 
   useEffect(() => {
     handleChange(roomSelection);
   }, [roomSelection]);
 
-  const handleChange = (newSelection: RoomType | null) => {
+  const handleChange = (newSelection: RoomType[] | null) => {
     onRoomSelectionChange(newSelection);
   };
 
@@ -101,34 +116,44 @@ const RoomSelection = ({
           Current selection
         </p>
 
-        {roomSelection ? (
+        {roomSelection !== null ? (
           <div className="max-h-36 h-fit overflow-y-auto flex flex-col">
-            {
-              <div className="flex justify-between items-center h-9 px-2 shrink-0">
-                {roomSelection.roomName}
+            {roomSelection.map((value, index) => {
+              return (
                 <div
-                  className="h-full aspect-square flex justify-center items-center"
-                  onClick={() =>
-                    setRoomSelection((prev) => {
-                      if (!prev) {
-                        return null;
-                      }
-                      return prev.roomName !== roomSelection.roomName
-                        ? prev
-                        : null;
-                    })
-                  }
+                  className="flex justify-between items-center h-9 px-2 shrink-0"
+                  key={"selection-" + index}
                 >
-                  <CrossOutlined
-                    className="h-3!"
-                    stroke="stroke-[var(--color-placeholder)]"
-                  />
+                  {value.roomName}
+                  <div
+                    className="h-full aspect-square flex justify-center items-center"
+                    onClick={() => {
+                      setRoomSelection((prev) => {
+                        if (
+                          !prev ||
+                          (prev &&
+                            prev.length === 1 &&
+                            prev[0].roomName === value.roomName)
+                        ) {
+                          return null;
+                        }
+                        return prev.filter(
+                          (room) => room.roomName !== value.roomName
+                        );
+                      });
+                    }}
+                  >
+                    <CrossOutlined
+                      className="h-3!"
+                      stroke="stroke-[var(--color-placeholder)]"
+                    />
+                  </div>
                 </div>
-              </div>
-            }
+              );
+            })}
           </div>
         ) : (
-          <p className="text-placeholder">No location selected yet...</p>
+          <p className="text-placeholder">No locations selected yet...</p>
         )}
       </div>
 
@@ -142,7 +167,12 @@ const RoomSelection = ({
         <div className="flex flex-col">
           {roomSearchSelection.map((value, index) => {
             const currentSelection = roomSelection;
-            const selected = currentSelection?.roomName === value.roomName;
+            const isArraySelection = Array.isArray(roomSelection);
+            const selected =
+              isArraySelection &&
+              currentSelection
+                ?.map((value) => value.roomName)
+                .includes(value.roomName);
 
             return (
               <div
@@ -154,9 +184,15 @@ const RoomSelection = ({
                 onClick={() =>
                   setRoomSelection((prev) => {
                     if (!prev) {
-                      return value;
+                      return [value];
+                    }
+
+                    if (selected) {
+                      return prev.filter(
+                        (ele) => ele.roomName !== value.roomName
+                      );
                     } else {
-                      return prev.roomName !== value.roomName ? value : null;
+                      return [...prev, value];
                     }
                   })
                 }
@@ -171,4 +207,4 @@ const RoomSelection = ({
   );
 };
 
-export default RoomSelection;
+export default RoomSelectionMultiple;

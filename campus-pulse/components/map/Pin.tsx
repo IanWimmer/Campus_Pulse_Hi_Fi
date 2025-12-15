@@ -50,7 +50,7 @@ const Pin: React.FC<PinProps> = ({ id, imgPath, clickable = true, alt = "" }) =>
                     }}
                 >
                     <img
-                        src={`/${imgPath}`}
+                        src={imgPath}
                         alt={alt}
                         className="w-full h-full object-cover"
                     />

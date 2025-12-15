@@ -17,9 +17,6 @@ import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLoginContext } from "@/contexts/LoginContext";
 
-type loadingType = {
-  image: boolean;
-};
 
 const recurrenceOptions = [
   { label: "Daily", value: "daily" },
@@ -37,7 +34,6 @@ const CreateEvent = ({
 }) => {
   const [show, setShow] = useState(visible);
   const [loadingSubmit, setLoadingSubmit] = useState<boolean>();
-  const [loadingDone, setLoadingDone] = useState<boolean>(true);
   const [showRecurring, setShowRecurring] = useState<boolean>(false);
   const [categoriesFocused, setCategoriesFocused] = useState<boolean>(false);
 
@@ -146,7 +142,7 @@ const CreateEvent = ({
       }
 
       const created = await res.json();
-      console.log("Event created:", created);
+      // console.log("Event created:", created);
       handleClose();
     } catch (err) {
       console.error("Error creating event", err);

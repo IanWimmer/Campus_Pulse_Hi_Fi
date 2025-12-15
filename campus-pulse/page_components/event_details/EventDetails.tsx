@@ -331,11 +331,14 @@ const EventDetails = ({
             <PrimaryButton
               text={"ENROLL ME!"}
               containerClassName="w-full"
+              disabled={eventData.max_participants === eventData.participants}
               onClick={async () => {
-                await fetch(`api/enrollment/enroll/${id}`, {
+                const res = await fetch(`api/enrollment/enroll/${id}`, {
                   method: "PUT",
                   headers: { "X-Device-Id": loginContext.state.deviceId },
                 });
+
+                console.log(res)
 
                 onEnroll();
 

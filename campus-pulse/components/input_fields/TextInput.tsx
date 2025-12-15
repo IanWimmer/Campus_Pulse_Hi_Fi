@@ -39,17 +39,17 @@ const TextInput = ({
   type?: string;
   withoutShadow?: boolean;
   className?: string;
-  value?: string;
+  value?: string | null;
 }) => {
   if (withEndIcon && !endIcon) throw new Error("Add an endIcon.");
   if (withStartIcon && !startIcon) throw new Error("Add a startIcon.");
   if (id == 0) id = useId();
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const [internalValue, setInternalValue] = useState<string>(value);
+  const [internalValue, setInternalValue] = useState<string>(value === "null" || value === undefined || value === "" ? "" : String(value));
 
   useEffect(() => {
-    const newValue = value === null || value === undefined ? "" : String(value);
+    const newValue = value === "null" || value === undefined || value === "" ? "" : String(value);
     setInternalValue(newValue);
   }, [value]);
 

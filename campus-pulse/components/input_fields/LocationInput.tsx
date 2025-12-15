@@ -2,7 +2,6 @@
 
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
-import { ChangeEvent, useRef } from "react";
 import LocationSearch from "@/components/icons/LocationSearch";
 import { RoomType } from "@/types/types";
 import RoomSelection from "@/page_components/room_selection/RoomSelection";
@@ -25,14 +24,7 @@ const LocationInput = ({
   const [roomSelection, setRoomSelection] = useState<RoomType | null>(null);
   const [roomsOpen, setRoomsOpen] = useState<boolean>(false);
 
-  // Update date when native picker value changes
-  const handleChange = (newSelection: RoomType | null) => {
-    setRoomSelection(newSelection);
-    onChange(newSelection);
-  };
-
-  useEffect(() => {
-    const fetchRoom = async () => {
+  const fetchRoom = async () => {
       const res = await fetch(`api/rooms/${value}`)
 
       if (!res.ok) {
@@ -43,11 +35,21 @@ const LocationInput = ({
       const r = (await res.json()) as RoomType
       setRoomSelection(r)
     }
-    
-    if (value) {
+
+  // Update date when native picker value changes
+  const handleChange = (newSelection: RoomType | null) => {
+    setRoomSelection(newSelection);
+  };
+
+  useEffect(() => {
+    onChange(roomSelection)
+  }, [roomSelection])
+
+  useEffect(() => {
+    if (value && value !== roomSelection?.roomName)
       fetchRoom();
-    }
-  }, [])
+  }, [value])
+  
 
   return (
     <>
@@ -79,7 +81,7 @@ const LocationInput = ({
           onRoomSelectionChange={(newSelection) =>
             handleChange(newSelection)
           }
-          initialSelection={roomSelection}
+          value={roomSelection}
           directCloseSingle
         />
       )}

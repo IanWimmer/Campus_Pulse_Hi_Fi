@@ -12,12 +12,14 @@ const NegativeButton = ({
   containerClassName = "",
   buttonClassName = "",
   stopPropagation = false,
+  disabled = false,
 }: {
   onClick?: () => void;
   text: string | React.ReactNode;
   containerClassName?: string;
   buttonClassName?: string;
   stopPropagation?: boolean;
+  disabled?: boolean;
 }) => {
   const { clicked, handleClick } = useClickAnimation(onClick, { delay: 300 });
 
@@ -28,14 +30,15 @@ const NegativeButton = ({
           if (stopPropagation) {
             event.stopPropagation();
           }
-          handleClick();
+          if (!disabled) handleClick();
         }}
         className={clsx(
           "w-full h-12 bg-negative text-white rounded-md border-2 border-black text-xl font-semibold transition",
           buttonClassName,
-          clicked
+          clicked && !disabled
             ? "shadow-[0_0_0_0_rgba(0,0,0,1.00)] translate-x-1.5 translate-y-1.5"
-            : "shadow-neobrutalist"
+            : "shadow-neobrutalist",
+          disabled ? "bg-zinc-200 text-red-800 border-red-800" : "bg-negative text-white border-black"
         )}
       >
         {text}

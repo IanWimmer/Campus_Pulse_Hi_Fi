@@ -3,7 +3,7 @@ import { neon } from "@neondatabase/serverless";
 
 const sql = neon(process.env.DATABASE_URL!);
 
-export async function readUser(uid: string): Promise<UserType | undefined> {
+export async function getUser(uid: string): Promise<UserType | undefined> {
   const response = (await sql`SELECT * FROM users WHERE id = ${uid};`)[0];
   const user = response as UserType;
 
@@ -14,7 +14,7 @@ export async function readUser(uid: string): Promise<UserType | undefined> {
   return user;
 }
 
-export async function readUsers(): Promise<UserType[] | undefined> {
+export async function getUsers(): Promise<UserType[] | undefined> {
   const response = await sql`SELECT * FROM users;`;
   const users = response as UserType[];
 
@@ -25,7 +25,7 @@ export async function readUsers(): Promise<UserType[] | undefined> {
   return users;
 }
 
-export async function writeUser(user: UserType) {
+export async function createUser(user: UserType) {
   const response = await sql`INSERT INTO users (
     id, name, enrollments, my_events
   ) VALUES (
@@ -39,7 +39,7 @@ export async function writeUser(user: UserType) {
 
 export async function updateUser(
   uid: string,
-  action: "enroll" | "unenroll" | "create" | "delete" | "name",
+  action: "enroll" | "unenroll" | "create_event" | "delete_event" | "name",
   eid?: string,
   name?: string
 ) {
@@ -53,10 +53,10 @@ export async function updateUser(
     return await sql`UPDATE users SET enrollments = array_append(enrollments, ${eid}) WHERE id = ${uid};`;
   } else if (action === "unenroll") {
     return await sql`UPDATE users SET enrollments = array_remove(enrollments, ${eid}) WHERE id = ${uid};`;
-  } else if (action === "create") {
-    return await sql`UPDATE users SET enrollments = array_append(my_events, ${eid}) WHERE id = ${uid};`;
-  } else if (action === "delete") {
-    return await sql`UPDATE users SET enrollments = array_remove(my_events, ${eid}) WHERE id = ${uid};`;
+  } else if (action === "create_event") {
+    return await sql`UPDATE users SET my_events = array_append(my_events, ${eid}) WHERE id = ${uid};`;
+  } else if (action === "delete_event") {
+    return await sql`UPDATE users SET my_events = array_remove(my_events, ${eid}) WHERE id = ${uid};`;
   } else if (action === "name") {
     return await sql`UPDATE users SET name = ${name} WHERE id = ${uid};`;
   }

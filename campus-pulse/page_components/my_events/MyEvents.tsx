@@ -99,6 +99,7 @@ const MyEvents = ({
                 location={event.location}
                 enrolled={event.user_enrolled}
                 enrollmentAllowed
+                enrollmentDisabled={event.max_participants === event.participants}
                 onEnroll={async () => {
                   console.log("trying to enroll")
                   await fetch(`api/enrollment/enroll/${event.id}`, {

@@ -16,6 +16,9 @@ export type EventType = {
   created_by_user?: boolean;
 };
 
+export type EventKey = keyof EventType;
+export type ValueTypeOfKey<K extends EventKey> = EventType[K];
+
 export type NavigationTabType = {
   id: number;
   icon: React.ReactElement;

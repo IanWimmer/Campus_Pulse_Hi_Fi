@@ -14,6 +14,7 @@ const Card = ({
   height = null,
   enrolled = false,
   enrollmentAllowed = false,
+  enrollmentDisabled = false,
   onEnroll = () => {},
   onCancel = () => {},
 }: {
@@ -25,7 +26,8 @@ const Card = ({
   tall?: boolean;
   height?: string | number | null;
   enrolled?: boolean;
-  enrollmentAllowed?: boolean
+  enrollmentAllowed?: boolean;
+  enrollmentDisabled?: boolean;
   onEnroll?: () => any;
   onCancel?: () => any;
 }) => {
@@ -92,6 +94,7 @@ const Card = ({
                 console.log("enroll")
                 onEnroll();
               }}
+              disabled={enrollmentDisabled}
             />
           </div>
         </div>

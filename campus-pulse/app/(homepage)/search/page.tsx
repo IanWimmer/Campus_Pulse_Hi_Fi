@@ -12,8 +12,8 @@ import { useLoginContext } from "@/contexts/LoginContext";
 import { useSearchVersionContext } from "@/contexts/SearchVersionContext";
 import EventDetails from "@/page_components/event_details/EventDetails";
 import RoomSelection from "@/page_components/room_selection/RoomSelection";
-import { useRoomSelection } from "@/page_components/room_selection/RoomSelection";
-import { DateTimeRange, EventType, UserType } from "@/types/types";
+import RoomSelectionMultiple from "@/page_components/room_selection/RoomSelectionMultiple";
+import { DateTimeRange, EventType, RoomType, UserType } from "@/types/types";
 import {
   AccountCircleOutlined,
   CategoryOutlined,
@@ -58,7 +58,7 @@ const page = () => {
 
   // Search input
   const [searchInput, setSearchInput] = useState<string | null>(null);
-  const [roomSelection, setRoomSelection] = useRoomSelection(true);
+  const [roomSelection, setRoomSelection] = useState<RoomType[] | null>(null);
   const [dateTimeRange, setDateTimeRange] = useState<DateTimeRange | null>(
     null
   );
@@ -830,13 +830,12 @@ const page = () => {
   );
 
   const RoomsOverlay = (
-    <RoomSelection
+    <RoomSelectionMultiple
       onClose={() => setRoomsOpen(false)}
-      multiple
-      onRoomSelectionChangeMultiple={(newSelection) => {
+      onRoomSelectionChange={(newSelection) => {
         setRoomSelection(newSelection);
       }}
-      initialSelection={roomSelection}
+      value={roomSelection}
     />
   );
 
