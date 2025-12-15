@@ -13,6 +13,8 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.5",
     "@mui/material": "^7.3.5",
+    "@neondatabase/serverless": "^1.0.2",
+    "@vercel/blob": "^2.0.0",
     "clsx": "^2.1.1",
     "motion": "^12.23.24",
     "next": "16.0.1",

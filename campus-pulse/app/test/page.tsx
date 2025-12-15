@@ -37,6 +37,17 @@ const page = () => {
     <div className="flex flex-col gap-3 p-2">
       <div>
         <PrimaryButton
+          text="Fetch '0' from Neon server"
+          onClick={() => {
+            console.log(
+              fetch(`api/test`, {
+                method: "GET",
+                headers: { "X-Device-Id": loginContext.state.deviceId },
+              })
+            );
+          }}
+        />
+        <PrimaryButton
           text="Enroll to '0'"
           onClick={() => {
             console.log(

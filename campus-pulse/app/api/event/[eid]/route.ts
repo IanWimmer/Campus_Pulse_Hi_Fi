@@ -3,6 +3,7 @@ import path from "path";
 import fs from "fs/promises";
 import { EventType, UserType } from "@/types/types";
 import { randomUUID } from "crypto";
+import { neon } from "@neondatabase/serverless";
 
 const EventTypeDefault: Partial<EventType> = {
   id: "",
@@ -20,12 +21,20 @@ const EventTypeDefault: Partial<EventType> = {
   participants: 0,
 };
 
+const sql = neon(process.env.DATABASE_URL!);
+
 const eventDataPath = path.join(process.cwd(), "public", "data", "events.json");
 const eventLockPath = path.join(process.cwd(), "public", "data", "events.lock");
 const userDataPath = path.join(process.cwd(), "public", "data", "users.json");
 const userLockPath = path.join(process.cwd(), "public", "data", "users.lock");
 const uploadsPath = path.join(process.cwd(), "public", "uploads");
 const uploadsPathForClient = "uploads";
+
+
+async function getEvent(eid: string) {
+  const response = (await sql`SELECT * FROM events WHERE id = ${eid}`)[0];
+  return response as EventType | undefined;
+}
 
 /**
  * Simple file lock - prevents concurrent writes
