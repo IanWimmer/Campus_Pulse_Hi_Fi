@@ -219,7 +219,7 @@ const ComponentsPage = () => {
           <br />
           Navigation bar
           <div className="absolute left-0 mt-12">
-            <NavigationBar options={navigationTabs} />
+            <NavigationBar options={navigationTabs} selected={0} />
           </div>
           <div className="h-26" />
         </div>
@@ -238,36 +238,7 @@ const ComponentsPage = () => {
                   setEventDetails({ mounted: false, visible: false });
                 }, 300);
               }}
-              title="Spontaneous Chess Tournament 🏆"
-              datetime="2025-12-16T20:13:20.000Z"
-              location="CAB G 56"
-              categories={[
-                "Boardgames",
-                "For all",
-                "Spontaneous",
-                "Tournament",
-              ]}
-              participants={6}
-              max_participants={8}
-              description={
-                <p>
-                  We're searching for contestants in a spontaneous chess
-                  tournament this Friday. We will organize the boards
-                  and clocks and provide snacks and drinks, so all you have to
-                  bring is a good mood.
-                  <br />
-                  <br />
-                  Gamemode <br /> We will start with 3 group-phase games, then
-                  continue with the elimination game. This is where the real
-                  shit happens, and nobody will be able to read this line of
-                  text since it is hidden by the button. Anyway, as I was
-                  saying, the tournament Lorem ipsum dolor sit amet consectetur
-                  adipisicing elit. Nam eum impedit sint est nemo ab voluptatum
-                  nobis provident quisquam, omnis eos exercitationem amet vitae
-                  possimus quae ullam, dolorem incidunt asperiores?
-                </p>
-              }
-              enrolled={enrolled}
+              id={"0"}
               onEnroll={() => setEnrolled(true)}
               onCancel={() => setEnrolled(false)}
             />
