@@ -105,11 +105,11 @@ const Account = ({
     }
 
     setEditMode(false);
-    
-      showPopup({
-        title: "Changes successful",
-        ttl: 4000,
-      });
+
+    showPopup({
+      title: "Changes successful",
+      ttl: 4000,
+    });
     fetchUser();
   };
 

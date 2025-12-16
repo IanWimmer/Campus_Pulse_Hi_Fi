@@ -1,5 +1,6 @@
 import Chip from "@/components/chip/Chip";
 import Spinner from "@/components/icons/Spinner";
+import { showPopup } from "@/utils/GlobalPopupManager";
 import { EditOffRounded, EditRounded } from "@mui/icons-material";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import clsx from "clsx";
@@ -137,7 +138,18 @@ const EventPreferences = ({
         </h1>
         <button
           className="w-8 h-8 flex items-center justify-center"
-          onClick={() => setEditMode((prev) => !prev)}
+          onClick={() => {
+            setEditMode((prev) => {
+              if (prev) {
+                showPopup({
+                  title: "Changes successful",
+                  ttl: 4000,
+                });
+              }
+
+              return !prev;
+            });
+          }}
         >
           {editMode ? (
             <EditOffRounded sx={{ fontSize: 28 }} />
@@ -192,9 +204,7 @@ const EventPreferences = ({
               </div>
             </div>
             <div>
-              <h2 className="font-secondary text-xl font-semibold">
-                🎲 Games
-              </h2>
+              <h2 className="font-secondary text-xl font-semibold">🎲 Games</h2>
               <div className="flex flex-wrap w-full gap-2 mt-2">
                 {preferenceNames.g.map((value, index) => {
                   return (

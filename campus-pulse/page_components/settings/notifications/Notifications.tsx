@@ -114,7 +114,7 @@ const Notifications = ({
   visible?: boolean;
 }) => {
   const [show, setShow] = useState<boolean>(visible);
-  const [editMode, setEditMode] = useState<boolean>(false);
+  const [changed, setChanged] = useState<boolean>(false);
   const [notificationSettings, setNotificationSettings] =
     useState<null | NotificationSettingsType>(null);
 
