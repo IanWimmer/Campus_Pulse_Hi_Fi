@@ -10,6 +10,7 @@ import Spinner from "@/components/icons/Spinner";
 import TextInput from "@/components/input_fields/TextInput";
 import SecondaryButton from "@/components/buttons/SecondaryButton";
 import PrimaryButton from "@/components/buttons/PrimaryButton";
+import { showPopup } from "@/utils/GlobalPopupManager";
 
 const Account = ({
   onClose = () => {},
@@ -75,9 +76,12 @@ const Account = ({
   };
 
   const onSubmitEdit = async () => {
-    if (user === null || (editedUser !== null && editedUser.name === user.name)) {
+    if (
+      user === null ||
+      (editedUser !== null && editedUser.name === user.name)
+    ) {
       setEditMode(false);
-      return
+      return;
     }
 
     const formData = new FormData();
@@ -90,8 +94,23 @@ const Account = ({
       headers: { "X-Device-Id": loginContext.state.deviceId },
     });
 
-    setEditMode(false)
-    fetchUser()
+    if (!res.ok) {
+      console.error("Something went wrong while updating user profile");
+
+      showPopup({
+        title: "Changes unsuccessful",
+        description: `Something went wrong while updating, please try again!`,
+        ttl: 4000,
+      });
+    }
+
+    setEditMode(false);
+    
+      showPopup({
+        title: "Changes successful",
+        ttl: 4000,
+      });
+    fetchUser();
   };
 
   const onCancelEdit = async () => {
@@ -158,8 +177,14 @@ const Account = ({
                 </div>
               </div>
               <div className="fixed bottom-4 left-0 w-screen pl-10.5 pr-9 flex flex-col gap-3">
-                <SecondaryButton text={"Cancel"} onClick={() => onCancelEdit()} />
-                <PrimaryButton text={"Submit changes"} onClick={() => onSubmitEdit()} />
+                <SecondaryButton
+                  text={"Cancel"}
+                  onClick={() => onCancelEdit()}
+                />
+                <PrimaryButton
+                  text={"Submit changes"}
+                  onClick={() => onSubmitEdit()}
+                />
               </div>
             </div>
           ) : (
