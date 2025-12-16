@@ -184,7 +184,7 @@ const DropDownMenu = ({
 
       <motion.div
         className={clsx(
-          "absolute max-h-[40vh] px-2 z-50 mt-2 bg-white shadow-neobrutalist-xs border-2 border-black flex flex-col overflow-y-auto"
+          "absolute max-h-[min(300px,calc(var(--vh,1vh)*30))] px-2 z-50 mt-2 bg-white shadow-neobrutalist-xs border-2 border-black flex flex-col overflow-y-auto"
         )}
         style={{ width: dropdownButtonRef?.current?.offsetWidth }}
         initial={{ opacity: 0, height: 0 }}
@@ -193,7 +193,7 @@ const DropDownMenu = ({
             ? {
                 opacity: 100,
                 height: "auto",
-                maxHeight: "40vh",
+                maxHeight: "min(300px,calc(var(--vh,1vh)*30))",
               }
             : { opacity: 0, height: 0, maxHeight: 0 }
         }

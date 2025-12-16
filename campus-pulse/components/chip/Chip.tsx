@@ -26,7 +26,7 @@ const Chip = ({
           ? "shadow-[0_0_0_0_rgba(0,0,0,1.00)] translate-x-1 translate-y-1"
           : clickable && "shadow-neobrutalist-sm"
       )}
-      onClick={handleClick}
+      onClick={(event) => {if (clickable) {handleClick(); setActive(prev => !prev)}}}
     >
       <span className="px-3 text-nowrap">{content}</span>
     </button>

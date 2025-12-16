@@ -1,7 +1,6 @@
 "use client";
 
 import NegativeButton from "@/components/buttons/NegativeButton";
-import PrimaryButton from "@/components/buttons/PrimaryButton";
 import SecondaryButton from "@/components/buttons/SecondaryButton";
 import DropDownMenu from "@/components/dropdown/DropDownMenu";
 import DateTimeInput from "@/components/input_fields/DateTimeInput";
@@ -20,6 +19,7 @@ import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import AcceptanceModal from "@/components/acceptance_modal/AcceptanceModal";
 import { useLoginContext } from "@/contexts/LoginContext";
+import { showPopup } from "@/utils/GlobalPopupManager";
 
 type loadingType = {
   image: boolean;
@@ -186,6 +186,7 @@ const EditEvent = ({
         }
         console.error("Failed to create event", await res.text());
       }
+      showPopup({ title: "Edited event successfully", ttl: 4000 });
       handleClose();
     } catch (err) {
       console.error("Error creating event", err);
@@ -225,6 +226,7 @@ const EditEvent = ({
               return;
             }
 
+            showPopup({ title: "Deleted event successfully", ttl: 4000 });
             handleClose();
           } catch (err) {
             console.error("Failed to delete event:", err);
@@ -251,7 +253,7 @@ const EditEvent = ({
           className="w-8 h-8 flex items-center justify-center"
           onClick={() => handleClose()}
         >
-          <ArrowBack fontSize="large"/>
+          <ArrowBack fontSize="large" />
         </button>
         <h1 className="w-full h-8 text-center content-center text-2xl font-semibold text-white-border">
           Edit event
@@ -354,7 +356,10 @@ const EditEvent = ({
             <div className="px-7 mt-2">
               <LocationInput
                 onChange={(newSelection) =>
-                  handleEventDataChange("location", newSelection ? newSelection.roomName : "")
+                  handleEventDataChange(
+                    "location",
+                    newSelection ? newSelection.roomName : ""
+                  )
                 }
                 value={eventData.location}
               />
@@ -543,8 +548,10 @@ const EditEvent = ({
             <NegativeButton text={"Delete event"} onClick={onDeleteSubmit} />
           </div>
           {loadingSubmit && (
-            <div className="fixed top-0 left-0 h-full w-screen z-50 bg-[rgba(255, 255, 255, 0.5)]">
-              <Spinner />
+            <div className="fixed top-0 left-0 h-[calc(var(--vh,1vh)*100)] w-screen z-50 bg-[rgba(0,0,0,0.1)] flex items-center justify-center" onClick={(event) => event.stopPropagation()}>
+              <div className="h-fit w-fit p-2 bg-white">
+                <Spinner />
+              </div>
             </div>
           )}
         </div>

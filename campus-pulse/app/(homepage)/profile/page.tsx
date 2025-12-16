@@ -13,6 +13,7 @@ import { PersonOutline } from "@mui/icons-material";
 import clsx from "clsx";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
+import CreatedEvents from "@/page_components/created_events/CreatedEvents";
 
 const AddFriendsContainer = ({
   visible = true,
@@ -61,6 +62,7 @@ const page = () => {
   const loginContext = useLoginContext();
 
   const [myEventsOpen, setMyEventsOpen] = useState<boolean>(false)
+  const [createdEventsOpen, setCreatedEventsOpen] = useState<boolean>(false)
   const [friendsOpen, setFriendsOpen] = useState<boolean>(false)
   const [settingsOpen, setSettingsOpen] = useState<boolean>(false)
 
@@ -108,6 +110,7 @@ const page = () => {
       </div>
       <div className="absolute top-111 flex flex-col gap-4 w-full px-10.5">
         <SecondaryButton text={"MY EVENTS"} onClick={() => setMyEventsOpen(true)} />
+        <SecondaryButton text={"CREATED EVENTS"} onClick={() => setCreatedEventsOpen(true)} />
         <SecondaryButton text={"FRIENDS"} onClick={() => setFriendsOpen(true)} />
         <SecondaryButton text={"SETTINGS"} onClick={() => setSettingsOpen(true)} />
       </div>
@@ -115,6 +118,12 @@ const page = () => {
       {myEventsOpen && <MyEvents onClose={() => {
         setTimeout(() => {
           setMyEventsOpen(false)
+        }, 300)
+      }} />}
+
+      {createdEventsOpen && <CreatedEvents onClose={() => {
+        setTimeout(() => {
+          setCreatedEventsOpen(false)
         }, 300)
       }} />}
 

@@ -52,10 +52,11 @@ export const CheckboxInput = ({
   name,
   value,
   onChange = (event) => {},
-  id = 0,
+  id = "",
   label = "",
   checked = false,
   boxPosition = "start",
+  bgSwitching = false
 }: {
   name: string;
   value: string;
@@ -64,6 +65,7 @@ export const CheckboxInput = ({
   label?: string | React.ReactNode;
   checked?: boolean;
   boxPosition?: "start" | "end";
+  bgSwitching?: boolean;
 }) => {
   const inputId = id?.toString() || `${name}-${value}`;
   const inputRef = useRef<HTMLInputElement>(null);
@@ -104,7 +106,7 @@ export const CheckboxInput = ({
           y={0}
           width={24}
           height={24}
-          className="fill-primary-background stroke-3 stroke-black"
+          className={clsx("stroke-3 stroke-black", bgSwitching && !checked ? "fill-white" : "fill-primary-background")}
         />
         {checked && (
           <polyline

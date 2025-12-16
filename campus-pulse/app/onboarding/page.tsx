@@ -1,6 +1,7 @@
 "use client";
 
 import Card from "@/components/card/Card";
+import LoadingPageOverlay from "@/components/loading_page_overlay/LoadingPageOverlay";
 import OnboardingProgressionBar from "@/components/OnboardingProgressionBar";
 import { useOnboardingContext } from "@/contexts/OnboardingContext";
 import AddFriends from "@/page_components/add_friends/AddFriends";
@@ -134,6 +135,10 @@ const OnboardingPage = () => {
     }
     // If stage !== 0, do nothing and no timer is set
   }, [onboardingContext.state.stage]);
+
+  if (onboardingContext.state.stage === -1) {
+    output = (<LoadingPageOverlay />)
+  }
 
   if (onboardingContext.state.stage == 0) {
     output = (

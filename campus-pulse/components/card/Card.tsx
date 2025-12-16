@@ -3,6 +3,7 @@ import NegativeButton from "../buttons/NegativeButton";
 
 import { formatEventDateTime } from "@/utils/formatDateTime";
 import PrimaryButton from "../buttons/PrimaryButton";
+import { showPopup } from "@/utils/GlobalPopupManager";
 
 const Card = ({
   imageSrc = "images/image_placeholder.jpg",
@@ -78,6 +79,11 @@ const Card = ({
               text={"CANCEL"}
               containerClassName="[&_button]:px-4"
               onClick={() => {
+                showPopup({
+                  title: "Enrollment canceled",
+                  description: `Your enrollement to ${title} was canceled`,
+                  ttl: 4000,
+                });
                 onCancel();
               }}
             />
@@ -91,7 +97,7 @@ const Card = ({
               stopPropagation
               text={"ENROLL"}
               onClick={() => {
-                console.log("enroll")
+                showPopup({ title: "Enrollment successful", description: `You're now enrolled to ${title}`, ttl: 4000 });
                 onEnroll();
               }}
               disabled={enrollmentDisabled}

@@ -7,9 +7,8 @@ import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import EditEvent from "../edit_event/EditEvent";
-import EventDetails from "../event_details/EventDetails";
 
-const MyEvents = ({
+const CreatedEvents = ({
   onClose = () => {},
   visible = true,
 }: {
@@ -18,7 +17,7 @@ const MyEvents = ({
 }) => {
   const [show, setShow] = useState<boolean>(visible);
   const [events, setEvents] = useState<null | EventType[]>(null);
-  const [showEvent, setShowEvent] = useState<null | string>(null);
+  const [editEvent, setEditEvent] = useState<null | number | string>(null);
   const loginContext = useLoginContext();
 
   useEffect(() => {
@@ -30,7 +29,7 @@ const MyEvents = ({
   }, []);
 
   function handleCardClick(id: string) {
-    setShowEvent(id);
+    setEditEvent(id);
   }
 
   const handleClose = () => {
@@ -44,7 +43,8 @@ const MyEvents = ({
       headers: { "X-Device-Id": loginContext.state.deviceId },
     });
     const data = (await response.json()) as EventType[];
-    setEvents(data);
+    const filtered_data = data.filter((event) => event.created_by_user)
+    setEvents(filtered_data);
   };
 
   return createPortal(
@@ -65,7 +65,7 @@ const MyEvents = ({
           <ArrowBack fontSize="large"/>
         </button>
         <h1 className="w-full h-8 text-center content-center text-2xl font-semibold text-white-border">
-          My Events
+          Created Events
         </h1>
         <span className="w-8" />
       </div>
@@ -77,7 +77,6 @@ const MyEvents = ({
         )}
       >
         {events && events.length > 0 ? events.map((event, index) => {
-          if (!event.user_enrolled) return;
           const datetime = new Date(event.datetime);
           return (
             <div
@@ -123,15 +122,15 @@ const MyEvents = ({
               />
             </div>
           );
-        }) : (<div className="font-secondary">No events found...</div>)}
+        }): (<div className="font-secondary">No events found...</div>)}
       </div>
 
-      {showEvent !== null ? (
-        <EventDetails
-          id={showEvent}
+      {editEvent !== null ? (
+        <EditEvent
+          id={editEvent}
           onClose={() => {
             setTimeout(() => {
-              setShowEvent(null);
+              setEditEvent(null);
               fetchEvents();
             }, 300);
           }}
@@ -144,4 +143,4 @@ const MyEvents = ({
   );
 };
 
-export default MyEvents;
+export default CreatedEvents;

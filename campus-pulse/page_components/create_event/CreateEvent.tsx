@@ -9,6 +9,7 @@ import TextAreaInput from "@/components/input_fields/TextAreaInput";
 import TextInput from "@/components/input_fields/TextInput";
 import Switch from "@/components/switch/Switch";
 import CrossOutlined from "@/components/icons/CrossOutlined";
+import Spinner from "@/components/icons/Spinner";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import { EventType } from "@/types/types";
 import clsx from "clsx";
@@ -16,7 +17,7 @@ import { motion } from "motion/react";
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLoginContext } from "@/contexts/LoginContext";
-
+import { showPopup } from "@/utils/GlobalPopupManager";
 
 const recurrenceOptions = [
   { label: "Daily", value: "daily" },
@@ -138,11 +139,17 @@ const CreateEvent = ({
       });
 
       if (!res.ok) {
+        showPopup({
+          title: "Something went wrong",
+          description: "An error occured while creating the event",
+          ttl: 4000,
+        });
         console.error("Failed to create event", await res.text());
       }
 
       const created = await res.json();
       // console.log("Event created:", created);
+      showPopup({ title: "Created event successfully", ttl: 4000 });
       handleClose();
     } catch (err) {
       console.error("Error creating event", err);
@@ -166,7 +173,7 @@ const CreateEvent = ({
           className="w-8 h-8 flex items-center justify-center"
           onClick={() => handleClose()}
         >
-          <ArrowBack fontSize="large"/>
+          <ArrowBack fontSize="large" />
         </button>
         <h1 className="w-full h-8 text-center content-center text-2xl font-semibold text-white-border">
           Create event
@@ -459,6 +466,16 @@ const CreateEvent = ({
       <div className="fixed bottom-0 left-0 w-full p-4 z-42">
         <PrimaryButton text={"Create Event!"} onClick={onSubmit} />
       </div>
+      {loadingSubmit && (
+        <div
+          className="fixed top-0 left-0 h-[calc(var(--vh,1vh)*100)] w-screen z-50 bg-[rgba(0,0,0,0.1)] flex items-center justify-center"
+          onClick={(event) => event.stopPropagation()}
+        >
+          <div className="h-fit w-fit p-2 bg-white">
+            <Spinner />
+          </div>
+        </div>
+      )}
     </motion.div>,
     document.body
   );

@@ -7,6 +7,9 @@ import clsx from "clsx";
 import { motion } from "motion/react";
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import Account from "./account/Account";
+import EventPreferences from "./event_preferences/EventPreferences";
+import Notifications from "./notifications/Notifications";
 
 const Settings = ({
   onClose = () => {},
@@ -16,6 +19,9 @@ const Settings = ({
   visible?: boolean;
 }) => {
   const [show, setShow] = useState<boolean>(visible);
+  const [accountOpen, setAccountOpen] = useState<boolean>(false);
+  const [eventPreferencesOpen, setEventPreferencesOpen] = useState<boolean>(false);
+  const [notificationsOpen, setNotificationsOpen] = useState<boolean>(false);
 
   const searchVersionContext = useSearchVersionContext();
 
@@ -62,7 +68,7 @@ const Settings = ({
             Account
           </p>
           <div className="w-full flex flex-col gap-3">
-            <SecondaryButton text={"ACCOUNT"} />
+            <SecondaryButton text={"ACCOUNT"} onClick={() => setAccountOpen(true)} />
           </div>
         </div>
         <div className="w-full px-10.5 flex flex-col">
@@ -70,8 +76,8 @@ const Settings = ({
             Content & Notifications
           </p>
           <div className="w-full flex flex-col gap-3">
-            <SecondaryButton text={"EVENT PREFERENCES"} />
-            <SecondaryButton text={"NOTIFICATIONS"} />
+            <SecondaryButton text={"EVENT PREFERENCES"} onClick={() => setEventPreferencesOpen(true)} />
+            <SecondaryButton text={"NOTIFICATIONS"} onClick={() => setNotificationsOpen(true)} />
           </div>
         </div>
         <div className="w-full px-10.5 flex flex-col">
@@ -95,6 +101,10 @@ const Settings = ({
           </div>
         </div>
       </div>
+
+      {accountOpen && <Account onClose={() => {setTimeout(() =>{setAccountOpen(false)}, 300)}} />}
+      {eventPreferencesOpen && <EventPreferences onClose={() => {setTimeout(() =>{setEventPreferencesOpen(false)}, 300)}}  />}
+      {notificationsOpen && <Notifications onClose={() => {setTimeout(() =>{setNotificationsOpen(false)}, 300)}}  />}
     </motion.div>,
     document.body
   );

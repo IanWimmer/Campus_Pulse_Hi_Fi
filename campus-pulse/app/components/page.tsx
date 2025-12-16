@@ -28,6 +28,7 @@ import EventDetails from "@/page_components/event_details/EventDetails";
 import { NavigationTabType } from "@/types/types";
 import { motion } from "motion/react";
 import DateTimeInput from "@/components/input_fields/DateTimeInput";
+import { showPopup } from "@/utils/GlobalPopupManager";
 
 const ComponentsPage = () => {
   const [eventDetails, setEventDetails] = useState<{
@@ -35,6 +36,8 @@ const ComponentsPage = () => {
     visible: boolean;
   }>({ mounted: false, visible: false });
   const [enrolled, setEnrolled] = useState<boolean>(false);
+  const [popup, setPopup] = useState<boolean>(false);
+  const [popupTtl, setPopupTtl] = useState<boolean>(false);
 
   const radioButtonOptions = [
     { label: "Option 1", value: "option1" },
@@ -224,7 +227,7 @@ const ComponentsPage = () => {
           <div className="h-26" />
         </div>
         <br />
-        <div>
+        <div className="flex flex-col gap-4">
           <p className="text-xl font-semibold">Others</p>
           <PrimaryButton
             text={"Event details"}
@@ -243,6 +246,18 @@ const ComponentsPage = () => {
               onCancel={() => setEnrolled(false)}
             />
           )}
+          <div className="flex justify-between">
+            <span>
+              Popup without ttl
+            </span>
+            <Switch initialState={popup} onSwitch={(new_state) => {if (new_state) showPopup({title: "Test Popup", description: "some random description", onClose: () => setPopup(false)})}} />
+          </div>
+          <div className="">
+            <PrimaryButton
+            text={"TTL popup"}
+            onClick={() => showPopup({title: "Test Popup", description: "some random description", ttl: 3000})}
+          />
+          </div>
         </div>
       </motion.div>
     </main>

@@ -10,7 +10,8 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const loggedIn = useLoginContext().state.state;
-  const onboardingDone = useOnboardingContext().state.done;
+  const onboardingContext = useOnboardingContext();
+  const onboardingDone = onboardingContext.state.done;
   const [prevPath, setPrevPath] = useState<string | null>(null);
 
   useEffect(() => {
@@ -25,14 +26,15 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
       if (!loggedIn) {
         if (pathname !== "/login") setPrevPath(pathname);
         router.replace("/login");
-      } 
+      }
       // if onboading isn't done yet, we redirect to the onboarding page (if we're currently not on the login page)
-      else if (
-        !onboardingDone &&
-        pathname !== "/onboarding"
-      ) {
+      else if (!onboardingDone && pathname !== "/onboarding") {
         router.replace("/onboarding");
-      } else if (loggedIn && (pathname === "/login" || pathname === "/onboarding") && onboardingDone) {
+      } else if (
+        loggedIn &&
+        (pathname === "/login" || pathname === "/onboarding") &&
+        onboardingDone
+      ) {
         router.replace(prevPath === null ? "/" : prevPath);
       }
     }

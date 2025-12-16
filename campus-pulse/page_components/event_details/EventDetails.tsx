@@ -19,6 +19,7 @@ import CrossOutlined from "@/components/icons/CrossOutlined";
 import { useClickAnimation } from "@/utils/useClickAnimation";
 import AcceptanceModal from "@/components/acceptance_modal/AcceptanceModal";
 import ViewOnMap from "../view_on_map/ViewOnMap";
+import { showPopup } from "@/utils/GlobalPopupManager";
 
 type loadingType = {
   image: boolean;
@@ -322,6 +323,7 @@ const EventDetails = ({
                   headers: { "X-Device-Id": loginContext.state.deviceId },
                 });
 
+                showPopup({ title: "Enrollment canceled", description: `Your enrollement to ${eventData.title} was canceled`, ttl: 4000 });
                 onCancel();
 
                 await fetchEvent();
@@ -340,6 +342,7 @@ const EventDetails = ({
 
                 console.log(res)
 
+                showPopup({ title: "Enrollment successful", description: `You're now enrolled to ${eventData.title}`, ttl: 4000 });
                 onEnroll();
 
                 await fetchEvent();
