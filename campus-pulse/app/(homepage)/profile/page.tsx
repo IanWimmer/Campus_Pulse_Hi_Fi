@@ -91,7 +91,7 @@ const page = () => {
   }
 
   return (
-    <div className="absolute top-0 left-0 max-h-[calc(var(--vh,1vh)*100-64px)] w-full">
+    <div className="absolute top-0 left-0 h-[calc(var(--vh,1vh)*100-64px)] w-full overflow-y-auto">
       <div className="flex flex-col items-center pt-18">
         <div className="border-black border-2 shadow-neobrutalist w-40 h-40 rounded-full flex items-center justify-center">
           <PersonOutline sx={{ fontSize: 128 }} />
@@ -108,7 +108,7 @@ const page = () => {
         <h2 className="font-bold text-xl">Email address</h2>
         <p className="text-grayed">{user.name}@student.ethz.ch</p>
       </div>
-      <div className="absolute top-111 flex flex-col gap-4 w-full px-10.5">
+      <div className="absolute top-111 flex flex-col gap-4 w-full px-10.5 pb-24">
         <SecondaryButton text={"MY EVENTS"} onClick={() => setMyEventsOpen(true)} />
         <SecondaryButton text={"CREATED EVENTS"} onClick={() => setCreatedEventsOpen(true)} />
         <SecondaryButton text={"FRIENDS"} onClick={() => setFriendsOpen(true)} />

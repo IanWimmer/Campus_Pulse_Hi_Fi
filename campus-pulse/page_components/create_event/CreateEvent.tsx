@@ -356,7 +356,7 @@ const CreateEvent = ({
             />
           </div>
           {categoriesFocused && (
-            <div className="px-7 mt-2">
+            <div className="px-7 mt-2 h-full overflow-y-auto">
               <p className="text-xl font-semibold font-secondary">
                 Current selection
               </p>
@@ -390,7 +390,7 @@ const CreateEvent = ({
               <p className="text-xl font-semibold font-secondary">
                 Search results
               </p>
-              <div className="overflow-y-auto flex flex-wrap gap-2">
+              <div className="overflow-y-auto flex flex-wrap gap-2 pb-24">
                 {categorySearchSelection.map((value, index) => {
                   const selected = categorySelection.includes(value);
                   return (
